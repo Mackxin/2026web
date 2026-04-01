@@ -1,0 +1,1715 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 在head标签内添加图标字体链接 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网盘分享</title>
+    <link rel="shortcut icon" href="../img/xininn.ico" />
+    <style>
+        /* 基础样式优化 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 容器样式 */
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 10px 30px;
+            border-radius: 16px;
+            margin-bottom: 50px;
+        }
+
+        /* 标题样式优化 */
+        .page-title {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .page-title a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        .page-title a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: #3498db;
+            transition: all 0.3s ease;
+        }
+        .page-title a:hover {
+            color: #3498db;
+        }
+        .page-title a:hover::after {
+            width: 100%;
+        }
+
+        /* 分享项目样式优化 */
+        .share-item {
+            margin-bottom: 6px;  /* 减小底部间距 */
+            padding: 8px 16px;    /* 减小内边距 */
+            border-radius: 12px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        /* 标题样式 */
+        h3 {
+            color: #1a1a1a;
+            margin: 0 0 10px 0;   /* 减小底部间距 */
+            font-size: 16px;      /* 减小字体大小 */
+            font-weight: 500;
+        }
+
+        /* 在暗色模式中更新标题选择器 */
+        @media (prefers-color-scheme: dark) {
+            h3, .page-title a { color: #ffffff; }
+        }
+        .share-item:nth-child(1) { animation-delay: 0.1s; }
+        .share-item:nth-child(2) { animation-delay: 0.2s; }
+        .share-item:nth-child(3) { animation-delay: 0.3s; }
+        .share-item:nth-child(4) { animation-delay: 0.4s; }
+
+        /* 链接样式优化 */
+        /* 链接样式优化 */
+        .link-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .link {
+            flex: 1;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .link-wrapper {
+                display: flex;
+                flex-direction: row !important;  /* 强制保持水平布局 */
+                align-items: center;
+                gap: 8px;
+            }
+            
+            .link {
+                flex: 1;
+                font-size: 12px;
+                padding: 8px 12px;
+            }
+            
+            .copy-btn {
+                flex: none;
+                width: auto;
+                padding: 8px;
+                background: transparent;
+                box-shadow: none;
+                margin-left: 4px;
+            }
+            
+            .copy-btn i {
+                display: inline-block;
+                font-size: 18px;
+                color: #3498db;
+            }
+            
+            .btn-text {
+                display: none;
+            }
+        }
+        
+        /* 针对更小屏幕的优化 */
+        @media (max-width: 480px) {
+            .link-wrapper {
+                flex-direction: row !important;
+            }
+            .copy-btn {
+                width: auto;
+            }
+        }
+        .link {
+            flex: 1;
+            color: #3498db;  /* 更改链接颜色为蓝色 */
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .link:hover {
+            color: #2980b9;  /* 悬停时加深颜色 */
+        }
+
+        /* 在暗色模式中的链接样式 */
+        @media (prefers-color-scheme: dark) {
+            .link {
+                background-color: rgba(52, 152, 219, 0.1);
+                color: #60a5fa;
+                border-color: rgba(96, 165, 250, 0.2);
+            }
+            .link:hover {
+                background-color: rgba(52, 152, 219, 0.15);
+                color: #93c5fd;
+            }
+        }
+        /* 按钮样式优化 */
+        .copy-btn {
+            padding: 6px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .copy-btn i {
+            display: inline-block;
+            font-size: 18px;
+            color: #3498db;
+        }
+        
+        .btn-text {
+            display: none;
+        }
+
+        /* 移动端适配中的按钮样式 */
+        @media (max-width: 768px) {
+            .copy-btn {
+                padding: 8px;
+                width: auto;
+            }
+            .copy-btn i {
+                display: inline-block;
+                font-size: 18px;
+            }
+            .btn-text {
+                display: none;
+            }
+        }
+        .copy-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+        
+        /* 暗色模式下的按钮样式 */
+        @media (prefers-color-scheme: dark) {
+            .copy-btn {
+                background-color: #3498db;
+                color: #ffffff;
+                box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
+            }
+            .copy-btn:hover {
+                background-color: #2980b9;
+            }
+        }
+        .copy-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #d0d0d0;
+            color: #333;
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 暗色模式优化 */
+        @media (prefers-color-scheme: dark) {
+            body { background-color: #1a1a1a; }
+            .container { background-color: #2d2d2d; }
+            .share-item { 
+                background-color: #363636;
+                border-color: #404040;
+            }
+            .share-item:hover { background-color: #404040; }
+            h1, .page-title a { color: #ffffff; }
+            .link {
+                background-color: #2d2d2d;
+                color: #e0e0e0;
+                border-color: #404040;
+            }
+            .copy-btn {
+                background-color: #363636;
+                color: #e0e0e0;
+                border-color: #404040;
+            }
+        }
+
+        /* 移动端适配优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;  /* 移除body的内边距 */
+            }
+            .container { 
+                width: 100%;  /* 设置容器宽度为100% */
+                padding: 15px;
+                margin: 0;    /* 移除容器外边距 */
+                border-radius: 0;  /* 移除圆角 */
+                box-shadow: none;  /* 移除阴影 */
+            }
+            .page-title {
+                padding: 10px 0;
+            }
+            .page-title a {
+                font-size: 24px;
+            }
+            .share-item { 
+                padding: 12px;
+                margin-bottom: 8px;
+            }
+            h3 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            .link-wrapper {
+                flex-direction: row;  /* 保持水平布局 */
+                gap: 8px;
+            }
+            .link {
+                font-size: 12px;
+                padding: 8px 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .copy-btn {
+                padding: 6px 8px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+        }
+
+        /* 针对更小屏幕的优化 */
+        @media (max-width: 480px) {
+            .container {
+                min-height: 100vh;  /* 确保容器至少占满整个视口高度 */
+            }
+            .link-wrapper {
+                flex-direction: column;
+                gap: 6px;
+            }
+        }
+        /* 版权声明样式 */
+        .copyright-notice {
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        /* 在暗色模式中更新提示文字颜色 */
+        @media (prefers-color-scheme: dark) {
+            .copyright-notice {
+                color: #999;
+            }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .copyright-notice {
+                font-size: 11px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<script>
+    function copyLink(button) {
+        const link = button.previousElementSibling.href;
+        const tempInput = document.createElement('input');
+        tempInput.value = link;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        
+        try {
+            document.execCommand('copy');
+            const originalIcon = button.querySelector('i').className;
+            const originalText = button.querySelector('.btn-text').textContent;
+            
+            button.querySelector('i').className = 'ri-check-line';
+            button.querySelector('.btn-text').textContent = '已复制';
+            button.style.backgroundColor = '#2ecc71';
+            button.style.color = '#ffffff';
+            
+            setTimeout(() => {
+                button.querySelector('i').className = originalIcon;
+                button.querySelector('.btn-text').textContent = originalText;
+                button.style.backgroundColor = '';
+                button.style.color = '';
+            }, 2000);
+        } catch (err) {
+            console.error('复制失败:', err);
+        }
+        
+        document.body.removeChild(tempInput);
+    }
+
+    // 添加页面加载完成后的动画触发
+    document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.share-item');
+        items.forEach(item => item.style.opacity = '1');
+    });
+</script>
+<body>
+    <div class="container">
+        <div class="page-title">
+            <a href="http://yilingyaoling.xyz" target="_blank">网盘资源分享</a>
+        </div>
+        <div class="copyright-notice">
+            如有侵权，请联系删除：【QQ】850907478@qq.com
+        </div>
+        
+        <div class="share-item">
+            <h3>邱淑贞经典电影合集 未删减版(48部)</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e8e872e5d173" class="link" target="_blank">e8e872e5d173</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>【珍藏】林正英电影46部合集【高清修复版】</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/79a997cff20e" class="link" target="_blank">79a997cff20e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>Python小白也能听懂的入门课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/8ddc189e640e" class="link" target="_blank">8ddc189e640e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>香港电影经典蓝光未删减版合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/94f87bda4c80" class="link" target="_blank">94f87bda4c80</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>TK 小店）从入门到精通课程概览</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/45389bdc2437" class="link" target="_blank">45389bdc2437</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖店运营全流程指南：起店选品、商品卡推广与达人玩法</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/0b5129bf5b06" class="link" target="_blank">0b5129bf5b06</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>凡人修仙传真人版</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d27a5a469b68" class="link" target="_blank">d27a5a469b68</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>装修避坑指南+装修避坑资料包</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/51f05d961059" class="link" target="_blank">51f05d961059</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>WPS Office永久激活版</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/222495242d42" class="link" target="_blank">222495242d42</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>老陶电商拼多多+抖音小店课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/02aeee299a22" class="link" target="_blank">02aeee299a22</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>拔作岛-不要在公共场合观看</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/21bcabcf2a5c" class="link" target="_blank">21bcabcf2a5c</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>黑门</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/bf026a1d9b3a" class="link" target="_blank">bf026a1d9b3a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>小白也能听懂的人工智能原理</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/0fad0a0a2d2d" class="link" target="_blank">0fad0a0a2d2d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>超全编程开发付费课程合集【700GB】</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/b6b4451b6d53" class="link" target="_blank">b6b4451b6d53</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>b站付费课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/0fad0a0a2d2d" class="link" target="_blank">0fad0a0a2d2d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>从零开始做手机配件生意外贸课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/316dd7121040" class="link" target="_blank">316dd7121040</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖音商城运营课程(更新25年1月)</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/ef7be6fce4eb" class="link" target="_blank">ef7be6fce4eb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖音小店21天开店教程 ，抖店的最新玩法</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/5c3af11bbc3c" class="link" target="_blank">5c3af11bbc3c</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>理解抖店正规玩法运营课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/66a952f882e9" class="link" target="_blank">66a952f882e9</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>华为认证网络工程师（HCIA）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/1781a909172a" class="link" target="_blank">1781a909172a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>19部擦边短剧【合集】</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/384d240d3ef3" class="link" target="_blank">384d240d3ef3</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>拼多多+抖音小店无货源开店案例</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/27274fb645bb" class="link" target="_blank">27274fb645bb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>B站-南门录像厅-剪辑+拍摄 全能视频创作课（新手友好）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/b9677d8d7300" class="link" target="_blank">b9677d8d7300</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>【南门录像厅】 从新手到大神：剪辑师实战就业班，深度培养创作思维</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6f959d3ad570" class="link" target="_blank">6f959d3ad570</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>让你轻松学会剪映全套视频剪辑</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/103e905d845b" class="link" target="_blank">103e905d845b</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>剪映电脑版进阶拔高案例实操</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6af63912a018" class="link" target="_blank">6af63912a018</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>校长工具箱：班级管理类</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/167e18ee2723" class="link" target="_blank">167e18ee2723</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>凯叔故事宝库：凯叔讲故事合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/5f3a73ac1bcd" class="link" target="_blank">5f3a73ac1bcd</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>2025大明老师全新底层公式，自然流+千川投放系统搭建实操课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/694298eb3b85" class="link" target="_blank">694298eb3b85</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>TikTok小店运营实操课，从选品到出单的全流程带货变现指南</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/bdc752356a9a" class="link" target="_blank">bdc752356a9a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>全面解析跨境电商独立运营</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e3feb9eaf0b9" class="link" target="_blank">e3feb9eaf0b9</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>课程带你全方位玩转拼多多各种玩法</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/f9035c799f3a" class="link" target="_blank">f9035c799f3a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>三小时变身python极客</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/ae4e99ad0c8d" class="link" target="_blank">ae4e99ad0c8d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>实体商家精准获客训练，带你学习简单落地的获客秘籍</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e881627c3219" class="link" target="_blank">e881627c3219</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>Youtube金牌运营直播训练营</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/85edfef42d37" class="link" target="_blank">85edfef42d37</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>打造爆款电商视频号素材、选品、剪辑教程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d25fce909c1c" class="link" target="_blank">d25fce909c1c</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>短视频好物投流巨量的核心教程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/691542a53a88" class="link" target="_blank">691542a53a88</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>知名女明星珍藏精彩电影共16位人间you物</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/0f7d095bc91f" class="link" target="_blank">0f7d095bc91f</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>小红书电商运营课程?从入门到精髓</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/81838808b516" class="link" target="_blank">81838808b516</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>10天带你玩转python</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/80fd305c446f" class="link" target="_blank">80fd305c446f</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>3000多首mp3高品质歌曲随心听</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/978d20bb767a" class="link" target="_blank">978d20bb767a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>BBC自然探索PDF合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e944e22e8868" class="link" target="_blank">e944e22e8868</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>Office办公技能提升课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/08daada99cc0" class="link" target="_blank">08daada99cc0</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>户型设计优化平面方案合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/3f1835bb5ce4" class="link" target="_blank">3f1835bb5ce4</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>行业报告分享</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/36a3242f3fef" class="link" target="_blank">36a3242f3fef</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>剪映电脑版进阶拔高案例实操课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/319b9b280f56" class="link" target="_blank">319b9b280f56</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>魔天记</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/186993c56abe" class="link" target="_blank">186993c56abe</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>RC抖音直播带货培训班</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d29728a8b71b" class="link" target="_blank">d29728a8b71b</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>新版-洋葱学院小初高学科课程全套视频</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/981c1362c5df" class="link" target="_blank">981c1362c5df</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>精选270+套不同风格PPT模板</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/3419277223ab" class="link" target="_blank">3419277223ab</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>交个朋友AI短视频创富营100节</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/63b35271fc94" class="link" target="_blank">63b35271fc94</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>诛仙更新至第三季</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6263111a6924" class="link" target="_blank">6263111a6924</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>仙武传(2025)4K更新119集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/101470924733" class="link" target="_blank">101470924733</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>BBC经典哲学启蒙动画-雨果带你看世界</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d769e2839370" class="link" target="_blank">d769e2839370</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>春夏秋冬养生食疗课［音频］</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/8623bf8f833a" class="link" target="_blank">8623bf8f833a</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>程响 无损歌曲</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/187a1929079e" class="link" target="_blank">187a1929079e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>巴黎贝甜60款经典面包配方流程 烘焙技术资料</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/667b0139fe2c" class="link" target="_blank">667b0139fe2c</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>水墨风PPT</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/fe315c9d8c75" class="link" target="_blank">fe315c9d8c75</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>兵哥AIoT智能物联网</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/8c9346ee7f89" class="link" target="_blank">8c9346ee7f89</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>4K夸克网盘分享</h3>
+            <div class="link-wrapper">
+                <a href="https://xuexizhinan.com/" class="link" target="_blank">xuexizhinan</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>2025年剪映专业版剪辑课程：从入门到精通</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/a929a3968f32" class="link" target="_blank">a929a3968f32</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>超小白从0开始学 Ps 教程 ABCD全系列全集 – 带课件素材</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/80f6aa0b8af2" class="link" target="_blank">80f6aa0b8af2</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>292页全球贸易趋势的研究报告（2025）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/8a4a8d099cb2" class="link" target="_blank">8a4a8d099cb2</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>灵笼</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/23974a793f1c" class="link" target="_blank">23974a793f1c</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>完美世界</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/c861c1d57c70" class="link" target="_blank">c861c1d57c70</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>照顾酱·电商人修炼手册，从0到1，手把手教你理解淘宝运营底层逻辑</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/62113db6babc" class="link" target="_blank">62113db6babc</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>一生必读的50本可以提升认知的书[pdf]</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/945e58951d9e" class="link" target="_blank">945e58951d9e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>(猴博士)高数叔-电工电子技术</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/94a63705cf67" class="link" target="_blank">94a63705cf67</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>低压电工培训教程全集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/c9ef7d6c3649" class="link" target="_blank">c9ef7d6c3649</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>527页动态高端PPT模板</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/5ab31d3fde99" class="link" target="_blank">5ab31d3fde99</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>知识付费年入30万训练营（1-7）合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/ee65c565ff4d" class="link" target="_blank">ee65c565ff4d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>PS大神高级创意教程合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/dc35cfded6bf" class="link" target="_blank">dc35cfded6bf</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>C4D锐课基础教程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/ecaf8c6987df" class="link" target="_blank">ecaf8c6987df</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>特效研究所【AE+C4D 综合教程】</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/60192f62ec1f" class="link" target="_blank">60192f62ec1f</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>小白成长记C4D R19（入门篇）全32集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/a35a3f136edb" class="link" target="_blank">a35a3f136edb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>沧元图</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/8bd0add6534d" class="link" target="_blank">8bd0add6534d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>仙逆</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/766650580e1e" class="link" target="_blank">766650580e1e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖音电商从入门到精通，全面解析抖音电商核心逻辑</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/3ec3054e745e" class="link" target="_blank">3ec3054e745e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖音本地生活酒店民宿运营，0基础也可以做抖音增量</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/50322c63d8fc" class="link" target="_blank">50322c63d8fc</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>精品凉拌菜系列热卤系列课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/14eb35fc1688" class="link" target="_blank">14eb35fc1688</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>基金从业|资料|</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/69516bf28f8f" class="link" target="_blank">69516bf28f8f</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>零基础Google精准客户开发，成为外贸业务高手</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/c3177fd460fb" class="link" target="_blank">c3177fd460fb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>2024金融类课程大合集 407G</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/5bc8f2f7e224" class="link" target="_blank">5bc8f2f7e224</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>B站付费课程大合集,共242个付费课程，大小1.5T</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6175443fae79" class="link" target="_blank">6175443fae79</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>十部经典的华语电影</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/f949a3815eb5" class="link" target="_blank">f949a3815eb5</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>吴彦祖带你学口语/英语课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/5bffc8244d10#/" class="link" target="_blank">5bffc8244d10</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>牧神记</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d99b95dd75fb" class="link" target="_blank">d99b95dd75fb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>今敏导演 动画/电影</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/1a8f804c0ed1" class="link" target="_blank">1a8f804c0ed1</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>凡人修仙传 海外风云  【4K】</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/d61723cab576" class="link" target="_blank">d61723cab576</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>TikTok电商课程，​系统学习TK电商起号到变现</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/df95d43760dd" class="link" target="_blank">df95d43760dd</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>阿里巴巴国际站新店0-1</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/2dfcbeaa7feb" class="link" target="_blank">2dfcbeaa7feb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>短剧混剪起号燃剪爆单技巧实操</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/1e931568fd81" class="link" target="_blank">1e931568fd81</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>B站课程 修炼血厚攻高的自己：无所畏惧，高能成长-[完结]</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/649aad60578e" class="link" target="_blank">649aad60578e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>豆包 AI 全能训练营从小白到高手</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/fab16dc5d8f8" class="link" target="_blank">fab16dc5d8f8</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>抖音小店运营核心课（25年4月）流量获取途径，商城系统强烈推荐与精准流量提升实际操作</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.baidu.com/s/1DKPJoTvjqtYpmFQo_9V-qw?pwd=spfa" class="link" target="_blank">1DKPJoTvjqtYpmFQo_9V-qw</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>2025拼多多运营实战课，从开店到直播，全方位助力电商人（40节课）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.baidu.com/s/13nDadLpfgTY3kXI0hodUFA?pwd=6uet" class="link" target="_blank">13nDadLpfgTY3kXI0hodUFA</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>万老师CAD零基础到精通精品教程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/7ee2139ea2e7" class="link" target="_blank">7ee2139ea2e7</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>Ai基础入门与进阶训练课程</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/97745aadf2f1" class="link" target="_blank">97745aadf2f1</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>莱尼日记｜影视剪辑全流程入门+短剧实战课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/7d8dce7a5629#/" class="link" target="_blank">7d8dce7a5629</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>李兴兴：三合一剪辑训练营</h3>
+            <div class="link-wrapper">
+                <a href="https://since1982-my.sharepoint.com/personal/2502_since1982_org/_layouts/15/onedrive.aspx?ga=1" class="link" target="_blank">onedrive</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>2025年一级建造师精选考点背诵PDF</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6eefb3d106e6#/" class="link" target="_blank">6eefb3d106e6</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>交个朋友电商运营课程大合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/14d7aa75d7d3" class="link" target="_blank">14d7aa75d7d3</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>财务EXCEL从入门到精通系统学习班-财会成长学苑</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/9d46de5b4f63" class="link" target="_blank">9d46de5b4f63</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>网易云课堂教程：女神经叫你玩WPS（共50课）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/cd318479cd21" class="link" target="_blank">cd318479cd21</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="share-item">
+            <h3>Adobe2025</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/9e85fa24433d" class="link" target="_blank">9e85fa24433d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>韩学杰中医驻颜养生课，90个逆龄古方抗衰老（完结）</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/ca01077e5846" class="link" target="_blank">ca01077e5846</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>5大抖音同城流量矩阵裂变体系</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/6219b49397ea" class="link" target="_blank">6219b49397ea</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>《剪映视频后期剪辑》零基础入门到精通</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/c048e241dd18" class="link" target="_blank">c048e241dd18</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>王一快《B站精品课：简单有趣的自我成长课堂》</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/dff0ca608deb" class="link" target="_blank">dff0ca608deb</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>90后必备青春记忆700首无损合集</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e6225a377cb6" class="link" target="_blank">e6225a377cb6</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>电工师傅的秘密之家居布线</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/e86d31a15ae3" class="link" target="_blank">e86d31a15ae3</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>工廠青春期男女的愛情是什麼樣子白天打情罵俏晚上同浴同住</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/68e6c85df9c2" class="link" target="_blank">68e6c85df9c2</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>AI剪辑教程_AI视频创作课</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/b2bdb229cb8e" class="link" target="_blank">b2bdb229cb8e</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>我们如何对抗抑郁 (2021)</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/c3c8c8bd0d29" class="link" target="_blank">c3c8c8bd0d29</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>AI风向标《AI与视频制作全攻略：从入门到精通实战课程》</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.baidu.com/s/14Xs1up18-zk8Yl6W8sUSbQ" class="link" target="_blank">14Xs1up18-zk8Yl6W8sUSbQ</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="share-item">
+            <h3>剪映专业版6.1.0</h3>
+            <div class="link-wrapper">
+                <a href="https://pan.quark.cn/s/b75669a3dc3d" class="link" target="_blank">b75669a3dc3d</a>
+                <button class="copy-btn" onclick="copyLink(this)">
+                    <i class="ri-file-copy-line"></i>
+                    <span class="btn-text">复制链接</span>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+
+<script>
+
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+
+</script>
+</body>
+</html>
