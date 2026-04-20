@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/xininn.ico" />
+    <title>游猴脚本 - 壹号栈</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff1d55;
+            --primary-light: #ff7a95;
+            --primary-dark: #e61045;
+            --primary-muted: rgba(255, 29, 85, 0.07);
+            --primary-border: rgba(255, 29, 85, 0.2);
+            --bg: #f2f0ed;
+            --bg-warm: #eae8e5;
+            --card-bg: #ffffff;
+            --text: #2a2a2a;
+            --text-secondary: #858079;
+            --border: #ddd9d4;
+            --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.03);
+            --shadow: 0 3px 8px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.07);
+            --shadow-xl: 0 16px 40px rgb(0 0 0 / 0.09);
+            --radius: 18px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -15%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(255, 29, 85, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 122, 149, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 80%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 3rem 0 5rem;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3.5rem;
+            padding: 1.5rem 2.5rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .top-nav-logo {
+            font-size: 1.375rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .top-nav-logo svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .top-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .top-nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .hero {
+            margin-bottom: 4.5rem;
+            padding: 4rem 3.5rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-light) 100%);
+            border-radius: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.25rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title-sub {
+            display: block;
+            font-size: 0.55em;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 0.5rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            opacity: 0.9;
+        }
+
+        .hero-desc {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid rgba(255, 255, 255, 0.6);
+            padding: 1rem 1.25rem;
+            border-radius: 0 10px 10px 0;
+            line-height: 1.8;
+            max-width: 640px;
+            font-size: 0.9375rem;
+            opacity: 0.95;
+        }
+
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.25);
+        }
+
+        .section-title-group {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-border);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-muted);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            transform: scale(1.05);
+        }
+
+        .card:hover .card-icon-emoji {
+            filter: brightness(0) invert(1);
+        }
+
+        .card-title {
+            font-size: 1.0625rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-top: auto;
+        }
+
+        .card-tag {
+            padding: 0.25rem 0.625rem;
+            background: var(--bg);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.625rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .card-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.3);
+        }
+
+        .card-btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .card-btn-secondary:hover {
+            background: var(--border);
+            box-shadow: none;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            height: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav { display: grid; }
+            body { padding-bottom: 60px; }
+        }
+
+        .mobile-bottom-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-bottom-nav a:hover {
+            color: var(--primary);
+            background: var(--primary-muted);
+        }
+
+        .mobile-bottom-nav a.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 1rem 1rem 3rem;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+            }
+
+            .top-nav-links {
+                gap: 1.25rem;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                gap: 0.875rem;
+            }
+
+            .section-number {
+                width: 40px;
+                height: 40px;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+    <div class="container">
+
+        <nav class="top-nav">
+            <a href="index.html" class="top-nav-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                壹号栈
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="naver.html">导航</a></li>
+                <li><a href="about.html">搬砖</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                    </svg>
+                    Tampermonkey Scripts
+                </div>
+                <h1 class="hero-title">
+                    游猴脚本
+                    <span class="hero-title-sub">在用的实用脚本精选</span>
+                </h1>
+                <div class="hero-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        零零零陆
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        2026年04月15日
+                    </span>
+                </div>
+                <div class="hero-desc">
+                    快速发现好用的 Tampermonkey 脚本，收集在用或觉得值得推荐的实用脚本，随机分享给有需要的人。
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">壹</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">脚本管理器</h2>
+                    <p class="section-subtitle">先装管理器，再装脚本</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://docs.scriptcat.org/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🐱</span></div>
+                        <div class="card-title">ScriptCat</div>
+                    </div>
+                    <p class="card-desc">兼容 Tampermonkey 的用户脚本管理器，支持后台运行与定时每日任务。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">资源穿越</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">贰</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">实用脚本</h2>
+                    <p class="section-subtitle">日常使用场景精选</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://greasyfork.org/zh-CN/scripts/420352" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📝</span></div>
+                        <div class="card-title">CSDN 净化</div>
+                    </div>
+                    <p class="card-desc">重置 CSDN 布局，开启暗黑模式，移除广告与弹窗，自动展开内容与评论，支持直接复制。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">去广告</span>
+                        <span class="card-tag">暗黑模式</span>
+                        <span class="card-tag">自动展开</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/519353" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">☁️</span></div>
+                        <div class="card-title">123 云盘解锁</div>
+                    </div>
+                    <p class="card-desc">增强 123 云盘，解锁 VIP 功能，移除下载限制与广告，支持自定义用户信息。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">VIP 解锁</span>
+                        <span class="card-tag">去广告</span>
+                        <span class="card-tag">在线配置</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/520602" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📄</span></div>
+                        <div class="card-title">Office 文件在线预览</div>
+                    </div>
+                    <p class="card-desc">自动将 .xlsx、.docx 等链接跳转至 Microsoft Office Online，浏览器内直接预览。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">在线预览</span>
+                        <span class="card-tag">Office</span>
+                        <span class="card-tag">自动跳转</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/446342" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">✈️</span></div>
+                        <div class="card-title">Telegram 受限媒体下载</div>
+                    </div>
+                    <p class="card-desc">绕过频道下载/保存限制，轻松保存 Telegram 受限图片与视频，完全免费。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">媒体下载</span>
+                        <span class="card-tag">Telegram</span>
+                        <span class="card-tag">免费</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/467511" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎬</span></div>
+                        <div class="card-title">B站未登录享最高画质</div>
+                    </div>
+                    <p class="card-desc">强制 B 站未登录状态下也可享受最高画质，解除 360P 限制与 30 秒试看限制。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">画质解锁</span>
+                        <span class="card-tag">Bilibili</span>
+                        <span class="card-tag">去限制</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/381682" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎞️</span></div>
+                        <div class="card-title">H5Player 增强</div>
+                    </div>
+                    <p class="card-desc">增强 B 站、爱奇艺、腾讯、YouTube、微博、知乎等 HTML5 视频播放器，支持快捷键与高级控制。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">播放器增强</span>
+                        <span class="card-tag">快捷键</span>
+                        <span class="card-tag">多平台</span>
+                    </div>
+                </a>
+                <a href="https://greasyfork.org/zh-CN/scripts/419215-autopager" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">♾️</span></div>
+                        <div class="card-title">自动无缝翻页</div>
+                    </div>
+                    <p class="card-desc">实现无限滚动，自动加载并追加下一页内容，告别手动翻页。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">自动翻页</span>
+                        <span class="card-tag">无限滚动</span>
+                        <span class="card-tag">多站支持</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>由 <a href="index.html">壹号栈</a> 整理 · 仅供学习交流使用</p>
+        </footer>
+    </div>
+
+    <nav class="mobile-bottom-nav" role="navigation" aria-label="移动端导航">
+        <a href="index.html">首页</a>
+        <a href="naver.html">导航</a>
+        <a href="qiantai.html">前台</a>
+        <a href="about.html">搬砖</a>
+    </nav>
+</body>
+</html>

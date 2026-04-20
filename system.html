@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/xininn.ico" />
+    <title>从零开始安装系统 - 壹号栈</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff1d55;
+            --primary-light: #ff7a95;
+            --primary-dark: #e61045;
+            --primary-muted: rgba(255, 29, 85, 0.07);
+            --primary-border: rgba(255, 29, 85, 0.2);
+            --bg: #f2f0ed;
+            --bg-warm: #eae8e5;
+            --card-bg: #ffffff;
+            --text: #2a2a2a;
+            --text-secondary: #858079;
+            --border: #ddd9d4;
+            --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.03);
+            --shadow: 0 3px 8px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.07);
+            --shadow-xl: 0 16px 40px rgb(0 0 0 / 0.09);
+            --radius: 18px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -15%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(255, 29, 85, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 122, 149, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 80%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 3rem 0 5rem;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3.5rem;
+            padding: 1.5rem 2.5rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .top-nav-logo {
+            font-size: 1.375rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .top-nav-logo svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .top-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .top-nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .hero {
+            margin-bottom: 4.5rem;
+            padding: 4rem 3.5rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-light) 100%);
+            border-radius: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.25rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title-sub {
+            display: block;
+            font-size: 0.55em;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 0.5rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            opacity: 0.9;
+        }
+
+        .hero-desc {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid rgba(255, 255, 255, 0.6);
+            padding: 1rem 1.25rem;
+            border-radius: 0 10px 10px 0;
+            line-height: 1.8;
+            max-width: 640px;
+            font-size: 0.9375rem;
+            opacity: 0.95;
+        }
+
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.25);
+        }
+
+        .section-title-group {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-border);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-muted);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            transform: scale(1.05);
+        }
+
+        .card:hover .card-icon-emoji {
+            filter: brightness(0) invert(1);
+        }
+
+        .card-title {
+            font-size: 1.0625rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-top: auto;
+        }
+
+        .card-tag {
+            padding: 0.25rem 0.625rem;
+            background: var(--bg);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.625rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .card-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.3);
+        }
+
+        .card-btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .card-btn-secondary:hover {
+            background: var(--border);
+            box-shadow: none;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card-full-inner {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 0.875rem;
+        }
+
+        .card-full-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.625rem;
+            padding: 1.5rem 1rem;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .card-full-item:hover {
+            background: var(--primary-muted);
+            border-color: var(--primary-border);
+            transform: translateY(-2px);
+        }
+
+        .card-full-item-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .card-full-item:hover .card-full-item-icon {
+            background: var(--primary-muted);
+            border-color: var(--primary-border);
+        }
+
+        .card-full-item-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            height: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav { display: grid; }
+            body { padding-bottom: 60px; }
+        }
+
+        .mobile-bottom-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-bottom-nav a:hover {
+            color: var(--primary);
+            background: var(--primary-muted);
+        }
+
+        .mobile-bottom-nav a.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 1rem 1rem 3rem;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+            }
+
+            .top-nav-links {
+                gap: 1.25rem;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-full-inner {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section-header {
+                gap: 0.875rem;
+            }
+
+            .section-number {
+                width: 40px;
+                height: 40px;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+    <div class="container">
+
+        <nav class="top-nav">
+            <a href="index.html" class="top-nav-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                壹号栈
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="naver.html">导航</a></li>
+                <li><a href="about.html">赞助</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    系统安装教程
+                </div>
+                <h1 class="hero-title">
+                    从零开始安装系统
+                    <span class="hero-title-sub">Install OS from Scratch · 全流程教程</span>
+                </h1>
+                <div class="hero-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        零零零壹
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        2026年04月19日
+                    </span>
+                </div>
+                <div class="hero-desc">
+                    小白从零开始学习安装系统，这是一个从零开始的教程。涵盖 U 盘制作、系统下载、激活工具以及网络诊断等全流程资源。
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">壹</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">U 盘制作工具</h2>
+                    <p class="section-subtitle">任选其一即可制作启动 U 盘</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://rufus.ie/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">💾</span></div>
+                        <div class="card-title">RUFUS</div>
+                    </div>
+                    <p class="card-desc">轻量级 USB 启动盘制作工具，支持 Windows/Linux/UEFI 引导，适用于 BIOS 刷写与低级工具场景。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                        <span class="card-btn card-btn-secondary">下载</span>
+                    </div>
+                </a>
+                <a href="https://www.ventoy.net/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🔧</span></div>
+                        <div class="card-title">VENTOY</div>
+                    </div>
+                    <p class="card-desc">开源可启动 U 盘方案，多 ISO 直拷无需反复格式化，支持 WIM/IMG/VHD/EFI 等多种格式引导。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                        <span class="card-btn card-btn-secondary">下载</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">贰</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">系统下载</h2>
+                    <p class="section-subtitle">正版 / 纯净系统镜像资源汇总</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://www.microsoft.com/software-download/windows11" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🪟</span></div>
+                        <div class="card-title">Windows 11 正版官网</div>
+                    </div>
+                    <p class="card-desc">微软官方渠道下载，纯净无篡改，配置自动匹配，完整性可验证。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">下载地址</span>
+                    </div>
+                </a>
+                <a href="https://winnew.cn/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🌐</span></div>
+                        <div class="card-title">WinNew</div>
+                    </div>
+                    <p class="card-desc">简洁的在线 Windows 下载工具，无广告干扰，界面清晰易用。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                        <span class="card-btn card-btn-secondary">镜像 / 激活</span>
+                    </div>
+                </a>
+                <a href="https://hellowindows.cn/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📦</span></div>
+                        <div class="card-title">HelloWindows</div>
+                    </div>
+                    <p class="card-desc">官方原版系统镜像仓库，涵盖 XP 至 Win11，仅收录最新版，未修改可信赖。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                    </div>
+                </a>
+                <a href="https://www.sysmini.com/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎯</span></div>
+                        <div class="card-title">极简系统</div>
+                    </div>
+                    <p class="card-desc">提供多操作系统下载，链接选项丰富，按需选择适合你的版本。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                    </div>
+                </a>
+                <a href="https://yyczxt.com/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🚀</span></div>
+                        <div class="card-title">又要重装</div>
+                    </div>
+                    <p class="card-desc">精选优化版 Windows 系统包，精简轻量，适合老旧设备或极速体验。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">官网</span>
+                    </div>
+                </a>
+                <a href="https://msdn.itellyou.cn/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🗂️</span></div>
+                        <div class="card-title">MSDN 系统下载</div>
+                    </div>
+                    <p class="card-desc">综合系统下载站点，含 MSDN 原版、修复工具及 TWM000 等资源。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">MSDN-山己几子木</span>
+                        <span class="card-tag">修系统</span>
+                        <span class="card-tag">TWM000</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">叁</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">系统激活</h2>
+                    <p class="section-subtitle">Windows / Office 一键激活工具</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🔑</span></div>
+                        <div class="card-title">一键激活 Windows / Office</div>
+                    </div>
+                    <p class="card-desc">基于 KMS 脚本生成的激活通道，操作便捷，支持多款系统与办公套件。</p>
+                    <div class="card-actions">
+                        <a href="https://kms.cx/" class="card-btn" target="_blank" rel="noopener">激活通道 ①</a>
+                        <a href="https://www.moerats.com/kms/" class="card-btn" target="_blank" rel="noopener">激活通道 ②</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">肆</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">一些杂货</h2>
+                    <p class="section-subtitle">PE 导航与学习资源</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🧰</span></div>
+                        <div class="card-title">KUERPE 全系列导航</div>
+                    </div>
+                    <p class="card-desc">集成 KMS 脚本学习通道与最全驱动 PE，方便进行系统维护与故障排查。</p>
+                    <div class="card-actions">
+                        <a href="http://bbs.wuyou.net/forum.php?mod=viewthread&tid=434320&extra=page%3D1" class="card-btn" target="_blank" rel="noopener">学习通道</a>
+                        <a href="http://bbs.wuyou.net/forum.php?mod=viewthread&tid=441315" class="card-btn" target="_blank" rel="noopener">最全驱动 PE</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">陆</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">视频教程</h2>
+                    <p class="section-subtitle">全网最好的装机教程，没有之一</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://www.bilibili.com/video/BV1BG4y137mG/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎬</span></div>
+                        <div class="card-title">学习装机</div>
+                    </div>
+                    <p class="card-desc">从零开始学习电脑组装与系统安装，步骤详细适合新手。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">观看教程</span>
+                    </div>
+                </a>
+                <a href="https://www.bilibili.com/video/BV17WZ4YsEiX/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📹</span></div>
+                        <div class="card-title">系统重装视频教程</div>
+                    </div>
+                    <p class="card-desc">手把手演示系统重装全流程，避开常见坑点。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">观看教程</span>
+                    </div>
+                </a>
+                <a href="https://zhuangit.ababtools.com/videos" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🔧</span></div>
+                        <div class="card-title">2025 全球电脑故障解决指南</div>
+                    </div>
+                    <p class="card-desc">涵盖常见硬件 / 系统故障排查与修复方案，全面实用。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">观看教程</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>由 <a href="index.html">壹号栈</a> 整理 · 仅供学习交流使用</p>
+        </footer>
+    </div>
+
+    <nav class="mobile-bottom-nav" role="navigation" aria-label="移动端导航">
+        <a href="index.html">首页</a>
+        <a href="naver.html">导航</a>
+        <a href="qiantai.html">前台</a>
+        <a href="about.html">搬砖</a>
+    </nav>
+</body>
+</html>

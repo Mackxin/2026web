@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/xininn.ico" />
+    <title>Mac 软件推荐 - 壹号栈</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff1d55;
+            --primary-light: #ff7a95;
+            --primary-dark: #e61045;
+            --primary-muted: rgba(255, 29, 85, 0.07);
+            --primary-border: rgba(255, 29, 85, 0.2);
+            --bg: #f2f0ed;
+            --bg-warm: #eae8e5;
+            --card-bg: #ffffff;
+            --text: #2a2a2a;
+            --text-secondary: #858079;
+            --border: #ddd9d4;
+            --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.03);
+            --shadow: 0 3px 8px rgb(0 0 0 / 0.05);
+            --shadow-lg: 0 8px 24px rgb(0 0 0 / 0.07);
+            --shadow-xl: 0 16px 40px rgb(0 0 0 / 0.09);
+            --radius: 18px;
+            --radius-sm: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-decoration::before {
+            content: '';
+            position: absolute;
+            top: -15%;
+            right: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(255, 29, 85, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .bg-decoration::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 122, 149, 0.04) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 80%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 3rem 0 5rem;
+        }
+
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3.5rem;
+            padding: 1.5rem 2.5rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .top-nav-logo {
+            font-size: 1.375rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+        }
+
+        .top-nav-logo svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .top-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .top-nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .hero {
+            margin-bottom: 4.5rem;
+            padding: 4rem 3.5rem;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-light) 100%);
+            border-radius: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.25rem, 4vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title-sub {
+            display: block;
+            font-size: 0.55em;
+            font-weight: 400;
+            opacity: 0.85;
+            margin-top: 0.5rem;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            opacity: 0.9;
+        }
+
+        .hero-desc {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 3px solid rgba(255, 255, 255, 0.6);
+            padding: 1rem 1.25rem;
+            border-radius: 0 10px 10px 0;
+            line-height: 1.8;
+            max-width: 640px;
+            font-size: 0.9375rem;
+            opacity: 0.95;
+        }
+
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-number {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.25);
+        }
+
+        .section-title-group {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-border);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-muted);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.375rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            transform: scale(1.05);
+        }
+
+        .card:hover .card-icon-emoji {
+            filter: brightness(0) invert(1);
+        }
+
+        .card-title {
+            font-size: 1.0625rem;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-top: auto;
+        }
+
+        .card-tag {
+            padding: 0.25rem 0.625rem;
+            background: var(--bg);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.625rem;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 8px;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .card-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 12px rgba(255, 29, 85, 0.3);
+        }
+
+        .card-btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .card-btn-secondary:hover {
+            background: var(--border);
+            box-shadow: none;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        .card-full-inner {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 0.875rem;
+        }
+
+        .card-full-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.625rem;
+            padding: 1.5rem 1rem;
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .card-full-item:hover {
+            background: var(--primary-muted);
+            border-color: var(--primary-border);
+            transform: translateY(-2px);
+        }
+
+        .card-full-item-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .card-full-item:hover .card-full-item-icon {
+            background: var(--primary-muted);
+            border-color: var(--primary-border);
+        }
+
+        .card-full-item-label {
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4rem 0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            border-top: 1px solid var(--border);
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            height: 3rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-bottom-nav { display: grid; }
+            body { padding-bottom: 60px; }
+        }
+
+        .mobile-bottom-nav a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-bottom-nav a:hover {
+            color: var(--primary);
+            background: var(--primary-muted);
+        }
+
+        .mobile-bottom-nav a.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                width: 92%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 1rem 1rem 3rem;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+            }
+
+            .top-nav-links {
+                gap: 1.25rem;
+            }
+
+            .hero {
+                padding: 2rem 1.5rem;
+                margin-bottom: 3rem;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-full-inner {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section-header {
+                gap: 0.875rem;
+            }
+
+            .section-number {
+                width: 40px;
+                height: 40px;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+    <div class="container">
+
+        <nav class="top-nav">
+            <a href="index.html" class="top-nav-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                壹号栈
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="naver.html">导航</a></li>
+                <li><a href="about.html">搬砖</a></li>
+            </ul>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                    Mac Software
+                </div>
+                <h1 class="hero-title">
+                    Mac 软件推荐
+                    <span class="hero-title-sub">精选日常使用必备工具</span>
+                </h1>
+                <div class="hero-meta">
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        壹号记录
+                    </span>
+                    <span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        2026年04月15日
+                    </span>
+                </div>
+                <div class="hero-desc">
+                    国补弄了一台 Mac Mini，开始用 Mac 电脑了。记录装机过程中的实用工具和配置经验，精选日常使用必备软件。
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">壹</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">Mac 软件下载</h2>
+                    <p class="section-subtitle">精选日常使用必备工具</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://macwk.com" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📦</span></div>
+                        <div class="card-title">MacWK</div>
+                    </div>
+                    <p class="card-desc">免费、高质量的 Mac 软件下载平台，涵盖系统工具、设计软件、编程环境等。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">系统工具</span>
+                        <span class="card-tag">设计软件</span>
+                        <span class="card-tag">编程环境</span>
+                    </div>
+                </a>
+                <a href="https://pilotmoon.com/scrollreverser/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🖱️</span></div>
+                        <div class="card-title">Scroll Reverser</div>
+                    </div>
+                    <p class="card-desc">分别设置鼠标和触控板的滚动方向，解决 Mac 上鼠标滚动方向不适的问题。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">免费</span>
+                        <span class="card-tag">触控板</span>
+                        <span class="card-tag">鼠标</span>
+                    </div>
+                </a>
+                <a href="https://maczip.cn" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📁</span></div>
+                        <div class="card-title">MacZip</div>
+                    </div>
+                    <p class="card-desc">专为 macOS 设计的压缩软件，支持 20+ 格式，永久免费。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">压缩</span>
+                        <span class="card-tag">加密</span>
+                        <span class="card-tag">20+ 格式</span>
+                    </div>
+                </a>
+                <a href="https://macmousefix.com" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🖥️</span></div>
+                        <div class="card-title">Mac Mouse Fix</div>
+                    </div>
+                    <p class="card-desc">模拟触控板手势，在 Mac 上提供好用的鼠标增强功能。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">手势</span>
+                        <span class="card-tag">滚动</span>
+                        <span class="card-tag">鼠标增强</span>
+                    </div>
+                </a>
+                <a href="https://ivean.com/dockminimize/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🪟</span></div>
+                        <div class="card-title">DockMinimize</div>
+                    </div>
+                    <p class="card-desc">在macOS上实现类似Windows系统的单击隐藏和显示窗口功能</p>
+                    <div class="card-tags">
+                        <span class="card-tag">窗口预览</span>
+                        <span class="card-tag">显示隐藏</span>
+                    </div>
+                </a>
+                <a href="https://alt-tab.app/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🌅</span></div>
+                        <div class="card-title">AltTab</div>
+                    </div>
+                    <p class="card-desc">切换到任意窗口</p>
+                    <div class="card-tags">
+                        <span class="card-tag">后台切换</span>
+                        <span class="card-tag">应用预览</span>
+                    </div>
+                </a>
+                <a href="https://www.keka.io/zh-cn/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🛣️</span></div>
+                        <div class="card-title">Keka</div>
+                    </div>
+                    <p class="card-desc">macOS系统压缩文件管理器</p>
+                    <p class="card-desc">官网上下载免费</p>
+                    <div class="card-tags">
+                        <span class="card-tag"></span>
+                        <span class="card-tag">应用预览</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">贰</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">装机记录</h2>
+                    <p class="section-subtitle">新 Mac 装机实用工具与配置</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://www.rustc.cloud/mac-install" class="card card-full" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">💻</span></div>
+                        <div class="card-title">新 Macbook Pro 装机记录</div>
+                    </div>
+                    <p class="card-desc">日常 Mac 软件推荐，记录装机过程中的实用工具和配置经验。涵盖开发工具、实用系统设置、插件以及新手常见问题解答。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">装机</span>
+                        <span class="card-tag">配置</span>
+                        <span class="card-tag">开发工具</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">叁</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">更多推荐</h2>
+                    <p class="section-subtitle">录屏、格式转换、自救指南</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://lihaoyun6.github.io/quickrecorder/" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎥</span></div>
+                        <div class="card-title">QuickRecorder</div>
+                    </div>
+                    <p class="card-desc">开源轻量高性能 macOS 录屏工具，支持全屏 / 区域 / 窗口 / App 录制，双屏支持，文件小于 10MB，零隐私数据收集。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">资源穿越</span>
+                    </div>
+                </a>
+                <a href="https://apps.apple.com/cn/app/solid-image-converter/id6737818163" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">📸</span></div>
+                        <div class="card-title">图片转换 PDF 专家</div>
+                    </div>
+                    <p class="card-desc">完全免费无广告无离线，支持 60+ 图片格式转 PDF，内置 OCR 可编辑 PDF，纯离线运行。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">图片转 PDF</span>
+                        <span class="card-tag">OCR</span>
+                        <span class="card-tag">60+ 格式</span>
+                    </div>
+                </a>
+                <a href="https://xream.notion.site/6fed380cf1d147c6a047bce452a8f2af" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🍎</span></div>
+                        <div class="card-title">苹果生态玄学自救指北</div>
+                    </div>
+                    <p class="card-desc">苹果生态实用故障排查与技巧指南，慢慢看，总有能用上的一条。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">资源穿越</span>
+                    </div>
+                </a>
+                <a href="https://qnswkjn28n.feishu.cn/wiki/T8uJwQH4YiIy7BkHyQpczpyDnug" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🎁</span></div>
+                        <div class="card-title">小张的分享中心</div>
+                    </div>
+                    <p class="card-desc">让大家用上好用的工具，创作出优秀的作品。目前面向全体 Mac 用户。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">资源穿越</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">肆</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">终端命令</h2>
+                    <p class="section-subtitle">macOS 系统常用终端指令</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🔓</span></div>
+                        <div class="card-title">允许未知来源 — macOS 10.13</div>
+                    </div>
+                    <p class="card-desc">开启后可安装任意来源的应用。在终端中粘贴执行，输入密码后回车。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">启用: sudo spctl --master-disable</span>
+                        <span class="card-tag">恢复: sudo spctl --master-enable</span>
+                    </div>
+                </div>
+                <div class="card card-full">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🔓</span></div>
+                        <div class="card-title">移除隔离属性 — macOS 10.15</div>
+                    </div>
+                    <p class="card-desc">移除已下载应用的隔离标志。将应用拖入终端替换路径，回车执行。</p>
+                    <div class="card-tags">
+                        <span class="card-tag">sudo xattr -r -d com.apple.quarantine [拖入应用]</span>
+                        <span class="card-tag">例: sudo xattr -r -d com.apple.quarantine /Applications/qq.app/</span>
+                    </div>
+                </div>
+                <a href="https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🍺</span></div>
+                        <div class="card-title">Homebrew 安装</div>
+                    </div>
+                    <p class="card-desc">macOS 必备包管理器，一键脚本快速安装。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">安装脚本</span>
+                    </div>
+                </a>
+                <a href="https://gitee.com/cunkai/HomebrewCN/raw/master/HomebrewUninstall.sh" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">🗑️</span></div>
+                        <div class="card-title">Homebrew 卸载</div>
+                    </div>
+                    <p class="card-desc">需要时一键移除 Homebrew。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">卸载脚本</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="section">
+            <div class="section-header">
+                <div class="section-number">伍</div>
+                <div class="section-title-group">
+                    <h2 class="section-title">系统工具</h2>
+                    <p class="section-subtitle">磁盘恢复等实用软件</p>
+                </div>
+            </div>
+            <div class="card-grid">
+                <a href="https://www.cleverfiles.com/cn/data-recovery-software.html" class="card" target="_blank" rel="noopener">
+                    <div class="card-header">
+                        <div class="card-icon"><span class="card-icon-emoji">💿</span></div>
+                        <div class="card-title">Disk Drill</div>
+                    </div>
+                    <p class="card-desc">磁盘数据恢复软件，帮助找回误删文件。</p>
+                    <div class="card-actions">
+                        <span class="card-btn">资源穿越</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>由 <a href="index.html">壹号栈</a> 整理 · 仅供学习交流使用</p>
+        </footer>
+    </div>
+
+    <nav class="mobile-bottom-nav" role="navigation" aria-label="移动端导航">
+        <a href="index.html">首页</a>
+        <a href="naver.html">导航</a>
+        <a href="qiantai.html">前台</a>
+        <a href="about.html">搬砖</a>
+    </nav>
+</body>
+</html>
