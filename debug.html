@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <input type="text" id="testUrl" placeholder="测试URL" oninput="testGenerate()" style="width: 300px; padding: 10px;">
+    <div id="output" style="margin-top: 20px; background: #000; color: #0f0; padding: 10px;">命令将在这里显示</div>
+
+    <script>
+        function testGenerate() {
+            const url = document.getElementById('testUrl').value.trim() || "视频网址";
+            const cmd = `yt-dlp "${url}"`;
+            document.getElementById('output').innerText = cmd;
+            console.log('生成命令:', cmd);
+        }
+
+        // 页面加载时调用
+        document.addEventListener('DOMContentLoaded', testGenerate);
+    </script>
+</body>
+</html>
