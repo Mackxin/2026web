@@ -49,20 +49,167 @@
                 scroll-behavior: smooth;
             }
             body {
-                @apply bg-white text-slate-900 transition-colors duration-300;
+                background-color: #ffffff;
+                color: #0f172a;
+                transition: background-color 300ms, color 300ms;
+                margin: 0;
+                padding: 0;
+                font-family: system-ui, -apple-system, sans-serif;
             }
             .dark body {
                 background-color: #020617 !important;
                 color: #f1f5f9 !important;
             }
         }
-        
+
+        /* ===== 基础布局样式 (Tailwind备用) ===== */
+        .hidden { display: none !important; }
+        .block { display: block !important; }
+        .flex { display: flex !important; }
+        .w-full { width: 100% !important; }
+        .text-center { text-align: center !important; }
+        .text-3xl { font-size: 1.875rem !important; line-height: 2.25rem !important; }
+        .text-4xl { font-size: 2.25rem !important; line-height: 2.5rem !important; }
+        .font-black { font-weight: 900 !important; }
+        .mb-4 { margin-bottom: 1rem !important; }
+        .mb-6 { margin-bottom: 1.5rem !important; }
+        .pt-8 { padding-top: 2rem !important; }
+        .pb-6 { padding-bottom: 1.5rem !important; }
+        .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+        .bg-white { background-color: #ffffff !important; }
+        .max-w-2xl { max-width: 42rem !important; }
+        .mx-auto { margin-left: auto !important; margin-right: auto !important; }
+        .relative { position: relative !important; }
+        .absolute { position: absolute !important; }
+
+        @media (min-width: 768px) {
+            .md\:block { display: block !important; }
+            .md\:hidden { display: none !important; }
+            .md\:px-8 { padding-left: 2rem !important; padding-right: 2rem !important; }
+            .md\:text-4xl { font-size: 2.25rem !important; line-height: 2.5rem !important; }
+            .md\:scroll-mt-48 { scroll-margin-top: 12rem !important; }
+        }
+
         /* ===== 导航高亮样式 ===== */
         .nav-active {
             color: #ff1d55 !important;
             font-weight: 700 !important;
         }
         .dark .nav-active {
+            color: #ff4d74 !important;
+        }
+
+        /* ===== 更多基础样式 ===== */
+        .flex-grow { flex-grow: 1 !important; }
+        .py-10 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+        .mb-32 { margin-bottom: 8rem !important; }
+        .md\:mb-48 { margin-bottom: 12rem !important; }
+        .scroll-mt-32 { scroll-margin-top: 8rem !important; }
+        .text-slate-900 { color: #0f172a !important; }
+        .text-slate-500 { color: #64748b !important; }
+        .dark .text-slate-400 { color: #94a3b8 !important; }
+        .dark .text-white { color: #ffffff !important; }
+        .dark .bg-\[\#020617\] { background-color: #020617 !important; }
+        .tracking-tight { letter-spacing: -0.025em !important; }
+        .text-sm { font-size: 0.875rem !important; line-height: 1.25rem !important; }
+        .font-medium { font-weight: 500 !important; }
+        .text-transparent { color: transparent !important; }
+        .bg-clip-text { -webkit-background-clip: text !important; background-clip: text !important; }
+        .bg-gradient-to-r { background-image: linear-gradient(to right, var(--tw-gradient-stops)) !important; }
+        .from-primary-600 { --tw-gradient-from: #ff1d55 !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(255 29 85 / 0)) !important; }
+        .to-primary-400 { --tw-gradient-to: #ff7a95 !important; }
+
+        /* ===== 搜索框基础样式 ===== */
+        .search-input {
+            width: 100% !important;
+            padding-left: 3rem !important;
+            padding-right: 6rem !important;
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+            background-color: #f1f5f9 !important;
+            border: 2px solid transparent !important;
+            border-radius: 0.75rem !important;
+            outline: none !important;
+            transition: all 150ms !important;
+            font-size: 0.875rem !important;
+            color: #0f172a !important;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+            font-weight: 700 !important;
+        }
+        .search-input:focus {
+            border-color: #ff4d74 !important;
+            background-color: #ffffff !important;
+        }
+        .dark .search-input {
+            background-color: rgba(30, 41, 59, 0.5) !important;
+            color: #ffffff !important;
+        }
+        .dark .search-input:focus {
+            background-color: #1e293b !important;
+        }
+        .placeholder-slate-400::placeholder {
+            color: #94a3b8 !important;
+        }
+        .inset-y-0 { top: 0 !important; bottom: 0 !important; }
+        .left-0 { left: 0 !important; }
+        .right-14 { right: 3.5rem !important; }
+        .right-3 { right: 0.75rem !important; }
+        .top-1\/2 { top: 50% !important; }
+        .-translate-y-1\/2 { transform: translateY(-50%) !important; }
+        .items-center { align-items: center !important; }
+        .justify-center { justify-content: center !important; }
+        .pl-4 { padding-left: 1rem !important; }
+        .pl-12 { padding-left: 3rem !important; }
+        .pr-24 { padding-right: 6rem !important; }
+        .h-5 { height: 1.25rem !important; }
+        .w-5 { width: 1.25rem !important; }
+        .h-4 { height: 1rem !important; }
+        .w-4 { width: 1rem !important; }
+        .text-slate-400 { color: #94a3b8 !important; }
+        .rounded { border-radius: 0.25rem !important; }
+        .pointer-events-none { pointer-events: none !important; }
+
+        /* ===== Footer基础样式 ===== */
+        .desktop-footer {
+            display: none !important;
+            position: fixed !important;
+            bottom: 0 !important;
+            z-index: 40 !important;
+            width: 100% !important;
+            background-color: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(12px) !important;
+            border-top: 1px solid #e2e8f0 !important;
+        }
+        @media (min-width: 768px) {
+            .desktop-footer { display: block !important; }
+        }
+        .desktop-footer-inner {
+            width: 100% !important;
+            padding: 1rem 1.5rem !important;
+        }
+        .desktop-footer-list {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            align-items: center !important;
+            justify-content: center !important;
+            column-gap: 1.5rem !important;
+            row-gap: 0.5rem !important;
+            font-size: 0.875rem !important;
+            font-weight: 700 !important;
+            width: 100% !important;
+            color: #334155 !important;
+        }
+        .desktop-footer-link {
+            color: #334155 !important;
+            transition: color 150ms !important;
+        }
+        .desktop-footer-link:hover {
+            color: #ff1d55 !important;
+        }
+        .dark .desktop-footer-link {
+            color: #cbd5e1 !important;
+        }
+        .dark .desktop-footer-link:hover {
             color: #ff4d74 !important;
         }
         
@@ -271,7 +418,6 @@
         }
         .mobile-search-icon {
             position: absolute;
-            inset: 0;
             top: 0;
             bottom: 0;
             left: 0;
@@ -574,47 +720,6 @@
                 right: 1.5rem;
             }
         }
-        .theme-toggle-desktop {
-            display: none;
-            width: 2.5rem;
-            height: 2.5rem;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.75rem;
-            background-color: #fff;
-            color: #475569;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-            border: 1px solid #e2e8f0;
-            transition: all 150ms;
-        }
-        .dark .theme-toggle-desktop {
-            background-color: #1e293b;
-            color: #cbd5e1;
-            border-color: #334155;
-        }
-        @media (min-width: 768px) {
-            .theme-toggle-desktop {
-                display: flex;
-                width: 2.75rem;
-                height: 2.75rem;
-            }
-        }
-        .theme-toggle-desktop:hover {
-            transform: scale(1.1);
-        }
-        .theme-toggle-desktop:active {
-            transform: scale(0.95);
-        }
-        .theme-toggle-desktop svg {
-            width: 1.25rem;
-            height: 1.25rem;
-        }
-        @media (min-width: 768px) {
-            .theme-toggle-desktop svg {
-                width: 1.5rem;
-                height: 1.5rem;
-            }
-        }
         .back-to-top-btn {
             width: 2.5rem;
             height: 2.5rem;
@@ -748,17 +853,6 @@
         <div class="mobile-header-inner">
             <h1 class="mobile-logo">壹号导航</h1>
             <div class="mobile-header-actions">
-                <!-- 暗黑模式切换按钮 (移动端) -->
-                <button id="theme-toggle-mobile" class="mobile-theme-btn" aria-label="切换暗黑模式">
-                    <!-- Sun Icon (Visible in Dark Mode) -->
-                    <svg id="icon-sun-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707-.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 110 8 4 4 0 010-8z" />
-                    </svg>
-                    <!-- Moon Icon (Visible in Light Mode) -->
-                    <svg id="icon-moon-mobile" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
                 <!-- 全部分类按钮 -->
                 <button onclick="App.toggleMobileMenu()" class="mobile-menu-btn" aria-label="全部分类">
                     全部分类
@@ -966,6 +1060,7 @@
                     <a href="https://www.appmiu.com/" target="_blank" class="category-link">APP喵</a>
                     <a href="https://opensource.builders/" target="_blank" class="category-link">开源替代品</a>
                     <a href="https://macin.top/" target="_blank" class="category-link">马斯克的赛博空间</a>
+                    <a href="https://pghub.cc/" target="_blank" class="category-link">PGHub</a>
                 </div>
             </section>
 
@@ -1019,6 +1114,8 @@
                     <a href="https://zjj.sz.gov.cn/" target="_blank" class="category-link">深圳市住房和建设局</a>
                     <a href="https://le.ouchn.cn/home" target="_blank" class="category-link">终身学习平台</a>
                     <a href="https://www.gdlll.cn/home" target="_blank" class="category-link">广东全民终身学习平台</a>
+                    <a href="https://fuwu.nhsa.gov.cn/" target="_blank" class="category-link">国家医保服务平台</a>
+                    <a href="https://igi.hsa.gd.gov.cn/web/#/Index" target="_blank" class="category-link">广东医保服务平台</a>
                 </div>
             </section>
 
@@ -3451,6 +3548,7 @@
                     <a href="https://filecr.com/" target="_blank" class="category-link">FileCR</a>
                     <a href="https://www.torrentmac.net/" target="_blank" class="category-link">MacTorrents</a>
                     <a href="https://github.com/X1a0He/Adobe-Downloader" target="_blank" class="category-link">Adobe Downloader</a>
+                    <a href="https://macapps.xyz/" target="_blank" class="category-link">Mac优质软件下载</a>
                 </div>
             </section>
 
@@ -3565,17 +3663,6 @@
 
     <!-- 右下角控制按钮组 -->
     <div class="control-buttons" role="toolbar" aria-label="页面控制">
-        <!-- 暗黑模式切换按钮 (仅桌面端显示) -->
-        <button id="theme-toggle" class="theme-toggle-desktop" aria-label="切换暗黑模式">
-            <!-- Sun Icon (Visible in Dark Mode) -->
-            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 hidden dark:block text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707-.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 110 8 4 4 0 010-8z" />
-            </svg>
-            <!-- Moon Icon (Visible in Light Mode) -->
-            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6 block dark:hidden text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-        </button>
         <!-- 返回顶部按钮 -->
         <button id="back-to-top"
                 class="back-to-top-btn"
@@ -4090,21 +4177,6 @@
                 ScrollManager.init();
                 SearchManager.init();
 
-                // 绑定暗黑模式切换按钮事件 (桌面端 + 移动端)
-                const themeToggleBtn = DOM.$('#theme-toggle');
-                const themeToggleMobileBtn = DOM.$('#theme-toggle-mobile');
-                
-                if (themeToggleBtn) {
-                    themeToggleBtn.addEventListener('click', () => {
-                        DarkModeManager.toggle();
-                    });
-                }
-                if (themeToggleMobileBtn) {
-                    themeToggleMobileBtn.addEventListener('click', () => {
-                        DarkModeManager.toggle();
-                    });
-                }
-
                 // 绑定返回顶部按钮事件
                 const backToTopBtn = DOM.$('#back-to-top');
                 if (backToTopBtn) {
@@ -4127,3 +4199,4 @@
     </script>
 </body>
 </html>
+		
