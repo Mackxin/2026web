@@ -1,13 +1,13 @@
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="zh-CN" data-theme="light" data-page-node-id="x3lbYpTtMzW4GtwwgnhZSh">
+<head data-page-node-id="Dfx92RONHGClrll1N6XYCA">
+<meta charset="UTF-8" data-page-node-id="9eojZ0Eu5P3fa3etO0o4Rf">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="uZsFrTQywTNIEiLmpAWuzF">
 <title>电池跑单 · 充电/里程/跑单记账</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" data-page-node-id="LqefKzwj9MIUHJadZGystE">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-page-node-id="gkacGhcQGn8GFzDK0ZKDcU">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" data-page-node-id="O2o25inCEZWTYEQcN6mWTT">
 <style>
 /* ============ 设计 Token（清爽极简 · 冷调中性 + 单一绿色 accent） ============ */
 :root{
@@ -457,6 +457,9 @@ textarea.control{ resize:vertical; min-height:64px; line-height:1.5; }
   .chart-tabs button{ padding:6px 12px; border-radius:8px; font-size:var(--fs-xs); font-weight:700; color:var(--text-2); transition:color .2s, background .2s; white-space:nowrap; }
   .chart-tabs button:hover{ color:var(--text); }
   .chart-tabs button.active{ background:var(--surface); color:var(--text); box-shadow:var(--sh-1); }
+  .chart-tabs button .pstar{ margin-left:3px; font-size:.85em; line-height:1; color:var(--text-3); cursor:pointer; transition:color .2s; user-select:none; }
+  .chart-tabs button.is-default .pstar{ color:#f5a623; }
+  .chart-tabs button .pstar:hover{ color:#f5a623; }
   .seg-theme{ display:inline-flex; gap:2px; padding:3px; background:var(--surface-2); border-radius:10px; }
   .seg-theme button{ padding:6px 12px; border:0; border-radius:8px; font-size:var(--fs-xs); font-weight:700; color:var(--text-2); background:transparent; cursor:pointer; transition:color .2s, background .2s; white-space:nowrap; }
   .seg-theme button:hover{ color:var(--text); }
@@ -522,7 +525,7 @@ textarea.control{ resize:vertical; min-height:64px; line-height:1.5; }
 .deli-item .di-platform{ flex:1.4; }
 .deli-item .di-num{ width:72px; }
 .deli-item .di-amt{ flex:1; }
-.deli-item .di-x{ width:40px; height:40px; border-radius:10px; background:var(--surface-2); color:var(--text-3); font-size:18px; flex:none; }
+.deli-item .di-x{ width:40px; height:40px; border-radius:10px; background:var(--surface-2); color:var(--text-3); font-size:18px; flex:none; display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:0; }
 .deli-item .di-x:hover{ background:var(--danger-soft); color:var(--danger); }
 /* 平台保险费配置卡 */
 .plat-cfg-list{ display:flex; flex-direction:column; gap:8px; }
@@ -530,8 +533,12 @@ textarea.control{ resize:vertical; min-height:64px; line-height:1.5; }
 .plat-cfg-row .pn{ flex:1; font-weight:600; font-size:var(--fs-sm); }
 .plat-cfg-row .ins-in{ width:96px; }
 .plat-cfg-row .unit{ color:var(--text-3); font-size:var(--fs-xs); white-space:nowrap; }
-.plat-cfg-row .di-x{ width:34px; height:34px; border-radius:10px; background:var(--surface-2); color:var(--text-3); flex:none; font-size:18px; }
+.plat-cfg-row .di-x{ width:34px; height:34px; border-radius:10px; background:var(--surface-2); color:var(--text-3); flex:none; font-size:18px; display:inline-flex; align-items:center; justify-content:center; line-height:1; padding:0; }
 .plat-cfg-row .di-x:hover{ background:var(--danger-soft); color:var(--danger); }
+.plat-cfg-row .def-btn{ width:30px; height:30px; border-radius:50%; flex:none; font-size:16px; line-height:1; background:transparent; color:var(--text-3); border:1px solid var(--border-1); cursor:pointer; padding:0; display:inline-flex; align-items:center; justify-content:center; }
+.plat-cfg-row .def-btn:hover{ background:var(--surface-2); color:var(--text-1); }
+.plat-cfg-row .def-btn.active{ background:#fff5d6; color:#b8860b; border-color:#b8860b; }
+.plat-cfg-row.is-default .pn::after{ content:' · 默认'; color:#b8860b; font-weight:500; font-size:var(--fs-xs); }
 .deli-total{ display:flex; justify-content:space-between; padding:var(--s-3) 2px; font-weight:700; border-top:1px dashed var(--border-2); margin-top:4px; }
 
 /* Toast */
@@ -758,786 +765,781 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
 .hint-inline{ font-size:12px; color:var(--text-3); margin-top:4px; line-height:1.4; }
 </style>
 </head>
-<body>
+<body data-page-node-id="M7AuqhjD0kTHKvqOxfs9sh">
 
 <!-- 顶部栏 -->
-<header class="appbar">
-  <div class="brand">
-    <div class="mark">🔋</div>
-    <div>
-      <h1>电池跑单</h1>
-      <p>充电 · 里程 · 跑单收支</p>
+<header class="appbar" data-page-node-id="c5Dz2KLQmSpyZuMQFHBhZf">
+  <div class="brand" data-page-node-id="u28qe6LAykaZFz7xGayT1y">
+    <div class="mark" data-page-node-id="n9ehSdNZk3IF79FzWsrDOE">🔋</div>
+    <div data-page-node-id="cmvRUqq7fvmYq15ZlC8OL4">
+      <h1 data-page-node-id="cmIRwhFZyemIyVblmUcpNX">电池跑单</h1>
+      <p data-page-node-id="8GUp9TEphQhnHwQDyGEJl3">充电 · 里程 · 跑单收支</p>
     </div>
   </div>
-  <div class="spacer"></div>
-  <button class="pill pill-bat" id="batPill" type="button" title="查看电池详情" aria-label="当前电池信息">
-    <span class="bat-pill-ico" aria-hidden="true">🛵</span>
-    <span class="bat-pill-name" id="batPillName">电池</span>
-    <span class="bat-pill-soc" id="batPillSoc">
-      <span class="bat-pill-dot" aria-hidden="true"></span>
-      <span id="batPillPct">--%</span>
+  <div class="spacer" data-page-node-id="NqQQmBxBlJjT6LaTuDoCJo"></div>
+  <button class="pill pill-bat" id="batPill" type="button" title="查看电池详情" aria-label="当前电池信息" data-page-node-id="HjjqrxdkxEcBAQWPbchD1h">
+    <span class="bat-pill-ico" aria-hidden="true" data-page-node-id="j5C6bJWeoX9TGqglTyMJTm">🛵</span>
+    <span class="bat-pill-name" id="batPillName" data-page-node-id="OqsGc2nhbDYpvGXvgAtjFZ">电池</span>
+    <span class="bat-pill-soc" id="batPillSoc" data-page-node-id="hMaq3QQnGbpm4hhZbaLPgp">
+      <span class="bat-pill-dot" aria-hidden="true" data-page-node-id="3dagWcGGn8aQ4e0PU6tRAf"></span>
+      <span id="batPillPct" data-page-node-id="j1nzMpqeVUh5yEjB8ManBw">--%</span>
     </span>
   </button>
-  <button class="icon-btn" id="themeBtn" title="切换主题" aria-label="切换深浅色">🌙</button>
+  <button class="icon-btn" id="themeBtn" title="切换主题" aria-label="切换深浅色" data-page-node-id="xP7X84lcKFYbpVAQc97Jsu">🌙</button>
 </header>
 
 <!-- 导航 -->
-<nav class="nav" id="nav">
-  <div class="nav-brand">
-    <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M22 11v3"/><path d="M9 7V4h6v3"/><path d="M11 11l2 2 2-2"/></svg>
+<nav class="nav" id="nav" data-page-node-id="5anIomKeLKqivMIbp96wpo">
+  <div class="nav-brand" data-page-node-id="rAoEkChIGZq4BeVDW2DvFG">
+    <div class="mark" aria-hidden="true" data-page-node-id="cOFm38XMvJv9LyL2FdadID">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="2tpaLVGqFHSApHtHgJn59Y"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" data-page-node-id="T9v4hHvfYKgpjRlIHlsUOH"/><path d="M22 11v3" data-page-node-id="SOUQN14EBH6bcZNREMh8MJ"/><path d="M9 7V4h6v3" data-page-node-id="RYuunS4xFPYUEdAKUggHwI"/><path d="M11 11l2 2 2-2" data-page-node-id="FnD7ANDtXcKJaW7SheUbh2"/></svg>
     </div>
-    <b>电池跑单</b>
+    <b data-page-node-id="FXEJ3VHmmeItrxrqYo5avf">电池跑单</b>
   </div>
-  <a href="#view-record" data-view="record" class="active" aria-current="page">
-    <span class="ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+  <a href="#view-record" data-view="record" class="active" aria-current="page" data-page-node-id="AYq4TIeJ75T6tIIqQoQa3F">
+    <span class="ico" aria-hidden="true" data-page-node-id="ZNAudZvVnJnT8Ph4henil7">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="pMdbC2NDQ7ovlqu7FozHpa"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" data-page-node-id="UQ0WNfdDEwL9w4cH3OwCn7"/><path d="M14 2v6h6" data-page-node-id="E3i1GVWiswRT38zBUgSmwP"/><path d="M16 13H8" data-page-node-id="snxdtpyurokSwLhWxMQ5aJ"/><path d="M16 17H8" data-page-node-id="sIKcxdynSBCexRuwe8tWV2"/><path d="M10 9H8" data-page-node-id="EEvaBOpQngUugh9he7KU1T"/></svg>
     </span>记录
-    <span class="badge" data-nav-badge="record">0</span>
+    <span class="badge" data-nav-badge="record" data-page-node-id="jCbXxM4fEJkRgeXhhz4K9c">0</span>
   </a>
-  <a href="#view-data" data-view="data">
-    <span class="ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 3 5-6"/></svg>
+  <a href="#view-data" data-view="data" data-page-node-id="J2GD3GO0u1yulk7iELL483">
+    <span class="ico" aria-hidden="true" data-page-node-id="FcGaQ1jvCusQYGIdeAYHCA">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="fUpha5c9adEy07WFgHSvG5"><path d="M3 3v18h18" data-page-node-id="UOL8N9gErDDvxY9bRUka6b"/><path d="M7 14l4-4 4 3 5-6" data-page-node-id="LIIhK6TyGWFHhkZNEFaP5Y"/></svg>
     </span>数据
   </a>
-  <a href="#view-battery" data-view="battery">
-    <span class="ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M22 11v3"/><path d="M9 7V4h6v3"/></svg>
+  <a href="#view-battery" data-view="battery" data-page-node-id="ZFI6YMREmnOR3kxMZVDw7I">
+    <span class="ico" aria-hidden="true" data-page-node-id="q9BPMlHB6cmbD4IuTkT3jq">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="4ltXeH78Qg07xjYbqduYMo"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" data-page-node-id="FSS2S3lGARW0kzRQ9BHJgp"/><path d="M22 11v3" data-page-node-id="Eg53eIu4kUCqMRr88ENkY9"/><path d="M9 7V4h6v3" data-page-node-id="rAVYy5bzYaJJLPyNKfUB6H"/></svg>
     </span>电池
   </a>
-  <a href="#view-mine" data-view="mine">
-    <span class="ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
+  <a href="#view-mine" data-view="mine" data-page-node-id="QxXLFHlb0WtvMNG5uTpxSu">
+    <span class="ico" aria-hidden="true" data-page-node-id="cQMdL7VNCX5p7yRLTWyuZd">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="fEL5IlBMwvWLVEKiSp33sF"><circle cx="12" cy="12" r="3" data-page-node-id="qnQjfqlGyTveBOe8zvPVNf"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V9a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z" data-page-node-id="AYNwKYBB3Y0PqGpGC14b9s"/></svg>
     </span>我的
   </a>
-  <a href="#view-help" data-view="help">
-    <span class="ico" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  <a href="#view-help" data-view="help" data-page-node-id="RQMOGlcrs1Azlx2lxAnWvu">
+    <span class="ico" aria-hidden="true" data-page-node-id="mKaFTPYccGztErhsGNm4xt">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="W7ZoEIOJgnbnynA4YXZchu"><circle cx="12" cy="12" r="10" data-page-node-id="SG1n8Ake89WuyrYDehNvvY"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" data-page-node-id="Yjtd9awyUTxBc0uqtO9inC"/><line x1="12" y1="17" x2="12.01" y2="17" data-page-node-id="1Y4PngHQdamGrWcLewHmzl"/></svg>
     </span>帮助
   </a>
 
-  <div class="nav-foot">
-    <div class="nav-bat" title="当前电池">
-      <div class="bat-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M22 11v3"/><path d="M9 7V4h6v3"/></svg>
+  <div class="nav-foot" data-page-node-id="OLx5Tt2EoqL1nm6cGWUaRS">
+    <div class="nav-bat" title="当前电池" data-page-node-id="8ihJm6bD7Yif9K8hVAp8Di">
+      <div class="bat-icon" aria-hidden="true" data-page-node-id="mpeqT3NUGDJUlFzJu2sEil">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="IIhPQqV9LaiEkiBte0kP96"><path d="M6 7h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" data-page-node-id="uEpbTJ1jKXMta4l8r2kOC4"/><path d="M22 11v3" data-page-node-id="28FpvnNpgJ8FEtJSeMwi89"/><path d="M9 7V4h6v3" data-page-node-id="pYlsmSc5CfjuHIq5SYNHpb"/></svg>
       </div>
-      <div class="bat-info">
-        <div class="bat-name">电池1 · 60V20Ah</div>
-        <div class="bat-pct">
-          <div class="bat-bar"><i></i></div>
-          <span>68%</span>
+      <div class="bat-info" data-page-node-id="1ZBy5DwMPNRbkjLk1rwzMC">
+        <div class="bat-name" data-page-node-id="QuOhhyr4t7ALEiGxyNIqZ8">电池1 · 60V20Ah</div>
+        <div class="bat-pct" data-page-node-id="WkHkaSNmI4umtzzjuOxPfF">
+          <div class="bat-bar" data-page-node-id="uaVuzHfe0gorGLchl1Fgtc"><i data-page-node-id="qmcEpgsrvaDhYidCbtfzli"></i></div>
+          <span data-page-node-id="MxKPvPbZuqbzlBjHRBueZt">68%</span>
         </div>
       </div>
     </div>
-    <button class="nav-theme" id="navThemeBtn" type="button" aria-label="切换深浅色">
-      <span>深色模式</span>
-      <span class="switch" aria-hidden="true"></span>
+    <button class="nav-theme" id="navThemeBtn" type="button" aria-label="切换深浅色" data-page-node-id="AnVPG9uAexqt8BaFwNHoaF">
+      <span data-page-node-id="RSBAVtSci2AYgdLF9EhB91">深色模式</span>
+      <span class="switch" aria-hidden="true" data-page-node-id="YOdfEDiRiN1wJ6wn2mgxiU"></span>
     </button>
   </div>
 </nav>
 
-<main class="content">
+<main class="content" data-page-node-id="CzuLKdNBk37NcPYl1EDpi5">
 
   <!-- ===================== 记录 ===================== -->
-  <section class="view active" id="view-record">
-    <div class="view-head">
-      <h2>记一笔</h2>
-      <p>充电、里程、跑单各记各的，互不干扰</p>
+  <section class="view active" id="view-record" data-page-node-id="lOZ3hpB6vrwmvH9Y9pXNiH">
+    <div class="view-head" data-page-node-id="cIEFs4aVsLGFGSmtcDl3FP">
+      <h2 data-page-node-id="1kvL0n2cRAgSHZtEO3oy2T">记一笔</h2>
+      <p data-page-node-id="EDcHTq5mXNvBPBxdTDF7PZ">充电、里程、跑单各记各的，互不干扰</p>
     </div>
 
-    <div class="segmented" id="recSeg">
-      <button class="active" data-seg="charge">🔋 充电</button>
-      <button data-seg="mile">🚗 里程</button>
-      <button data-seg="deli">🛵 跑单</button>
-      <button data-seg="reward">🎁 奖励</button>
-      <button data-seg="expense">💸 其他支出</button>
+    <div class="segmented" id="recSeg" data-page-node-id="hvE8BXkFLfarUW70OsIyu7">
+      <button class="active" data-seg="charge" data-page-node-id="unTSsCAMLGyphhbF27h3ss">🔋 充电</button>
+      <button data-seg="mile" data-page-node-id="AgeGTgvclCsnGJ2viXtIGn">🚗 里程</button>
+      <button data-seg="deli" data-page-node-id="UG42qB6CNaVvG71i3rEyBB">🛵 跑单</button>
+      <button data-seg="reward" data-page-node-id="yZk6d56NeBKCEYvRWNbWee">🎁 奖励</button>
+      <button data-seg="expense" data-page-node-id="jubSySjJyvdoHvhmNAyWg3">💸 其他支出</button>
     </div>
 
     <!-- 充电 -->
-    <div class="seg-panel" id="seg-charge">
-      <div class="card">
-        <h3>🔌 一次充电</h3>
-        <div class="row">
-          <div class="field">
-            <label>充电日期</label>
-            <input type="date" class="control" id="chDate">
+    <div class="seg-panel" id="seg-charge" data-page-node-id="oJAzaIie0ENgX6JbfeW29o">
+      <div class="card" data-page-node-id="XZs1LDAWSZ9FUq3xSDPeiP">
+        <h3 data-page-node-id="Cy1eDnWV6v8ZA81HsTGzKr">🔌 一次充电</h3>
+        <div class="row" data-page-node-id="Y6qtesoDrjq0CsEqghr2Xb">
+          <div class="field" data-page-node-id="OfryzXloTWOyZAOADuGG6c">
+            <label data-page-node-id="knJoozkPOumKoYKf1HAdFO">充电日期</label>
+            <input type="date" class="control" id="chDate" data-page-node-id="nSca445tkIQAmKAoACp3c9">
           </div>
-          <div class="field">
-            <label>充电前剩余电量（%）</label>
-            <div class="row" style="align-items:flex-end;">
-              <input type="number" class="control" id="chgSoc" placeholder="如 35" min="0" max="100">
-              <button class="btn-ghost btn-sm" type="button" id="chEst">用里程估算</button>
+          <div class="field" data-page-node-id="2qBW4t1EEzf0WbeE0ChFId">
+            <label data-page-node-id="iORKVojowCaBiYjLWqyB75">充电前剩余电量（%）</label>
+            <div class="row" style="align-items:flex-end;" data-page-node-id="sgGU2fKJuX5AI57shbDiPO">
+              <input type="number" class="control" id="chgSoc" placeholder="如 35" min="0" max="100" data-page-node-id="h5qnhztNklzZgG4hF4lGD8">
+              <button class="btn-ghost btn-sm" type="button" id="chEst" data-page-node-id="EqBScjEu46HJteTC0TREuB">用里程估算</button>
             </div>
-            <div class="hint">= 上次充满后骑到现在的剩余；可点按钮按骑行里程反推</div>
+            <div class="hint" data-page-node-id="4KmFfvgmA3k8DT8DUHloQg">= 上次充满后骑到现在的剩余；可点按钮按骑行里程反推</div>
           </div>
         </div>
-        <div class="field">
-          <label>充电地点</label>
-          <div class="chips" id="chgChips" data-chips="loc">
-            <button class="chip active" data-val="home">🏠 家里充电</button>
-            <button class="chip" data-val="station">🔌 充电桩</button>
+        <div class="field" data-page-node-id="ktfNngSYTWdY8msDcofyQP">
+          <label data-page-node-id="zz0g21ZK0DFcloZMV7mxCM">充电地点</label>
+          <div class="chips" id="chgChips" data-chips="loc" data-page-node-id="6GkVZAEukvgUxokWh7oPCq">
+            <button class="chip active" data-val="home" data-page-node-id="FFlQZmeCBfUQi81uC1UmVu">🏠 家里充电</button>
+            <button class="chip" data-val="station" data-page-node-id="69rzHfmPIlVZZfp56a8VpS">🔌 充电桩</button>
           </div>
         </div>
-        <div class="row">
-          <div class="field">
-            <label>充电金额（元）</label>
-            <input type="number" class="control" id="chgCost" placeholder="如 3.5" step="0.01">
-            <div class="hint-inline" id="chgCostHint">家充模式：基于电池伏数 × 安时 × 家里电价自动估算</div>
+        <div class="row" data-page-node-id="lrnrk5VgdoPJrGWRADbCKS">
+          <div class="field" data-page-node-id="Zty0wCKwTxBeFFKuEIx8jn">
+            <label data-page-node-id="2YW7GjUEo3Pb5PAH84Jge5">充电金额（元）</label>
+            <input type="number" class="control" id="chgCost" placeholder="如 3.5" step="0.01" data-page-node-id="O8ux0FmwlqTDo11s1uTcF3">
+            <div class="hint-inline" id="chgCostHint" data-page-node-id="TZubSzneZoProNsaRufp6w">家充模式：基于电池伏数 × 安时 × 家里电价自动估算</div>
           </div>
-          <div class="field">
-            <label>充满后续航里程（km）</label>
-            <input type="number" class="control" id="chRange" placeholder="如 106" step="0.1">
-            <div class="hint">实测能跑多远，用于看衰减与电量估算</div>
-          </div>
-          <div class="field">
-            <label>充电时长（可选）</label>
-            <input type="text" class="control" id="chDuration" placeholder="如 6h">
+          <div class="field" data-page-node-id="UJfhA4KCiSO4LNAwhdcLZX">
+            <label data-page-node-id="TM3hnxkeUHQgg2Wf4tt0id">充电时长（可选）</label>
+            <input type="text" class="control" id="chDuration" placeholder="如 6h" data-page-node-id="PYBwrzvenuyCxIY0d7mh4H">
           </div>
         </div>
-        <div class="field" style="display:flex;align-items:center;gap:8px;">
-          <label class="chk"><input type="checkbox" id="chgNotFull"> 还没充满（没充到 100%）</label>
+        <div class="field" style="display:flex;align-items:center;gap:8px;" data-page-node-id="RasJKJez58VSquFSpRe1Nw">
+          <label class="chk" data-page-node-id="iUZC0PgEyjU1eEYpB9FVZ0"><input type="checkbox" id="chgNotFull" data-page-node-id="gChmRzU2NCQnbDdyZgee3U"> 还没充满（没充到 100%）</label>
         </div>
-        <div class="field" id="chgEndSocField" style="display:none;">
-          <label>充到（%）</label>
-          <input type="number" class="control" id="chgEndSoc" min="0" max="100" step="1" placeholder="如 80">
-          <div class="hint-inline">家里常用 80-90% 充，电池更耐用</div>
+        <div class="field" id="chgEndSocField" style="display:none;" data-page-node-id="n6BHETxYUe50aFaUNjECAT">
+          <label data-page-node-id="Ok0O0pUWuTBI9dlgVy9qQI">充到（%）</label>
+          <input type="number" class="control" id="chgEndSoc" min="0" max="100" step="1" placeholder="如 80" data-page-node-id="Xo82y20K2zKLPvBpyQoUwt">
+          <div class="hint-inline" data-page-node-id="RwcorBqpSAOIf3k3rOP1PX">家里常用 80-90% 充，电池更耐用</div>
         </div>
-        <div class="field">
-          <label>备注（可选）</label>
+        <div class="field" data-page-node-id="C2WBwBHZQAxR4AHHYjcOYC">
+          <label data-page-node-id="dB9oECjy7P4OgeRXQObNej">备注（可选）</label>
           <textarea class="control" id="chNote" placeholder="如：完全没电才充 / 长时间没骑"></textarea>
         </div>
-        <button class="btn btn-primary btn-block" data-save="充电">记一笔充电</button>
-        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="充电" type="button" style="display:none;margin-top:8px;">取消编辑</button>
+        <button class="btn btn-primary btn-block" data-save="充电" data-page-node-id="WmaApa9tlGGFt2tJ60VQZH">记一笔充电</button>
+        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="充电" type="button" style="display:none;margin-top:8px;" data-page-node-id="aMosHSi33IpI0nixxVB4U8">取消编辑</button>
       </div>
-      <div class="card">
-        <h3>近期充电</h3>
-        <ul class="list deli-list-row" id="logList"></ul>
+      <div class="card" data-page-node-id="3o7lAOD0CwLOqfJ2YUpLaC">
+        <h3 data-page-node-id="gfip3aqcWGCmvwYiUZ8pDj">近期充电</h3>
+        <ul class="list deli-list-row" id="logList" data-page-node-id="QQ61bAVcRD6hnQsEsuGEuN"></ul>
       </div>
     </div>
 
     <!-- 里程 -->
-    <div class="seg-panel" id="seg-mile" style="display:none;">
-      <div class="card">
-        <h3>🚗 每日里程登记</h3>
-        <div class="row">
-          <div class="field">
-            <label>骑行日期</label>
-            <input type="date" class="control" id="miDate">
+    <div class="seg-panel" id="seg-mile" style="display:none;" data-page-node-id="o2FX7YDIf7UifSV1zoWRWY">
+      <div class="card" data-page-node-id="qNe7MuI3XiUFcmF6fuBl38">
+        <h3 data-page-node-id="Y1c9H6LmqczLN2WsDz9NDB">🚗 每日里程登记</h3>
+        <div class="row" data-page-node-id="6cSln31Wvj65Bp5bMDkKWr">
+          <div class="field" data-page-node-id="FGNbQ7AGXPkHkm7L7l7OkJ">
+            <label data-page-node-id="hiaAymKA90sxzijCHuAXWh">骑行日期</label>
+            <input type="date" class="control" id="miDate" data-page-node-id="jOFIrELyHPnP06PlKB7HiG">
           </div>
-          <div class="field">
-            <label>本次骑行里程（km）</label>
-            <input type="number" class="control" id="miKm" placeholder="如 12.5" step="0.1">
-            <div class="hint">一天可记多趟，不绑定充电</div>
+          <div class="field" data-page-node-id="OJveC03PQ1c2msNyZCubNB">
+            <label data-page-node-id="8K786c4aUbhIvVFUQthkf5">本次骑行里程（km）</label>
+            <input type="number" class="control" id="miKm" placeholder="如 12.5" step="0.1" data-page-node-id="Br7UrC3hCkBC3BuQbsP4c1">
+            <div class="hint" data-page-node-id="LPJDQ7FqSrnlkCtjKMPjMa">一天可记多趟，不绑定充电</div>
           </div>
-          <div class="field">
-            <label>结束剩余电量（%）</label>
-            <input type="number" class="control" id="miSoc" placeholder="如 80" step="1" min="0" max="100">
-            <div class="hint">骑行结束时的电量，可不填</div>
+          <div class="field" data-page-node-id="490PdxFitEYfVFGSUTP2ai">
+            <label data-page-node-id="8Xof3CHErGyfK2YEd59x9w">结束剩余电量（%）</label>
+            <input type="number" class="control" id="miSoc" placeholder="如 80" step="1" min="0" max="100" data-page-node-id="uMAKBVCdUNolCoMoT5kkEz">
+            <div class="hint" data-page-node-id="IHRUHCtPvyPuUmmJJfYHTm">骑行结束时的电量，可不填</div>
           </div>
         </div>
-        <div class="field">
-          <label>备注（可选）</label>
+        <div class="field" data-page-node-id="DdwAUdP9PFkCGzt1xU3wnR">
+          <label data-page-node-id="tWLfk35sDPTSRrziRdSbcK">备注（可选）</label>
           <textarea class="control" id="miNote" placeholder="如：通勤 / 买菜 / 送外卖"></textarea>
         </div>
-        <button class="btn btn-primary btn-block" data-save="里程">记一笔里程</button>
-        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="里程" type="button" style="display:none;margin-top:8px;">取消编辑</button>
+        <button class="btn btn-primary btn-block" data-save="里程" data-page-node-id="RmtEj3UfmsoceBsnx6zhlK">记一笔里程</button>
+        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="里程" type="button" style="display:none;margin-top:8px;" data-page-node-id="EQW8vMzyjzyo5TpEG5kXag">取消编辑</button>
       </div>
-      <div class="card">
-        <h3>近期里程</h3>
-        <ul class="list deli-list-row" id="mileList"></ul>
+      <div class="card" data-page-node-id="60b8JZPUtAhAYz9hyYUprw">
+        <h3 data-page-node-id="aVQeh8Yjjn5TZlKits0M1M">近期里程</h3>
+        <ul class="list deli-list-row" id="mileList" data-page-node-id="ipEWVChQ8iEEq5dUXPSCaT"></ul>
       </div>
     </div>
 
     <!-- 跑单 -->
-    <div class="seg-panel" id="seg-deli" style="display:none;">
-      <div class="card">
-        <h3>🛵 外卖跑单记录</h3>
-        <div class="field">
-          <label>跑单日期</label>
-          <input type="date" class="control" id="deDate">
+    <div class="seg-panel" id="seg-deli" style="display:none;" data-page-node-id="YYhU4k3i4Qm8dPGd36TZO2">
+      <div class="card" data-page-node-id="bvHx1s3ct9PFlqoth9F3hw">
+        <h3 data-page-node-id="D0ZYZIBXGeKjhnip26tLGz">🛵 外卖跑单记录</h3>
+        <div class="field" data-page-node-id="jMEJFbNbal4AQA3ISgBAvn">
+          <label data-page-node-id="fpevRgXAj6YzL1AWxnadyc">跑单日期</label>
+          <input type="date" class="control" id="deDate" data-page-node-id="2l2mAHCEYJfpDQxI696xVL">
         </div>
-        <div class="field">
-          <label>平台分项（可添加多个）</label>
-          <div id="deliItems">
-            <div class="deli-item">
-              <select class="di-platform"><option>美团众包</option><option>京东秒送</option><option>淘宝闪购</option><option>货拉拉</option></select>
-              <input class="di-num" type="number" placeholder="单量" min="0">
-              <input class="di-amt" type="number" placeholder="收入¥" step="0.01">
-              <button class="di-x" type="button" title="删除">×</button>
+        <div class="field" data-page-node-id="jzYG8W305QQOXCL74aablG">
+          <label data-page-node-id="cVM0FTEHXsDB1KqBSFoEoM">平台分项（可添加多个）</label>
+          <div id="deliItems" data-page-node-id="EWKtPo9ZYwvAZym2CACEWh">
+            <div class="deli-item" data-page-node-id="19WgcrAQoYy0GEQtADIXXh">
+              <select class="di-platform" data-page-node-id="ypjUEE9v1yJA0PQi7zdKa6"><option data-page-node-id="i0WJm1wkXv18O1Jd0vlDps"></option></select>
+              <input class="di-num" type="number" placeholder="单量" min="0" data-page-node-id="JzSX2gBIr6cPtcg5drHSNc">
+              <input class="di-amt" type="number" placeholder="收入¥" step="0.01" data-page-node-id="hhEnOaiaG6BSwhLqd5BuiX">
+              <button class="di-x" type="button" title="删除" data-page-node-id="oGCLlx3e0XiN3Doz5yzzdz">×</button>
             </div>
           </div>
-          <button class="btn-ghost btn-sm" id="deliAdd" type="button" style="margin-top:4px;">➕ 添加平台</button>
+          <button class="btn-ghost btn-sm" id="deliAdd" type="button" style="margin-top:4px;" data-page-node-id="OhFYHKLSxk7lgpTqEoBvDP">➕ 添加平台</button>
         </div>
-        <div class="hint" style="margin:4px 0 12px;">当天骑行里程请到「🚗 里程」里记一笔，这里只登各平台收入</div>
-        <div class="field">
-          <label>备注（可选）</label>
-          <input class="control" id="deNote" placeholder="如：晚高峰爆单 / 雨天">
+        <div class="hint" style="margin:4px 0 12px;" data-page-node-id="CXLtwD4ZjD8aswavuluyJ0">当天骑行里程请到「🚗 里程」里记一笔，这里只登各平台收入</div>
+        <div class="field" data-page-node-id="RFs2h27DCpg2EuSae5XCIn">
+          <label data-page-node-id="xjN9S9moAiVzeZZDc2uN9k">备注（可选）</label>
+          <input class="control" id="deNote" placeholder="如：晚高峰爆单 / 雨天" data-page-node-id="BYMBArLt7Ra4C6UQXf93kU">
         </div>
-        <div class="deli-total"><span>合计收入</span><span id="deliSum">¥0.00</span></div>
-        <button class="btn btn-primary btn-block" data-save="跑单" style="margin-top:12px;">记一笔跑单</button>
-        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="跑单" type="button" style="display:none;margin-top:8px;">取消编辑</button>
+        <div class="deli-total" data-page-node-id="Tfxhr6Iu0QRlK1XuzUCAfN"><span data-page-node-id="JZdo0arLtdv7v8EpBjJkKg">合计收入</span><span id="deliSum" data-page-node-id="gmoylD67eZA5o5Bm6MtEws">¥0.00</span></div>
+        <button class="btn btn-primary btn-block" data-save="跑单" style="margin-top:12px;" data-page-node-id="sHTQwRPwhVNTCGissBTScm">记一笔跑单</button>
+        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="跑单" type="button" style="display:none;margin-top:8px;" data-page-node-id="zujlXJ9gdEQGWbsNJBXzmA">取消编辑</button>
       </div>
-      <div class="card">
-        <h3>近期跑单</h3>
-        <ul class="list deli-list-row" id="deliList"></ul>
+      <div class="card" data-page-node-id="8Vxu6Py5c8HmuijJ6tdIHD">
+        <h3 data-page-node-id="MCmppPxZfAafWZJOnh4LaJ">近期跑单</h3>
+        <ul class="list deli-list-row" id="deliList" data-page-node-id="0CnydmqdhybefqXC4R1A5d"></ul>
       </div>
     </div>
 
     <!-- 活动奖励 -->
-    <div class="seg-panel" id="seg-reward" style="display:none;">
-      <div class="card">
-        <h3>🎁 活动奖励</h3>
-        <div class="field">
-          <label>奖励日期</label>
-          <input type="date" class="control" id="rwDate">
+    <div class="seg-panel" id="seg-reward" style="display:none;" data-page-node-id="Y00hIQUywjR73nJrLZuoxu">
+      <div class="card" data-page-node-id="vMmZQ2HsmXTbQooilY4DOh">
+        <h3 data-page-node-id="M35GI9tPLhMhCF63elXi8r">🎁 活动奖励</h3>
+        <div class="field" data-page-node-id="HhQPsY6J8pGJs2aMz9VM6b">
+          <label data-page-node-id="0ekETEENuuDbLyA8cqR19w">奖励日期</label>
+          <input type="date" class="control" id="rwDate" data-page-node-id="NafzalTPrSdmRmhvwP2NUx">
         </div>
-        <div class="field">
-          <label>活动名称</label>
-          <input class="control" id="rwName" placeholder="如：夏日冲单奖 / 新人红包 / 满勤奖">
+        <div class="field" data-page-node-id="ngtkd6nKPBDVtKXpQN7Fpi">
+          <label data-page-node-id="AGnvz0pvSeNbKJljq719Fk">活动名称</label>
+          <input class="control" id="rwName" placeholder="如：夏日冲单奖 / 新人红包 / 满勤奖" data-page-node-id="aOTo4jcu5SeuCf2r5Wpk9M">
         </div>
-        <div class="field">
-          <label>所属平台</label>
-          <select class="control" id="rwPlatform">
-            <option value="">不指定（归入活动奖励）</option>
+        <div class="field" data-page-node-id="pGFlfVAsD1fNuu3pd7GpHM">
+          <label data-page-node-id="NGRxQ2AQgZeVyvdURR8xdh">所属平台</label>
+          <select class="control" id="rwPlatform" data-page-node-id="ZHEnkcOSJP26BdCFEGukAy">
+            <option value="" data-page-node-id="OwFNU2BMvsEZUsAuLbAEqC">不指定（归入活动奖励）</option>
           </select>
         </div>
-        <div class="field">
-          <label>奖励金额（元）</label>
-          <input type="number" class="control" id="rwAmt" placeholder="如 25" step="0.01">
+        <div class="field" data-page-node-id="idcMQdibt6c4EeDnJ68jaf">
+          <label data-page-node-id="19yGC43cG29DaBUc1ZMfZS">奖励金额（元）</label>
+          <input type="number" class="control" id="rwAmt" placeholder="如 25" step="0.01" data-page-node-id="KD96BzyGNdpFuE0AOyEVYt">
         </div>
-        <div class="hint" style="margin:4px 0 12px;">活动奖励会直接计入「跑单收入」与「净收入」总额</div>
-        <button class="btn btn-primary btn-block" data-save="奖励" style="margin-top:12px;">记一笔奖励</button>
-        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="奖励" type="button" style="display:none;margin-top:8px;">取消编辑</button>
+        <div class="hint" style="margin:4px 0 12px;" data-page-node-id="dxsGXoOIA2Qw3tjKX5CgW7">活动奖励会直接计入「跑单收入」与「净收入」总额</div>
+        <button class="btn btn-primary btn-block" data-save="奖励" style="margin-top:12px;" data-page-node-id="Jg9i66mWPzsXysFMrhCs88">记一笔奖励</button>
+        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="奖励" type="button" style="display:none;margin-top:8px;" data-page-node-id="MMi0xMBbcpWEjoQrtPyRAT">取消编辑</button>
       </div>
-      <div class="card">
-        <h3>近期活动奖励</h3>
-        <ul class="list" id="rewardList"></ul>
+      <div class="card" data-page-node-id="9j35NQd0sY9xgJTVOEh3ZA">
+        <h3 data-page-node-id="txmJ5U78spZYKniWdNeo04">近期活动奖励</h3>
+        <ul class="list" id="rewardList" data-page-node-id="NwLIl7gORrr4cQ44lMjwYf"></ul>
       </div>
     </div>
 
     <!-- 其他支出：维修保养 / 罚单 -->
-    <div class="seg-panel" id="seg-expense" style="display:none;">
-      <div class="card">
-        <h3>💸 维修保养 / 跑单罚单</h3>
-        <div class="field">
-          <label>支出类型</label>
-          <div class="chips" id="expTypeChips" data-chips="exptype">
-            <button type="button" class="chip active" data-val="repair" onclick="(function(b){document.querySelectorAll('#expTypeChips .chip').forEach(function(x){x.classList.toggle('active',x===b);}); setExpType(b.dataset.val);})(this)">🛠 维修保养</button>
-            <button type="button" class="chip" data-val="ticket" onclick="(function(b){document.querySelectorAll('#expTypeChips .chip').forEach(function(x){x.classList.toggle('active',x===b);}); setExpType(b.dataset.val);})(this)">🚨 跑单罚单</button>
+    <div class="seg-panel" id="seg-expense" style="display:none;" data-page-node-id="dNSQ1OeolSVoEM3EdPagI8">
+      <div class="card" data-page-node-id="Xhpylg5ksoXC14IzFx0xdm">
+        <h3 data-page-node-id="GzrZ24cXLrU0sAG5NyuOaK">💸 维修保养 / 跑单罚单</h3>
+        <div class="field" data-page-node-id="BzYpdSppuHuBueGVOzFgtG">
+          <label data-page-node-id="GZoc9kMo6Z4cB5DCkY3Gwa">支出类型</label>
+          <div class="chips" id="expTypeChips" data-chips="exptype" data-page-node-id="3eczIyrRimnNOfmlIpdXBE">
+            <button type="button" class="chip active" data-val="repair" onclick="(function(b){document.querySelectorAll('#expTypeChips .chip').forEach(function(x){x.classList.toggle('active',x===b);}); setExpType(b.dataset.val);})(this)" data-page-node-id="hAL1mRfUPfzronHHhmmkNa">🛠 维修保养</button>
+            <button type="button" class="chip" data-val="ticket" onclick="(function(b){document.querySelectorAll('#expTypeChips .chip').forEach(function(x){x.classList.toggle('active',x===b);}); setExpType(b.dataset.val);})(this)" data-page-node-id="MpVgibkolNfyVmtki2Gnq1">🚨 跑单罚单</button>
           </div>
         </div>
-        <div class="row">
-          <div class="field">
-            <label>发生日期</label>
-            <input type="date" class="control" id="expDate">
+        <div class="row" data-page-node-id="rvNNXyxeHzpfKrlvesKHzM">
+          <div class="field" data-page-node-id="sbU6XzQmV7pkfzEaqdJgHw">
+            <label data-page-node-id="TZJDYVWXLsFZswhXu1lyAt">发生日期</label>
+            <input type="date" class="control" id="expDate" data-page-node-id="dldjMZGIz1N5wKSPiQFnTD">
           </div>
-          <div class="field">
-            <label>金额（元）</label>
-            <input type="number" class="control" id="expAmt" placeholder="如 50" step="0.01">
+          <div class="field" data-page-node-id="2Ka6f1s1h2iEQrBiLYeDr3">
+            <label data-page-node-id="Tcwj2oh619faykSSnK2Hz0">金额（元）</label>
+            <input type="number" class="control" id="expAmt" placeholder="如 50" step="0.01" data-page-node-id="iTdCvK1BbCKzwgmxFkkOuz">
           </div>
         </div>
-        <div class="field">
-          <label id="expCatLabel">项目 / 类型（可直接输入自定义）</label>
-          <input class="control" id="expCat" list="expCatList" placeholder="可输入自定义，如：改装 / 补漆 / 违停申诉">
-          <datalist id="expCatList"></datalist>
+        <div class="field" data-page-node-id="4pW4sdjw5SZcFOrCeqKgAK">
+          <label id="expCatLabel" data-page-node-id="Mqu67bO88FnJleqBrJjfr4">项目 / 类型（可直接输入自定义）</label>
+          <input class="control" id="expCat" list="expCatList" placeholder="可输入自定义，如：改装 / 补漆 / 违停申诉" data-page-node-id="SkEIaHXwkYUU9QKoPzQKzb">
+          <datalist id="expCatList" data-page-node-id="8GzCwAYcaJuXFecVva6q62"></datalist>
         </div>
-        <div class="field">
-          <label id="expPlatLabel">关联平台（罚单必填，维修可不填）</label>
-          <select class="control" id="expPlat">
-            <option value="">不指定</option>
+        <div class="field" data-page-node-id="AhVoNz1LNlre0OxPGVlkKa">
+          <label id="expPlatLabel" data-page-node-id="ZAGBWwYwFR6EduOe0kb3RZ">关联平台（罚单必填，维修可不填）</label>
+          <select class="control" id="expPlat" data-page-node-id="krDsfUcMflk5ujprLTosT5">
+            <option value="" data-page-node-id="I9gjcHWHHtuKRJ5GpgL9B9">不指定</option>
           </select>
         </div>
-        <div class="field">
-          <label>备注（可选）</label>
+        <div class="field" data-page-node-id="88UAtqkMfnhhEUh4WF7DCA">
+          <label data-page-node-id="ejWHmHC4ALRWKjB9z2IUor">备注（可选）</label>
           <textarea class="control" id="expNote" placeholder="如：轮胎扎钉 / 闯红灯被拍 / 雨天路滑"></textarea>
         </div>
-        <button class="btn btn-primary btn-block" data-save="支出" style="margin-top:12px;">记一笔支出</button>
-        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="支出" type="button" style="display:none;margin-top:8px;">取消编辑</button>
+        <button class="btn btn-primary btn-block" data-save="支出" style="margin-top:12px;" data-page-node-id="yi53iIE8VB47Ms2bRfTSe5">记一笔支出</button>
+        <button class="btn-ghost btn-sm btn-block" data-cancel-edit="支出" type="button" style="display:none;margin-top:8px;" data-page-node-id="IOfSc63RXLDG4y5kozuuFS">取消编辑</button>
       </div>
-      <div class="card">
-        <h3>近期支出</h3>
-        <ul class="list deli-list-row" id="expenseList"></ul>
+      <div class="card" data-page-node-id="E2blVDG3G71WqYx1Ec3CDz">
+        <h3 data-page-node-id="4EuSVOBnyJMVCIXENmgCRy">近期支出</h3>
+        <ul class="list deli-list-row" id="expenseList" data-page-node-id="zCNkLbnDGXq7bxxC8VaDiC"></ul>
       </div>
     </div>
   </section>
 
   <!-- ===================== 数据 ===================== -->
-  <section class="view" id="view-data">
-    <div class="view-head" style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-      <div>
-        <h2>数据总览</h2>
-        <p>充电、里程与跑单收支一眼看清</p>
+  <section class="view" id="view-data" data-page-node-id="YL0LUaWFHeF2FN1LnSP1Ab">
+    <div class="view-head" style="display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap;" data-page-node-id="5GdolEiwPM9jjeYOLSEhoQ">
+      <div data-page-node-id="0OXUTzcRtNGSr0no1sD4A7">
+        <h2 data-page-node-id="eooCGJeXHoOdpsZG8VqxBf">数据总览</h2>
+        <p data-page-node-id="6h2pqowbKc4sPQqN17HDrG">充电、里程与跑单收支一眼看清</p>
       </div>
-      <div class="period-bar">
-        <div class="chart-tabs" id="periodTabs">
-          <button class="active" data-period="total">总</button>
-          <button data-period="year">今年</button>
-          <button data-period="somemonth">选月</button>
-          <button data-period="someday">某天</button>
+      <div class="period-bar" data-page-node-id="mhHDof0TDnkt2YGfYmwrKx">
+        <div class="chart-tabs" id="periodTabs" data-page-node-id="UwjTIwC6EEdmVHAcGMZMRw">
+          <button class="active" data-period="total" data-page-node-id="fZGWyLd5Rw99vwosjyjVIT">总<span class="pstar" title="设为默认视图">☆</span></button>
+          <button data-period="year" data-page-node-id="Reblbdc5kvpTMS8cd7Fb9I">今年<span class="pstar" title="设为默认视图">☆</span></button>
+          <button data-period="somemonth" data-page-node-id="BCRu6EqDk4KG6PA1G7FyzR">选月<span class="pstar" title="设为默认视图">☆</span></button>
+          <button data-period="someday" data-page-node-id="6SeTWelBs9UrB2TFDoicae">某天<span class="pstar" title="设为默认视图">☆</span></button>
         </div>
-        <div class="range-bar" id="rangeBar">
-          <button class="range-nav" data-range-nav="prev" aria-label="上一范围" type="button">‹</button>
-          <div class="range-label" id="rangeLabel">
-            <span id="rangeText"></span>
-            <input type="month" class="range-month" id="monthPick" aria-label="选择月份">
-            <input type="date" class="range-date" id="datePick" aria-label="选择日期">
+        <div class="range-bar" id="rangeBar" data-page-node-id="Q0iLSpcoGIpLBAH38GtknC">
+          <button class="range-nav" data-range-nav="prev" aria-label="上一范围" type="button" data-page-node-id="U1lZJy6UojFxOBr0pJHp2r">‹</button>
+          <div class="range-label" id="rangeLabel" data-page-node-id="HL7Q489KYMsnZLmdVyiSnY">
+            <span id="rangeText" data-page-node-id="N63nVoeEXMWjwtNivRkIJV"></span>
+            <input type="month" class="range-month" id="monthPick" aria-label="选择月份" data-page-node-id="CE3qtAu5ILcpcwcPw40yHJ">
+            <input type="date" class="range-date" id="datePick" aria-label="选择日期" data-page-node-id="b9A0MO3Wd4rNTZARDEYthe">
           </div>
-          <button class="range-nav" data-range-nav="next" aria-label="下一范围" type="button">›</button>
+          <button class="range-nav" data-range-nav="next" aria-label="下一范围" type="button" data-page-node-id="nmaDKiu6PSyiMgeEk5c54e">›</button>
         </div>
       </div>
     </div>
 
     <!-- 核心 KPI -->
-    <div class="kpi-row">
-      <div class="kpi-card kpi-income">
-        <div class="kpi-ico">💰</div>
-        <div class="kpi-main">
-          <div class="kpi-v" data-k="income">¥0</div>
-          <div class="kpi-l">跑单收入</div>
+    <div class="kpi-row" data-page-node-id="Pq1k9lSSZtDmAzhEG4pTfB">
+      <div class="kpi-card kpi-income" data-page-node-id="dJuzkCdj6VuW92CZEBeX3n">
+        <div class="kpi-ico" data-page-node-id="qezY6dsFHlf4uJoBebbyzv">💰</div>
+        <div class="kpi-main" data-page-node-id="j3OgZrjPpcMUCBQ2IfVvHm">
+          <div class="kpi-v" data-k="income" data-page-node-id="ja06pjcc7FaA7s7df1KYuB">¥0</div>
+          <div class="kpi-l" data-page-node-id="7oyhGOoVgrhtzqtP36w8NW">跑单收入</div>
         </div>
       </div>
-      <div class="kpi-card kpi-net">
-        <div class="kpi-ico">📈</div>
-        <div class="kpi-main">
-          <div class="kpi-v" data-k="net">¥0</div>
-          <div class="kpi-l">净收入（不含电费）</div>
+      <div class="kpi-card kpi-net" data-page-node-id="A3kizFHQPDTaByxGdc20Ze">
+        <div class="kpi-ico" data-page-node-id="HDMxPyzGaZP1kiYrIv2Mhk">📈</div>
+        <div class="kpi-main" data-page-node-id="Zea80qvmkd0nphzyGZKza0">
+          <div class="kpi-v" data-k="net" data-page-node-id="ID39Bz329ypauvyCYhXJIe">¥0</div>
+          <div class="kpi-l" data-page-node-id="dBwtdgLDrrRnX1eViGPaUY">净收入（不含电费）</div>
         </div>
       </div>
-      <div class="kpi-card kpi-mile">
-        <div class="kpi-ico">🛵</div>
-        <div class="kpi-main">
-          <div class="kpi-v" data-k="mile">0<small>km</small></div>
-          <div class="kpi-l">骑行里程</div>
+      <div class="kpi-card kpi-mile" data-page-node-id="6NLRF0If6IFoBLXF3Z4ZwH">
+        <div class="kpi-ico" data-page-node-id="IfzMHpcAGfEU9URoHYPMtx">🛵</div>
+        <div class="kpi-main" data-page-node-id="H3GJD62l7NX7Qpe9Epzbai">
+          <div class="kpi-v" data-k="mile" data-page-node-id="8GSz4Hna8Bgs2oM1Cps2xW">0<small data-page-node-id="5gCWaBSEQ5Wo31oTO7ioeY">km</small></div>
+          <div class="kpi-l" data-page-node-id="bcoGPKXrFqRfDNJ6gKUTCb">骑行里程</div>
         </div>
       </div>
-      <div class="kpi-card kpi-days">
-        <div class="kpi-ico">📅</div>
-        <div class="kpi-main">
-          <div class="kpi-v" data-k="deliDay">0<small>天</small></div>
-          <div class="kpi-l">跑单天数</div>
+      <div class="kpi-card kpi-days" data-page-node-id="Bq2ffx61NMMTLs4j4l062O">
+        <div class="kpi-ico" data-page-node-id="REoYejbjqurEBnfmBLkjis">📅</div>
+        <div class="kpi-main" data-page-node-id="R9oz0yItLOgSJONbSnOuBk">
+          <div class="kpi-v" data-k="deliDay" data-page-node-id="W3PStNMgyq3P9okBc1E64P">0<small data-page-node-id="JJEkGub0lfGe8WY8uBE8Il">天</small></div>
+          <div class="kpi-l" data-page-node-id="m9MZbTOgZkmzKBodAQlyPu">跑单天数</div>
         </div>
       </div>
     </div>
 
     <!-- 收益效率 -->
-    <div class="stat-section">
-      <div class="stat-section-title">收益效率</div>
-      <div class="mini-stat-grid">
-        <div class="mini-stat"><div class="mini-v" data-k="avgDayIncome">¥0</div><div class="mini-l">日均收入</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="avgDayNet">¥0</div><div class="mini-l">日均净收入</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="perOrder">¥0<small>/单</small></div><div class="mini-l">平均每单</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="perKmNet">¥0<small>/km</small></div><div class="mini-l">每公里净收入</div></div>
-        <div class="mini-stat reward"><div class="mini-v" data-k="rewardTotal">¥0</div><div class="mini-l">活动奖励(周期)</div></div>
+    <div class="stat-section" data-page-node-id="ymEarLhKUO7DYcT4djOjPJ">
+      <div class="stat-section-title" data-page-node-id="yLdvHPqfaWveLQEe8rGSkg">收益效率</div>
+      <div class="mini-stat-grid" data-page-node-id="SKH8p35Z8Qzz2FRBF4WuAh">
+        <div class="mini-stat" data-page-node-id="5nAPVGQ0FEuMCAtDCCF7mB"><div class="mini-v" data-k="avgDayIncome" data-page-node-id="ctFiVbiG2z56b2Q3YTe9eQ">¥0</div><div class="mini-l" data-page-node-id="wYfFCOsqdJjOMLKvxE1iLb">日均收入</div></div>
+        <div class="mini-stat" data-page-node-id="DttmwsA7xIpfiUG2Em85lc"><div class="mini-v" data-k="avgDayNet" data-page-node-id="jBpd6UqyYhmFf9IJGFA3S7">¥0</div><div class="mini-l" data-page-node-id="SQW3NJihsElHXOwUk2qIGz">日均净收入</div></div>
+        <div class="mini-stat" data-page-node-id="CmG6lSICHWWTAI2sb7ULvy"><div class="mini-v" data-k="perOrder" data-page-node-id="2g8ZalUrsv9sV7fmrIqO5W">¥0<small data-page-node-id="BJ4ZNHUaOkIYlifOxyAlQG">/单</small></div><div class="mini-l" data-page-node-id="omR6KZo7AMpwrijyCaN3Lc">平均每单</div></div>
+        <div class="mini-stat" data-page-node-id="cfw4MuAKOVhkv5MtwKvzqj"><div class="mini-v" data-k="perKmNet" data-page-node-id="emYnGKkptMNWAHKGV3myV5">¥0<small data-page-node-id="2NHXz6AFaH4p98s901OWii">/km</small></div><div class="mini-l" data-page-node-id="GjhWYEEJmzWC23NSbkLUkS">每公里净收入</div></div>
+        <div class="mini-stat reward" data-page-node-id="6DKcGKcuJ7xbMlsNCDmYQa"><div class="mini-v" data-k="rewardTotal" data-page-node-id="nn0Rtr5OdRkANDXCBEDkti">¥0</div><div class="mini-l" data-page-node-id="DQorBtnYupq4tFirq2OKlH">活动奖励(周期)</div></div>
       </div>
     </div>
 
     <!-- 成本 -->
-    <div class="stat-section">
-      <div class="stat-section-title">
-        <span>成本</span>
-        <a href="#" data-go-expense class="stat-section-link">+ 记一笔维修/罚单</a>
+    <div class="stat-section" data-page-node-id="mpimRgpmvguRz4WFODIVLR">
+      <div class="stat-section-title" data-page-node-id="A1SQfSROE7QuEeZEPx393P">
+        <span data-page-node-id="OxzEBd2p3OqWCtJWYFwjES">成本</span>
+        <a href="#" data-go-expense class="stat-section-link" data-page-node-id="sRC8dg9Xjw5tjeQQlP8A50">+ 记一笔维修/罚单</a>
       </div>
-      <div class="mini-stat-grid">
-        <div class="mini-stat cost"><div class="mini-v" data-k="repairCost">¥0</div><div class="mini-l">维修保养(周期)</div></div>
-        <div class="mini-stat cost"><div class="mini-v" data-k="ticketCost">¥0</div><div class="mini-l">跑单罚单(周期)</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="elecCost">¥0</div><div class="mini-l">总电费</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="perKmElec">¥0<small>/km</small></div><div class="mini-l">每公里电费</div></div>
-        <div class="mini-stat cost"><div class="mini-v" data-k="todayIns">¥0</div><div class="mini-l">今日保险</div></div>
-        <div class="mini-stat cost"><div class="mini-v" data-k="todayElec">¥0</div><div class="mini-l">今日电费</div></div>
+      <div class="mini-stat-grid" data-page-node-id="lUt6ILc64viZ1MQwJeJI3V">
+        <div class="mini-stat cost" data-page-node-id="b2HVvdEYwmmYYFjMb8nSKj"><div class="mini-v" data-k="repairCost" data-page-node-id="UDjDxSvpVcevXaEHefgInu">¥0</div><div class="mini-l" data-page-node-id="f3mFKmEHDTBNnmA0Smv5bU">维修保养(周期)</div></div>
+        <div class="mini-stat cost" data-page-node-id="s8moy3sEqbyFxEiU8bD5PD"><div class="mini-v" data-k="ticketCost" data-page-node-id="Mxs1viKH01QyjWBAY7CoMO">¥0</div><div class="mini-l" data-page-node-id="bFiGLc0yKlEycN8hUh4MsJ">跑单罚单(周期)</div></div>
+        <div class="mini-stat" data-page-node-id="Lve2jpaaVNAJ3SIvnCRdvD"><div class="mini-v" data-k="elecCost" data-page-node-id="Ga0AdLHLV6g8NeUPb1AEv2">¥0</div><div class="mini-l" data-page-node-id="DIn3tcUe9VjV3ZXf9KXzKI">总电费</div></div>
+        <div class="mini-stat" data-page-node-id="NaHQXqDrOy3eO5UchQDouG"><div class="mini-v" data-k="perKmElec" data-page-node-id="6IomDkrLThwryI5CVwoKQD">¥0<small data-page-node-id="28wuKwFQYUNHufOnxAxpHT">/km</small></div><div class="mini-l" data-page-node-id="RFjSWTLQHG5A8qqYLaaiZv">每公里电费</div></div>
+        <div class="mini-stat cost" data-page-node-id="PDkOQr2DmIHVLMzPdNMa0R"><div class="mini-v" data-k="todayIns" data-page-node-id="q8ErYszKBro1satqbrp6iE">¥0</div><div class="mini-l" data-page-node-id="NkakIB32vXA7fCtDs6f5aM">今日保险</div></div>
+        <div class="mini-stat cost" data-page-node-id="O6uLnWW6NsR7RhF2xIA0tl"><div class="mini-v" data-k="todayElec" data-page-node-id="4kizcwlkSiCkMwhQu3E4hv">¥0</div><div class="mini-l" data-page-node-id="xhQFL8KZegJXZnjILts3er">今日电费</div></div>
       </div>
     </div>
 
     <!-- 充电 -->
-    <div class="stat-section">
-      <div class="stat-section-title">充电</div>
-      <div class="mini-stat-grid three">
-        <div class="mini-stat"><div class="mini-v" data-k="charge">0<small>次</small></div><div class="mini-l">充电次数</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="kwhTotal">0<small>度</small></div><div class="mini-l">累计充电</div></div>
-        <div class="mini-stat"><div class="mini-v" data-k="perCharge">0<small>km</small></div><div class="mini-l">平均续航</div></div>
+    <div class="stat-section" data-page-node-id="TOOtRGqqB8JMwrwIErvfEA">
+      <div class="stat-section-title" data-page-node-id="rdIEKySHJlO0RtE1sgZorg">充电</div>
+      <div class="mini-stat-grid three" data-page-node-id="uHZXlLcTVRJprwEOdBpo94">
+        <div class="mini-stat" data-page-node-id="WZXJi3pFK9886llDRAhkCd"><div class="mini-v" data-k="charge" data-page-node-id="JCNAhuGLbkP4HFHd75iFfP">0<small data-page-node-id="QiWd8HeYdhMEPaAmOyQJH0">次</small></div><div class="mini-l" data-page-node-id="zFC9k4EEmxB3p1VrXMxmyh">充电次数</div></div>
+        <div class="mini-stat" data-page-node-id="US3u2RvlQ1U8t15bVwr3ZS"><div class="mini-v" data-k="kwhTotal" data-page-node-id="e9xuzWnAfXEWsVhDfnpcxe">0<small data-page-node-id="IRbJBoDjtD94QB0TFwRUsc">度</small></div><div class="mini-l" data-page-node-id="mwLnXyjtrdcOX2Iq2dIJzl">累计充电</div></div>
+        <div class="mini-stat" data-page-node-id="QHe4BTk9cscyXKKanw1CQb"><div class="mini-v" data-k="perCharge" data-page-node-id="zaKiN5cY5jE72AsLhFrGSZ">0<small data-page-node-id="eb8Gv4QVTGWXh3VlMxvWaF">km</small></div><div class="mini-l" data-page-node-id="cPmySeNZ2kMD7jEUIr9kwo">平均续航</div></div>
       </div>
     </div>
 
     <!-- 今日 -->
-    <div class="stat-section">
-      <div class="stat-section-title">今日</div>
-      <div class="mini-stat-grid">
-        <div class="mini-stat"><div class="mini-v" data-k="todayOrders">0<small>单</small></div><div class="mini-l">今日单量</div></div>
-        <div class="mini-stat accent"><div class="mini-v" data-k="todayIncome">¥0</div><div class="mini-l">今日收入</div></div>
-        <div class="mini-stat accent"><div class="mini-v" data-k="todayNet">¥0</div><div class="mini-l">今日净收入</div></div>
-        <div class="mini-stat reward"><div class="mini-v" data-k="todayReward">¥0</div><div class="mini-l">今日奖励</div></div>
+    <div class="stat-section" data-page-node-id="goGiowAEdIS8OE25fC4tyb">
+      <div class="stat-section-title" data-page-node-id="6yTOEl3GMxKrjGl2eauIPc">今日</div>
+      <div class="mini-stat-grid" data-page-node-id="xEoDdPqX6zGxFdjMcxksAu">
+        <div class="mini-stat" data-page-node-id="PTKtGBHkB5A3U1UDDdpEea"><div class="mini-v" data-k="todayOrders" data-page-node-id="09XhgaXs54iKBb7m7kVFge">0<small data-page-node-id="x0SeEXHIFynSsHdEiCgULT">单</small></div><div class="mini-l" data-page-node-id="lVvzid3Roqa2weBNUXs0ph">今日单量</div></div>
+        <div class="mini-stat accent" data-page-node-id="26Or9nrsDLCwBRO7B5qwqO"><div class="mini-v" data-k="todayIncome" data-page-node-id="25U7AQglQU4rhcrCUavckS">¥0</div><div class="mini-l" data-page-node-id="M3oPSqleRbM5gtWomnidyN">今日收入</div></div>
+        <div class="mini-stat accent" data-page-node-id="7Yw4ImXfGEJcdgpDwdKO8E"><div class="mini-v" data-k="todayNet" data-page-node-id="dKezrB5TLnC5IrITSPwnGQ">¥0</div><div class="mini-l" data-page-node-id="QQH6Jb93u699qqrlSx8BED">今日净收入</div></div>
+        <div class="mini-stat reward" data-page-node-id="vujXyR40XncCSW9IpK9DS5"><div class="mini-v" data-k="todayReward" data-page-node-id="E69ECClUlYcLgV5gTfzUgi">¥0</div><div class="mini-l" data-page-node-id="A2o0KKQJcv2I4mj5s8AC92">今日奖励</div></div>
       </div>
     </div>
 
-    <div class="card">
-      <h3>🛵 平台收入分布 <span class="sub" id="platBarsSub">· 每天</span></h3>
-      <div class="bars" id="platBars"></div>
+    <div class="card" data-page-node-id="X5wbHJZ8D2DAcc5p6gXozW">
+      <h3 data-page-node-id="0qWXEg3BwkZM7EJYJbZ4ue">🛵 平台收入分布 <span class="sub" id="platBarsSub" data-page-node-id="L7jsznpbxAgCQP4BDldXUI">· 每天</span></h3>
+      <div class="bars" id="platBars" data-page-node-id="w4dAFzgDZKxkP6jukcj3gB"></div>
     </div>
 
-    <div class="card report-actions">
-      <h3>📤 导出报表</h3>
-      <p class="hint" style="margin-bottom:12px;">导出当前范围（<b id="reportRange">全部时间</b>）的汇总与明细。</p>
-      <div class="btn-row">
-        <button class="btn-ghost btn-sm" id="exportExcelBtn" type="button">📊 导出 Excel 报表</button>
-        <button class="btn-ghost btn-sm" id="exportPdfBtn" type="button">📄 导出 PDF 报表</button>
+    <div class="card report-actions" data-page-node-id="LfOGfYeIMizkHRIc49WvIq">
+      <h3 data-page-node-id="erMZbC3IxwGAasLnfDWM32">📤 导出报表</h3>
+      <p class="hint" style="margin-bottom:12px;" data-page-node-id="yJKKEG4S7iK8ejCH7WDaTZ">导出当前范围（<b id="reportRange" data-page-node-id="nO8P9odUvbCxFQJsTlLxK4">全部时间</b>）的汇总与明细。</p>
+      <div class="btn-row" data-page-node-id="o6c0SchXsIgnkt0obtHEil">
+        <button class="btn-ghost btn-sm" id="exportExcelBtn" type="button" data-page-node-id="82e2YvsrC0osTu9qaPd0tu">📊 导出 Excel 报表</button>
+        <button class="btn-ghost btn-sm" id="exportPdfBtn" type="button" data-page-node-id="DKMMaljQZEin7myhcIP0xC">📄 导出 PDF 报表</button>
       </div>
     </div>
   </section>
 
   <!-- ===================== 电池 ===================== -->
-  <section class="view" id="view-battery">
-    <div class="view-head">
-      <h2>电池状态</h2>
-      <p>续航、健康与充电提醒</p>
+  <section class="view" id="view-battery" data-page-node-id="eeL4XnMWZSqs0qbFAsRzbL">
+    <div class="view-head" data-page-node-id="OjclwD3OZ9LkBleBxG7ha5">
+      <h2 data-page-node-id="MWFFhoOmwaLJck6A3Mq67a">电池状态</h2>
+      <p data-page-node-id="FrHeo1cZUtkw9XlCdqOkol">续航、健康与充电提醒</p>
     </div>
 
-    <div class="card">
-      <div class="battery-wrap">
-        <div class="ring">
-          <svg width="128" height="128" viewBox="0 0 128 128">
-            <circle cx="64" cy="64" r="54" fill="none" stroke="var(--surface-3)" stroke-width="12"/>
+    <div class="card" data-page-node-id="xnRVGsIb5kBRYsP8MrBn8d">
+      <div class="battery-wrap" data-page-node-id="hotPUu6ixitISTpsOiLlkI">
+        <div class="ring" data-page-node-id="5QIcwSBDskdzHes7EDMNjt">
+          <svg width="128" height="128" viewBox="0 0 128 128" data-page-node-id="X3q5TjFv55AR6Dp0M8UqoG">
+            <circle cx="64" cy="64" r="54" fill="none" stroke="var(--surface-3)" stroke-width="12" data-page-node-id="D7W0lHMCWlLr4UzhupysSc"/>
             <circle id="ringFg" cx="64" cy="64" r="54" fill="none" stroke="var(--primary)" stroke-width="12"
-              stroke-linecap="round" stroke-dasharray="339.29" stroke-dashoffset="108.6"/>
+              stroke-linecap="round" stroke-dasharray="339.29" stroke-dashoffset="108.6" data-page-node-id="qY60ehrsioHjJ4cEdGMseF"/>
           </svg>
-          <div class="center"><div><div class="pct" id="ringPct">—</div><div class="cap">当前电量</div></div></div>
+          <div class="center" data-page-node-id="1pZ52SCibE1hpB5ucxzoMy"><div data-page-node-id="zYMSG9kDu6vxoCHwA9MFzc"><div class="pct" id="ringPct" data-page-node-id="3d3RApOcpX4WW8Y1icUpkS">—</div><div class="cap" data-page-node-id="iEr0y9qEDGylHEIGVTvaHq">当前电量</div></div></div>
         </div>
-        <div class="battery-meta" id="batMeta"></div>
+        <div class="battery-meta" id="batMeta" data-page-node-id="Pn9b9rm5mlcaMiZQMeairh"></div>
       </div>
     </div>
 
-    <div class="card">
-      <h3>🔔 充电提醒</h3>
-      <div id="chargeRemind" class="banner ok" style="margin-bottom:12px;"></div>
-      <label style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;">
+    <div class="card" data-page-node-id="lqhs8nMjojLFgfu9ZwMQQF">
+      <h3 data-page-node-id="LlGKpwVYcaJSfoVje6rs9a">🔔 充电提醒</h3>
+      <div id="chargeRemind" class="banner ok" style="margin-bottom:12px;" data-page-node-id="maeFPhWZLIQtCzXqVZFFaF"></div>
+      <label style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;" data-page-node-id="Hq5i13fT2YB7qsgCJBQ7Dk">
         开启桌面提醒（电量低 / 久未充电时弹窗）
-        <span class="switch" id="notifySwitch" data-notify role="switch" aria-checked="false" tabindex="0"></span>
+        <span class="switch" id="notifySwitch" data-notify role="switch" aria-checked="false" tabindex="0" data-page-node-id="WYF0wlGBFcNJ7njXojNZok"></span>
       </label>
     </div>
 
-    <div class="card">
-      <h3>📋 充电历史</h3>
-      <ul class="list" id="chargeHist"></ul>
+    <div class="card" data-page-node-id="FyDX1hcaASpvlUCROt7Sxx">
+      <h3 data-page-node-id="JuAKVn6pkZhfLT2eGQMlt0">📋 充电历史</h3>
+      <ul class="list" id="chargeHist" data-page-node-id="ZtDQiFf8VxeYG2qDp4hewB"></ul>
     </div>
   </section>
 
   <!-- ===================== 我的 ===================== -->
-  <section class="view" id="view-mine">
-    <div class="view-head">
-      <h2>我的</h2>
-      <p>电池、外观与数据</p>
+  <section class="view" id="view-mine" data-page-node-id="Qegss98BA67wKDLiyyn64T">
+    <div class="view-head" data-page-node-id="R7KWTsN2S1FuC08V71AreV">
+      <h2 data-page-node-id="rynsTbhahLtncuXYYuiQiK">我的</h2>
+      <p data-page-node-id="SIFARj7vx6fZnPZOdDe2YP">电池、外观与数据</p>
     </div>
 
-    <div id="dataStatus" class="status-banner"></div>
+    <div id="dataStatus" class="status-banner" data-page-node-id="TiVdMWqPr2g9WL1TpVeXYI"></div>
 
-    <div class="group help-entry"><div class="glabel">帮助</div></div>
-    <div class="card help-entry" style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-      <div>
-        <div style="font-weight:700; font-size:var(--fs-sm);">📖 使用帮助</div>
-        <div class="hint" style="margin-top:4px;">不会用？点这里看完整图文说明</div>
+    <div class="group help-entry" data-page-node-id="Uszh7v9TjRADbDvheawLZF"><div class="glabel" data-page-node-id="foZEjdH1HuFfXfRidIhNju">帮助</div></div>
+    <div class="card help-entry" style="display:flex; align-items:center; justify-content:space-between; gap:12px;" data-page-node-id="4ABl81jjTiqxM2dShQX9tj">
+      <div data-page-node-id="flV0oK9wTJV7VYHixvbNVt">
+        <div style="font-weight:700; font-size:var(--fs-sm);" data-page-node-id="VmjVPN0FJ2TPSAjeORk63u">📖 使用帮助</div>
+        <div class="hint" style="margin-top:4px;" data-page-node-id="WONOxztdifXA2aOKWJkhhk">不会用？点这里看完整图文说明</div>
       </div>
-      <button class="btn btn-primary btn-sm" id="helpOpenBtn" type="button">查看</button>
+      <button class="btn btn-primary btn-sm" id="helpOpenBtn" type="button" data-page-node-id="HWG7GIYH12IUKHIhv7KEb8">查看</button>
     </div>
 
-    <div class="group"><div class="glabel">电池管理</div></div>
-    <div class="card">
-      <div id="batSummary" class="battery-summary"></div>
-      <ul class="list" id="batList"></ul>
-      <div class="btn-row" style="margin-top:12px;">
-        <button class="btn-ghost btn-sm" id="batSaveCurrentBtn" type="button">保存当前电池</button>
-        <button class="btn-ghost btn-sm" id="batAddFastBtn" type="button">➕ 新增电池</button>
-        <button class="btn-ghost btn-sm" id="batExportJsonBtn" type="button">导出电池清单(JSON)</button>
-        <button class="btn-ghost btn-sm" id="batExportChargeCsvBtn" type="button">导出充电 CSV</button>
-        <button class="btn-ghost btn-sm" id="batExportDeliCsvBtn" type="button">导出跑单 CSV</button>
-        <button class="btn-ghost btn-sm" id="batExportMileCsvBtn" type="button">导出里程 CSV</button>
-        <button class="btn-ghost btn-sm" id="batExportRewardCsvBtn" type="button">导出奖励 CSV</button>
-        <button class="btn-ghost btn-sm" id="batExportExpenseCsvBtn" type="button">导出维修罚单 CSV</button>
-        <button class="btn-ghost btn-sm" id="batImportJsonBtn" type="button">⬆ 导入备份</button>
-        <button class="btn-ghost btn-sm" id="batAdd" type="button" style="display:none;">⬆ 编辑弹窗备用入口</button>
+    <div class="group" data-page-node-id="u4JsMvHAT34vYVoqspOYuH"><div class="glabel" data-page-node-id="nMYxUJCj6PQeLOaWVsszGW">电池管理</div></div>
+    <div class="card" data-page-node-id="OFC0FirbINvg3rRup7AKRj">
+      <div id="batSummary" class="battery-summary" data-page-node-id="JFqk9lDRqwWYaN5t2ZErGC"></div>
+      <ul class="list" id="batList" data-page-node-id="qGMv7VpTpoxQd9wUwzn3Iz"></ul>
+      <div class="btn-row" style="margin-top:12px;" data-page-node-id="5Iea5h0gC8wonMPqBO2wE6">
+        <button class="btn-ghost btn-sm" id="batSaveCurrentBtn" type="button" data-page-node-id="O8HAesttuDSbl2brNKuoTV">保存当前电池</button>
+        <button class="btn-ghost btn-sm" id="batAddFastBtn" type="button" data-page-node-id="ETx6BHYEkpKUHrxGx7ZvkU">➕ 新增电池</button>
+        <button class="btn-ghost btn-sm" id="batExportJsonBtn" type="button" data-page-node-id="9mnB6fwjSoQNGbOmxS5DvV">导出电池清单(JSON)</button>
+        <button class="btn-ghost btn-sm" id="batExportChargeCsvBtn" type="button" data-page-node-id="NLz9uRpChUkeujWeWD7TF7">导出充电 CSV</button>
+        <button class="btn-ghost btn-sm" id="batExportDeliCsvBtn" type="button" data-page-node-id="jk8SuPmhOQ9YUYGwJtQ5Ad">导出跑单 CSV</button>
+        <button class="btn-ghost btn-sm" id="batExportMileCsvBtn" type="button" data-page-node-id="Lpe7mWSgyfZxAlqqwXWpkg">导出里程 CSV</button>
+        <button class="btn-ghost btn-sm" id="batExportRewardCsvBtn" type="button" data-page-node-id="UPgFBEVa9oDYOxgZ9aZi2J">导出奖励 CSV</button>
+        <button class="btn-ghost btn-sm" id="batExportExpenseCsvBtn" type="button" data-page-node-id="l10ugkqn6rB1umbKfU5WWd">导出维修罚单 CSV</button>
+        <button class="btn-ghost btn-sm" id="batImportJsonBtn" type="button" data-page-node-id="arK2CZvtxi9KEB0wC6NBZy">⬆ 导入备份</button>
+        <button class="btn-ghost btn-sm" id="batAdd" type="button" style="display:none;" data-page-node-id="64wl462rzl128SmsITRo7q">⬆ 编辑弹窗备用入口</button>
       </div>
-      <details class="danger-zone">
-        <summary>⚠️ 危险操作（不可恢复）</summary>
-        <div id="delWarn" class="warn-box"></div>
-        <div class="btn-row">
-          <button class="btn-ghost btn-sm btn-warn" id="delCurrentBatBtn" type="button">删除当前电池（连同其记录）</button>
-          <button class="btn-ghost btn-sm btn-danger" id="wipeDeliBtn" type="button">仅清空跑单记录</button>
-          <button class="btn-ghost btn-sm btn-danger" id="wipeBtn" type="button">清空所有数据</button>
+      <details class="danger-zone" data-page-node-id="HysjQV4Ln9DocvQjLZDUWG">
+        <summary data-page-node-id="F0MWyoHoJcSHGfqpSWUCM8">⚠️ 危险操作（不可恢复）</summary>
+        <div id="delWarn" class="warn-box" data-page-node-id="jXz0tELphCpYOPeNhAi8M7"></div>
+        <div class="btn-row" data-page-node-id="LCjDE1PF9IfKAiJWmoEehv">
+          <button class="btn-ghost btn-sm btn-warn" id="delCurrentBatBtn" type="button" data-page-node-id="8AeuvhpIoSviJCdr79RRI6">删除当前电池（连同其记录）</button>
+          <button class="btn-ghost btn-sm btn-danger" id="wipeDeliBtn" type="button" data-page-node-id="6mvei4zgz6sMHh1xIAu50T">仅清空跑单记录</button>
+          <button class="btn-ghost btn-sm btn-danger" id="wipeBtn" type="button" data-page-node-id="uCB23D7ZsCiBMSX0BYxbd1">清空所有数据</button>
         </div>
       </details>
     </div>
 
-    <div class="group"><div class="glabel">外观</div></div>
-    <div class="card">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600; margin-bottom:10px;">
+    <div class="group" data-page-node-id="pmZOcBA1DhiThgwYo5uW6d"><div class="glabel" data-page-node-id="jcPX7pNOaHmYYJNpzAECao">外观</div></div>
+    <div class="card" data-page-node-id="GyesB3BrLLFXAZvprEXeJ6">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600; margin-bottom:10px;" data-page-node-id="euK0fcBRUiudjkLFzguW5U">
         主题
-        <div class="seg-theme" id="themeSeg" role="group" aria-label="主题">
-          <button type="button" data-theme-val="light">浅色</button>
-          <button type="button" data-theme-val="dark">深色</button>
-          <button type="button" data-theme-val="auto">跟随系统</button>
+        <div class="seg-theme" id="themeSeg" role="group" aria-label="主题" data-page-node-id="zLjDY4u9NMjDgi4fjCQD6B">
+          <button type="button" data-theme-val="light" data-page-node-id="q3SvkFujMwyfF4sMv86lAD">浅色</button>
+          <button type="button" data-theme-val="dark" data-page-node-id="JBAKHRhKWRznQfrdbWHRp0">深色</button>
+          <button type="button" data-theme-val="auto" data-page-node-id="RLZBsCFJhb9lSAWsLvoNwY">跟随系统</button>
         </div>
       </div>
-      <div class="hint" id="themeHint" style="margin-top:4px;">跟随系统或手动切换，所有颜色已做双主题适配</div>
+      <div class="hint" id="themeHint" style="margin-top:4px;" data-page-node-id="Wdfgj6rG3BUmkEumBMVkLv">跟随系统或手动切换，所有颜色已做双主题适配</div>
     </div>
 
-    <div class="group"><div class="glabel">提醒</div></div>
-    <div class="card">
-      <label style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;">
+    <div class="group" data-page-node-id="J2EYdlvxPC0U2xHwBvPlsl"><div class="glabel" data-page-node-id="ZQGuzsb4E7pIetdhFYrXMO">提醒</div></div>
+    <div class="card" data-page-node-id="dIkn8U83Y4DUIsss5xXLRB">
+      <label style="display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:var(--fs-sm); font-weight:600;" data-page-node-id="Gzx2hJ4hd7RjfCHAnyi7EP">
         桌面提醒（电量低 / 久未充电时）
-        <span class="switch" id="notifySwitchMine" data-notify role="switch" aria-checked="false" tabindex="0"></span>
+        <span class="switch" id="notifySwitchMine" data-notify role="switch" aria-checked="false" tabindex="0" data-page-node-id="zr2AY9a9fJTSs1C2nLe2Cx"></span>
       </label>
-      <div class="hint" id="notifyHint" style="margin-top:8px;">开启后需授权浏览器通知权限</div>
+      <div class="hint" id="notifyHint" style="margin-top:8px;" data-page-node-id="yKewS3FFrB8EJQLFapxqhl">开启后需授权浏览器通知权限</div>
     </div>
 
-    <div class="group"><div class="glabel">🛵 平台与保险费</div></div>
-    <div class="card">
-      <p class="hint" style="margin-bottom:12px;">保险费按「每天每平台」扣一次。修改费率后，跑单统计与导出会按新费率重新计算（历史日期的保险费随之变化）。</p>
-      <div id="platCfgList" class="plat-cfg-list"></div>
-      <div class="row" style="margin-top:10px; align-items:flex-end;">
-        <div class="field"><label>新增平台</label><input class="control" id="platNewName" placeholder="如：饿了么"></div>
-        <div class="field"><label>保险费/天</label><input class="control" id="platNewIns" type="number" step="0.1" placeholder="0" style="width:110px;"></div>
-        <button class="btn-ghost btn-sm" id="platAddBtn" type="button">添加</button>
+    <div class="group" data-page-node-id="N1UOHPNbHsbNksaXsjH35G"><div class="glabel" data-page-node-id="SGuFaPRKus9nP1bL4FwTcY">🛵 平台与保险费</div></div>
+    <div class="card" data-page-node-id="tfagAREH5glt1G1ecOXs9d">
+      <p class="hint" style="margin-bottom:12px;" data-page-node-id="qyPKXKieRdLye8PUa1sLLC">保险费按「每天每平台」扣一次。点平台左侧的 ☆ 设为跑单默认平台，新建跑单时第一行会自动选中。修改费率后，跑单统计与导出会按新费率重新计算（历史日期的保险费随之变化）。</p>
+      <div id="platCfgList" class="plat-cfg-list" data-page-node-id="17wauxxELcHHovtku18WJ0"></div>
+      <div class="row" style="margin-top:10px; align-items:flex-end;" data-page-node-id="3FqZ9KXwBVISsPHva0SdSK">
+        <div class="field" data-page-node-id="YDoVTpr6dQWfpA9sZmi8Ae"><label data-page-node-id="okFyTW6VkxvAoJKqamJR0T">新增平台</label><input class="control" id="platNewName" placeholder="如：饿了么" data-page-node-id="1EI6pC7lqqrnOLp7CGZOrk"></div>
+        <div class="field" data-page-node-id="utWAIyCYzgrbiDTgyeHfwZ"><label data-page-node-id="WkjLurr6jZ1jc6Brs3ugAd">保险费/天</label><input class="control" id="platNewIns" type="number" step="0.1" placeholder="0" style="width:110px;" data-page-node-id="h6clvwJFGBnxkJb41oEDf2"></div>
+        <button class="btn-ghost btn-sm" id="platAddBtn" type="button" data-page-node-id="tyQo4p3WWksrUshm2EQRBR">添加</button>
       </div>
     </div>
 
-    <div class="group"><div class="glabel">☁️ GitHub 同步</div></div>
-    <div class="card">
-      <p class="hint" style="margin-bottom:12px;">把数据同步到你的 GitHub 仓库，换电脑 / 换网址都能拉回。Token 只存本机，不会写入仓库。需要 <b>Contents: Read &amp; Write</b> 权限的 PAT。</p>
-      <div class="field">
-        <label>GitHub Token</label>
-        <input type="password" class="control" id="ghToken" placeholder="ghp_... 或 github_pat_..." autocomplete="off">
-        <div class="hint-inline">仅存本机浏览器 localStorage，不上传任何服务器</div>
+    <div class="group" data-page-node-id="Cx0vkCX3IEoMEqCK0G55Qt"><div class="glabel" data-page-node-id="2yXDWNrZe5Fmn4yBlkXOW0">☁️ GitHub 同步</div></div>
+    <div class="card" data-page-node-id="Li9PmBubbALrGJY1v2j2zc">
+      <p class="hint" style="margin-bottom:12px;" data-page-node-id="xfNURUhB27EqpFOHpZsniE">把数据同步到你的 GitHub 仓库，换电脑 / 换网址都能拉回。Token 只存本机，不会写入仓库。需要 <b data-page-node-id="biysjK99lbueoJBJ07PGjH">Contents: Read &amp; Write</b> 权限的 PAT。</p>
+      <div class="field" data-page-node-id="diX1suc3gNxl0xoXRZw33h">
+        <label data-page-node-id="SS4HEAmpyDltyOEbaOok4F">GitHub Token</label>
+        <input type="password" class="control" id="ghToken" placeholder="ghp_... 或 github_pat_..." autocomplete="off" data-page-node-id="NBQRqaUwx5hTfpxGRbn2iO">
+        <div class="hint-inline" data-page-node-id="dWU89cg9iDt4YpTrWRlrup">仅存本机浏览器 localStorage，不上传任何服务器</div>
       </div>
-      <div class="row">
-        <div class="field">
-          <label>仓库（owner/repo）</label>
-          <input type="text" class="control" id="ghRepo" placeholder="ali/battery-tracker">
+      <div class="row" data-page-node-id="GEIRUl1XrFREzLJio68LSw">
+        <div class="field" data-page-node-id="V6lIAPoMEGQMtzvrzbnAus">
+          <label data-page-node-id="6jQ7GtbbNyPFRHZkuf6qaP">仓库（owner/repo）</label>
+          <input type="text" class="control" id="ghRepo" placeholder="ali/battery-tracker" data-page-node-id="xc3Fvv68SczObD9C0F4SLC">
         </div>
-        <div class="field">
-          <label>数据文件路径</label>
-          <input type="text" class="control" id="ghPath" placeholder="data.json" value="data.json">
-        </div>
-      </div>
-      <div class="checks" style="margin:4px 0 10px;">
-        <label class="chk"><input type="checkbox" id="ghSyncData" checked> 同步数据</label>
-        <label class="chk"><input type="checkbox" id="ghSyncSrc"> 同步源代码</label>
-        <label class="chk"><input type="checkbox" id="ghAuto"> 自动同步（改动后 1.2s 推送）</label>
-      </div>
-      <div id="ghSrcBox" class="src-box" style="display:none; margin:2px 0 12px; padding:10px 12px; border:1px dashed var(--border); border-radius:10px;">
-        <div class="field" style="margin-bottom:8px;"><label>选择 index.html</label><input type="file" id="ghIndexFile" accept=".html,.htm,text/html"></div>
-        <div class="field" style="margin-bottom:4px;"><label>选择 README.md</label><input type="file" id="ghReadmeFile" accept=".md,text/markdown"></div>
-        <div class="hint-inline">file:// 双击打开需手动选文件；部署到 https 后可自动读取，手动选则以你选的为准。</div>
-      </div>
-      <div class="btn-row">
-        <button class="btn-ghost btn-sm" id="ghTest" type="button">测试连接</button>
-        <button class="btn-ghost btn-sm" id="ghPull" type="button">⬇ 拉取</button>
-        <button class="btn btn-primary btn-sm" id="ghPush" type="button">⬆ 推送</button>
-      </div>
-      <a id="ghRepoLink" class="repo-link" target="_blank" rel="noopener" style="display:none;"></a>
-      <div id="ghStatus" class="gh-status"></div>
-    </div>
-
-    <div class="group"><div class="glabel">📝 Gist 同步</div></div>
-    <div class="card">
-      <p class="hint" style="margin-bottom:12px;">用 GitHub <b>Gist</b> 保存数据，比仓库同步更轻：只要一个带 <b>gist</b> 权限的 Token，无需建仓库。开启自动同步后，本地改动秒推、远程改动每 10 秒自动拉回，多设备实时一致。Token 仅存本机。</p>
-      <div class="field">
-        <label>Gist Token</label>
-        <input type="password" class="control" id="gistToken" placeholder="ghp_... 或 github_pat_..." autocomplete="off">
-        <div class="hint-inline">仅需 <b>gist</b> 权限；可与上方 GitHub Token 相同也可不同</div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>Gist ID（可选）</label>
-          <input type="text" class="control" id="gistId" placeholder="留空则首次推送自动创建">
-        </div>
-        <div class="field">
-          <label>文件名</label>
-          <input type="text" class="control" id="gistFile" placeholder="dianchipaodan.json" value="dianchipaodan.json">
+        <div class="field" data-page-node-id="dUT1Mks9WayBarpZhbJqZC">
+          <label data-page-node-id="EBBD9vgOUeUArd65Sfwk9O">数据文件路径</label>
+          <input type="text" class="control" id="ghPath" placeholder="data.json" value="data.json" data-page-node-id="Ya9iQoBRgTIGadO6d2lSgn">
         </div>
       </div>
-      <div class="field" style="margin-top:4px;">
-        <label>API 代理地址（可选）</label>
-        <input type="text" class="control" id="gistProxy" placeholder="如 https://xxx.workers.dev/github（留空=直连 GitHub，仅本地可用）">
-        <div class="hint-inline">公网域名打开被 CORS 拦截时填写：部署一个 Cloudflare Worker（见 README），把地址填这里即可恢复自动同步。</div>
+      <div class="checks" style="margin:4px 0 10px;" data-page-node-id="Uc2607CnqIV0AQVyltqMbD">
+        <label class="chk" data-page-node-id="lldWgbvBCWUs5m7XxLXA5L"><input type="checkbox" id="ghSyncData" checked data-page-node-id="TJNQSF9B8qD6ymgQlwtLKm"> 同步数据</label>
+        <label class="chk" data-page-node-id="Wmz0e6RHAubzFAb8jXzNvt"><input type="checkbox" id="ghSyncSrc" data-page-node-id="8qrfph8kn82BJE4sgRTWiW"> 同步源代码</label>
+        <label class="chk" data-page-node-id="fLsN6Y4iSbxb4NtAQaDhP0"><input type="checkbox" id="ghAuto" data-page-node-id="U0EK6wvH1lscBkyD770q0r"> 自动同步（改动后 1.2s 推送）</label>
       </div>
-      <div class="checks" style="margin:4px 0 10px;">
-        <label class="chk"><input type="checkbox" id="gistEnabled" checked> 启用 Gist 同步</label>
-        <label class="chk"><input type="checkbox" id="gistPublic"> 公开 Gist（任何人可见，慎用于真实数据）</label>
-        <label class="chk"><input type="checkbox" id="gistAuto" checked> 自动同步（本地秒推 · 远程每 10 秒拉取）<span id="gistAutoStatus" class="sync-status"></span></label>
+      <div id="ghSrcBox" class="src-box" style="display:none; margin:2px 0 12px; padding:10px 12px; border:1px dashed var(--border); border-radius:10px;" data-page-node-id="PQ8fqI2F1A6P4llHd0uuIr">
+        <div class="field" style="margin-bottom:8px;" data-page-node-id="ve0LPN1EJ9XdlsyFG6t0om"><label data-page-node-id="gQATlVD8UNbRLbj6acD0DR">选择 index.html</label><input type="file" id="ghIndexFile" accept=".html,.htm,text/html" data-page-node-id="GB4PRcujPn12EbY0PAHTlp"></div>
+        <div class="field" style="margin-bottom:4px;" data-page-node-id="nfVDsVWso8dTz3x4sF7PD9"><label data-page-node-id="UJJANiCvh9Rj4TChRWcMLq">选择 README.md</label><input type="file" id="ghReadmeFile" accept=".md,text/markdown" data-page-node-id="JWEr8FBR0xzpVwCjuVkYyZ"></div>
+        <div class="hint-inline" data-page-node-id="9rMxaBeygARfw6EpOCyELP">file:// 双击打开需手动选文件；部署到 https 后可自动读取，手动选则以你选的为准。</div>
       </div>
-      <div class="btn-row">
-        <button class="btn-ghost btn-sm" id="gistTest" type="button">测试连接</button>
-        <button class="btn-ghost btn-sm" id="gistPull" type="button">⬇ 拉取</button>
-        <button class="btn btn-primary btn-sm" id="gistPush" type="button">⬆ 推送</button>
+      <div class="btn-row" data-page-node-id="LqqQ2UytSG2etnslEGO3p3">
+        <button class="btn-ghost btn-sm" id="ghTest" type="button" data-page-node-id="56rEAbXdECqSATGhlOAr5E">测试连接</button>
+        <button class="btn-ghost btn-sm" id="ghPull" type="button" data-page-node-id="DJZNSmJnHJmtmbAN3zhvyC">⬇ 拉取</button>
+        <button class="btn btn-primary btn-sm" id="ghPush" type="button" data-page-node-id="ZB4trLDNVojHqGuT30QjRV">⬆ 推送</button>
       </div>
-      <div id="gistStatus" class="gh-status">未同步</div>
+      <a id="ghRepoLink" class="repo-link" target="_blank" rel="noopener" style="display:none;" data-page-node-id="4S8OsIlZaFrOPdKdu9xyYT"></a>
+      <div id="ghStatus" class="gh-status" data-page-node-id="m09RASIfDXfD3IjEBgHDsm"></div>
     </div>
 
-    <div class="group"><div class="glabel">导入 / 导出（整包备份）</div></div>
-    <div class="card">
-      <p class="hint" style="margin-bottom:12px;">整包 JSON（电池+充电+里程+跑单全部数据），建议定期下载留备份；CSV 上面已经按模块拆好。</p>
-      <div class="btn-row">
-        <button class="btn-ghost btn-sm" id="exportJson" type="button">⬇ 导出整包 JSON</button>
-        <button class="btn-ghost btn-sm" id="importJson" type="button">⬆ 导入整包 JSON</button>
-        <input type="file" id="importFile" accept="application/json,.json" style="display:none;">
+    <div class="group" data-page-node-id="2pQk7fgXOTwuyQrI3mV1jg"><div class="glabel" data-page-node-id="798U9Mky3pTioA7QO9v7MF">📝 Gist 同步</div></div>
+    <div class="card" data-page-node-id="sXXtov3Kw4eZTX71sibEYh">
+      <p class="hint" style="margin-bottom:12px;" data-page-node-id="PZcRqtRfvvlw02o1BX41ft">用 GitHub <b data-page-node-id="emblqyO8gvrv6eio6b7rLl">Gist</b> 保存数据，比仓库同步更轻：只要一个带 <b data-page-node-id="uSpFHLhnIcMfupzyH8HpzC">gist</b> 权限的 Token，无需建仓库。开启自动同步后，本地改动秒推、远程改动每 10 秒自动拉回，多设备实时一致。Token 仅存本机。</p>
+      <div class="field" data-page-node-id="iunrZj253S1cJtKtY7w4pI">
+        <label data-page-node-id="K97Xl5vPf8xFP8fFi45mpU">Gist Token</label>
+        <input type="password" class="control" id="gistToken" placeholder="ghp_... 或 github_pat_..." autocomplete="off" data-page-node-id="bzwOThBMqcG2wl1z8ZoDFb">
+        <div class="hint-inline" data-page-node-id="fdGFpcaciQQ9csOJO1KWsS">仅需 <b data-page-node-id="Ki2x1tImNcRRbIb4VQraUA">gist</b> 权限；可与上方 GitHub Token 相同也可不同</div>
+      </div>
+      <div class="row" data-page-node-id="uZCX2UyT6rb6QppVnp8m7F">
+        <div class="field" data-page-node-id="t3syaqDkQ7nQYoZfuGHfHh">
+          <label data-page-node-id="IYKRDpIVUACDnB9zRhtUaZ">Gist ID（可选）</label>
+          <input type="text" class="control" id="gistId" placeholder="留空则首次推送自动创建" data-page-node-id="zfsuTl22omoOnMBNzsMmjD">
+        </div>
+        <div class="field" data-page-node-id="VuTEHD39HeIMFfjLf8EGXK">
+          <label data-page-node-id="qHXLmkonP4h0TtV9UT1KeW">文件名</label>
+          <input type="text" class="control" id="gistFile" placeholder="dianchipaodan.json" value="dianchipaodan.json" data-page-node-id="ADeQNbK7wRgDl0yXVFvt26">
+        </div>
+      </div>
+      <div class="field" style="margin-top:4px;" data-page-node-id="iGElf9VZbKJcgkwAA9SLUM">
+        <label data-page-node-id="6hbJOcR5DmiujtutOGGvkJ">API 代理地址（可选）</label>
+        <input type="text" class="control" id="gistProxy" placeholder="如 https://xxx.workers.dev/github（留空=直连 GitHub，仅本地可用）" data-page-node-id="Ar7tU84ZLjzzOl6smBej8a">
+        <div class="hint-inline" data-page-node-id="eusDjoYqFKbEaH2UxOHKVQ">公网域名打开被 CORS 拦截时填写：部署一个 Cloudflare Worker（见 README），把地址填这里即可恢复自动同步。</div>
+      </div>
+      <div class="checks" style="margin:4px 0 10px;" data-page-node-id="m6LWCQ1wFes85euC1N83AD">
+        <label class="chk" data-page-node-id="ba8kCP2TLWm7HyJrZyl2VQ"><input type="checkbox" id="gistEnabled" checked data-page-node-id="PGNZJRdYWRcqHglPV8EKVW"> 启用 Gist 同步</label>
+        <label class="chk" data-page-node-id="eA829QVsus57jdCxHAs7Ax"><input type="checkbox" id="gistPublic" data-page-node-id="5EBUjnkfGtsyXanpBSTul5"> 公开 Gist（任何人可见，慎用于真实数据）</label>
+        <label class="chk" data-page-node-id="Tb2U2FJvzNHGVLEHEGH8GQ"><input type="checkbox" id="gistAuto" checked data-page-node-id="NY2socZDS4cUsHAHJeW8bY"> 自动同步（本地秒推 · 远程每 10 秒拉取）<span id="gistAutoStatus" class="sync-status" data-page-node-id="z8x4FzsXuhDdVEEReeIhww"></span></label>
+      </div>
+      <div class="btn-row" data-page-node-id="efFagt4OaQKe7Lwc4fxDP5">
+        <button class="btn-ghost btn-sm" id="gistTest" type="button" data-page-node-id="nkKDD2XCgaxwzGCOthpvUD">测试连接</button>
+        <button class="btn-ghost btn-sm" id="gistPull" type="button" data-page-node-id="EJAJ1QM0d3C6eUcdPaKgCW">⬇ 拉取</button>
+        <button class="btn btn-primary btn-sm" id="gistPush" type="button" data-page-node-id="R3G2HumOCmDs90wFGTZqq6">⬆ 推送</button>
+      </div>
+      <div id="gistStatus" class="gh-status" data-page-node-id="wBT2hWDYMHp5W77ShMmyGn">未同步</div>
+    </div>
+
+    <div class="group" data-page-node-id="ToDBUQeoK2mgP0kgtACa2r"><div class="glabel" data-page-node-id="BZtpkzMszBgi48TjJPYDhr">导入 / 导出（整包备份）</div></div>
+    <div class="card" data-page-node-id="dLy7LzbL63KH0GUcHL0iEE">
+      <p class="hint" style="margin-bottom:12px;" data-page-node-id="NAhJq9IVyRpR1H6QIy62Vm">整包 JSON（电池+充电+里程+跑单全部数据），建议定期下载留备份；CSV 上面已经按模块拆好。</p>
+      <div class="btn-row" data-page-node-id="tPZqTefQkQSrklLjGpCHlW">
+        <button class="btn-ghost btn-sm" id="exportJson" type="button" data-page-node-id="7brtTc0A4u33A4QSh4fUiG">⬇ 导出整包 JSON</button>
+        <button class="btn-ghost btn-sm" id="importJson" type="button" data-page-node-id="L6BJqOC7zBUkuNRc6AzYfh">⬆ 导入整包 JSON</button>
+        <input type="file" id="importFile" accept="application/json,.json" style="display:none;" data-page-node-id="C5X9OcXs5T0QvvWp4nQWnF">
       </div>
     </div>
 
-    <div class="card">
-      <h3>💡 使用贴士</h3>
-      <ul class="list">
-        <li><div class="li-main"><div class="li-title">里程统一登记</div><div class="li-sub">当天骑行里程只在「里程」里记一次，跑单统计自动取用</div></div></li>
-        <li><div class="li-main"><div class="li-title">电量估算</div><div class="li-sub">点「用里程估算」按骑行反推剩余电量，仅供参考</div></div></li>
-        <li><div class="li-main"><div class="li-title">多端同步</div><div class="li-sub">开 GitHub 自动同步后，换设备只需拉取即可恢复</div></div></li>
+    <div class="card" data-page-node-id="cvHFYRSv3sLCslglzYyspo">
+      <h3 data-page-node-id="Cnmsi7StRaH1NkZcooqlUx">💡 使用贴士</h3>
+      <ul class="list" data-page-node-id="KucYLFyrQ8Kvyh4qjncq6Y">
+        <li data-page-node-id="acrSWUPnLLntc9DXMnhqkG"><div class="li-main" data-page-node-id="izlpK14CVXcUfL6PLyIW4o"><div class="li-title" data-page-node-id="cN7D7RXwqxBSE4EXAh2NmA">里程统一登记</div><div class="li-sub" data-page-node-id="poHi2KSVgCkmWsmEcHEgc7">当天骑行里程只在「里程」里记一次，跑单统计自动取用</div></div></li>
+        <li data-page-node-id="J4a2Z8JyfQDNzxOtXoEPl6"><div class="li-main" data-page-node-id="HltGjAxXNH7ja6LEtCsRP7"><div class="li-title" data-page-node-id="BfYFIHpBkVtGJ0KCKm7hvP">电量估算</div><div class="li-sub" data-page-node-id="636RjBKb32bBvNZR4w1AzS">点「用里程估算」按骑行反推剩余电量，仅供参考</div></div></li>
+        <li data-page-node-id="YB54HB9zlwHi4Thvom09bt"><div class="li-main" data-page-node-id="qFDiF9qq3iOUfP7UN0Gglf"><div class="li-title" data-page-node-id="WmtHRvHprrYbNkj2OHKKOH">多端同步</div><div class="li-sub" data-page-node-id="4pNQFgWn9USqX8xB8XfmpO">开 GitHub 自动同步后，换设备只需拉取即可恢复</div></div></li>
       </ul>
     </div>
   </section>
 
-  <section class="view" id="view-help">
-    <div class="view-head">
-      <h2>使用帮助</h2>
-      <p>一份给新手的图文说明</p>
+  <section class="view" id="view-help" data-page-node-id="KpkAfZ7ubAGKu5iR9cKsGo">
+    <div class="view-head" data-page-node-id="BCbRqDwZNAsapnYuX24xF2">
+      <h2 data-page-node-id="FUeCAsXiuSwgCEY4pGFNlD">使用帮助</h2>
+      <p data-page-node-id="6Q7VFu9VsiinhJWpIbnuUY">一份给新手的图文说明</p>
     </div>
-    <p class="help-intro">遇到不会用的地方，展开对应小节看看就好。</p>
-    <div class="help-list">
-      <details class="help-item" open>
-        <summary>🚀 快速开始</summary>
-        <div class="h-body">
-          <p>首次打开会自动建一块空白「<b>我的电池</b>」，不用预先填示例数据，记的第一笔就是你的真实数据。</p>
-          <ul>
-            <li>从底部（手机）/左侧（电脑）的「<b>📝 记录</b>」开始记第一笔：充电、里程、跑单、奖励。</li>
-            <li>两种打开方式：① 直接双击 <code>index.html</code> 用浏览器打开；② 部署到固定网址（GitHub Pages 等），数据更稳、换设备也能用。</li>
+    <p class="help-intro" data-page-node-id="tBc21p5X9OUKmqQhQTLC8a">遇到不会用的地方，展开对应小节看看就好。</p>
+    <div class="help-list" data-page-node-id="B8IUbGQfmB358uZDWKROIU">
+      <details class="help-item" open data-page-node-id="6bZyZaMUD8TksvpzkAvjs1">
+        <summary data-page-node-id="jdLGCeHHgLoHxHKcorbojf">🚀 快速开始</summary>
+        <div class="h-body" data-page-node-id="5qKuf2fA9sVXuYtdbAWHA5">
+          <p data-page-node-id="CGFSXrzdHDW6ClFuNgKl7V">首次打开会自动建一块空白「<b data-page-node-id="z9nvPnWKSmI7y5tld6dNkj">我的电池</b>」，不用预先填示例数据，记的第一笔就是你的真实数据。</p>
+          <ul data-page-node-id="KpaaOjwQYsaZFAZsHtZmuE">
+            <li data-page-node-id="csoCfwSRAbEfApTyJ4eG84">从底部（手机）/左侧（电脑）的「<b data-page-node-id="6jAhge1DF7zRwToawXFo9D">📝 记录</b>」开始记第一笔：充电、里程、跑单、奖励。</li>
+            <li data-page-node-id="z9gZwvT6ZVKpu5SRHaSIAu">两种打开方式：① 直接双击 <code data-page-node-id="BnMjwPJFc0O1xb3Z3c3Bwn">index.html</code> 用浏览器打开；② 部署到固定网址（GitHub Pages 等），数据更稳、换设备也能用。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>📝 四种记录怎么填</summary>
-        <div class="h-body">
-          <ul>
-            <li><b>🔋 充电</b>：填起止电量 %、度数、花费、续航、时长；单价和真实耗电会自动算。</li>
-            <li><b>🚗 里程</b>：记当天骑了多少公里（跑单或不跑单都记），用于估算电量还能撑多久。</li>
-            <li><b>🛵 跑单</b>：按「日期 + 平台」加单量和收入，一天可加多个平台；保险费按「每天每平台」只扣一次。</li>
-            <li><b>🎁 奖励</b>：满勤奖、冲单奖等，直接算进收入。</li>
+      <details class="help-item" data-page-node-id="2DyL2ZU4AYcyO6CsiioWSp">
+        <summary data-page-node-id="hXLMznoPUIq7MHm6nV3MO7">📝 四种记录怎么填</summary>
+        <div class="h-body" data-page-node-id="ui3DjEyxJt0Nb1o57zcKu0">
+          <ul data-page-node-id="M6PruijTXHDoEvYLtIYlNi">
+            <li data-page-node-id="Rra2ImDlgmWUXEuNBuXSXd"><b data-page-node-id="77Cfo4m8fqmnCnD4nYy4Tx">🔋 充电</b>：填起止电量 %、度数、花费、续航、时长；单价和真实耗电会自动算。</li>
+            <li data-page-node-id="dlMNnJTzJPHHFk942hj6HW"><b data-page-node-id="VlzhCgEkxaLRLUzL8czU2I">🚗 里程</b>：记当天骑了多少公里（跑单或不跑单都记），用于估算电量还能撑多久。</li>
+            <li data-page-node-id="5YJtChivIPTzHsHF6q54fD"><b data-page-node-id="cKHz9VVavp6n2P7GKHXwK5">🛵 跑单</b>：按「日期 + 平台」加单量和收入，一天可加多个平台；保险费按「每天每平台」只扣一次。</li>
+            <li data-page-node-id="HtoDWPYJhSFmYtuFGSf8Nd"><b data-page-node-id="dzFZLzAQl7ZO1GlR1sT4Ve">🎁 奖励</b>：满勤奖、冲单奖等，直接算进收入。</li>
           </ul>
-          <p>每类记录下方都有「近期记录」列表，点「编辑」把整笔回填修改，点「删除」二次确认后移除。</p>
+          <p data-page-node-id="NjoQnZgMEM98SBlSXXslJj">每类记录下方都有「近期记录」列表，点「编辑」把整笔回填修改，点「删除」二次确认后移除。</p>
         </div>
       </details>
-      <details class="help-item">
-        <summary>🛵 跑单与保险费</summary>
-        <div class="h-body">
-          <ul>
-            <li>保险费 <b>每天每平台只扣一次</b>（如 京东秒送 ¥3、美团众包 ¥2.5、淘宝闪购 ¥2.5、货拉拉 ¥0）。</li>
-            <li>同一天同一平台跑几单，只在首单扣，不会重复。</li>
-            <li>费率可在「⚙️ 我的 → 🛵 平台与保险费」里改，改后历史统计按新费率重算。</li>
-            <li>老数据用英文键（<code>jd</code>/<code>meituan</code> 等）记录的会自动归并到对应平台，不会重复统计。</li>
-          </ul>
-        </div>
-      </details>
-      <details class="help-item">
-        <summary>🎁 活动奖励算在哪</summary>
-        <div class="h-body">
-          <ul>
-            <li>奖励金额计入「<b>跑单收入</b>」和「<b>净收入</b>」，不扣保险费。</li>
-            <li>数据总览里有「<b>活动奖励(周期)</b>」和「今日 / 当日奖励」两项单独展示。</li>
-            <li>净收入已含奖励，会标注「<b>（含奖励）</b>」。</li>
-            <li>奖励指定平台时并入对应平台分布；不指定则以金色单独成条。</li>
+      <details class="help-item" data-page-node-id="SjD5zPZ0eTf88yqmhXxcke">
+        <summary data-page-node-id="50zJlZUdJcjlYDXvBkzPBE">🛵 跑单与保险费</summary>
+        <div class="h-body" data-page-node-id="DB4VlkN2MrsSiubnmSNCPr">
+          <ul data-page-node-id="HLQb3CDviEbyxBmhzKSNoG">
+            <li data-page-node-id="FhCPhM0PjWi2Ns1H1vmfXT">保险费 <b data-page-node-id="rDcwr4XSkXhGwPqIcwf1pj">每天每平台只扣一次</b>（如 京东秒送 ¥3、美团众包 ¥2.5、淘宝闪购 ¥2.5、货拉拉 ¥0）。</li>
+            <li data-page-node-id="rSIOHlRfy5RP9txVjPDUKd">同一天同一平台跑几单，只在首单扣，不会重复。</li>
+            <li data-page-node-id="5Ifpulu8o8OJQXMjfM13SZ">费率可在「⚙️ 我的 → 🛵 平台与保险费」里改，改后历史统计按新费率重算。</li>
+            <li data-page-node-id="HUnKEKoIOULs1yefkc2pF1">老数据用英文键（<code data-page-node-id="jY4xo7QooJldiD6weoWX7p">jd</code>/<code data-page-node-id="23bDkePQCxs1bXR1Gc1JlS">meituan</code> 等）记录的会自动归并到对应平台，不会重复统计。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>🔋 电池与提醒</summary>
-        <div class="h-body">
-          <ul>
-            <li>支持多块电池（铅酸 / 石墨烯 / 锂电等），各自独立记录，可随时切换。</li>
-            <li><b>电量自动测算</b>：以最近一次充电的「结束电量 + 满电续航」为基准，自动扣减之后每天登记的里程，得到当前剩余电量；你每天记的里程越多，电量估算越准。</li>
-            <li><b>手动修正</b>：在「⚙️ 我的 → 电池管理 → 编辑」里改「当前电量」，系统会把它作为新的基准点，后续里程从这里开始扣。</li>
-            <li><b>满电续航</b>：优先取最近一次充电记录填的「充满后续航」；如果还没记过充电，可在电池编辑里手动填一个。</li>
-            <li>电量环显示当前电量 %；<b>智能提醒</b>结合电量 + 近期骑行里程，估算「还能跑多少公里 / 大约还能用几天」。</li>
-            <li><b>桌面通知</b>：在电池页或「我的」勾选「开启桌面提醒」，电量过低或久未充电时弹窗。需以 <code>https</code> 或已安装方式打开（<code>file://</code> 下会自动置灰，这是浏览器限制）。</li>
-            <li><b>右上角电池信息卡</b>：页面右上角常驻显示当前电池「🛵 电池名 · 电量% + 状态点」。状态点颜色：<b>绿色</b>=电量充足、<b>黄色</b>=偏低（&lt;40%）、<b>红色</b>=极低（&lt;20%）、<b>蓝色脉冲</b>=今天有充电且尚未充满。点一下卡片可直接跳到「电池」页。</li>
+      <details class="help-item" data-page-node-id="osNReD89NsEO6j055EXlkB">
+        <summary data-page-node-id="eBeTWz12SSNQ77K4t1HB9G">🎁 活动奖励算在哪</summary>
+        <div class="h-body" data-page-node-id="ksJSRbZI61vvDPcfXQgUTe">
+          <ul data-page-node-id="drMZGY123o3zdiCyn4BDVZ">
+            <li data-page-node-id="SWHhY4L2A2kLv0iWEUDfZz">奖励金额计入「<b data-page-node-id="4VasMwVq5QPtzdJcQO9J29">跑单收入</b>」和「<b data-page-node-id="2JtQyF5ZDXoJ0Nvgguv81R">净收入</b>」，不扣保险费。</li>
+            <li data-page-node-id="3FLTsCmrEk7dUr0B0RWQGR">数据总览里有「<b data-page-node-id="Zfs9AMf62YxgfQuEckQrP8">活动奖励(周期)</b>」和「今日 / 当日奖励」两项单独展示。</li>
+            <li data-page-node-id="O3lgAkfUI7KPEhBfbuQSxS">净收入已含奖励，会标注「<b data-page-node-id="KiqLi7Qd70aLTLudMSYuKP">（含奖励）</b>」。</li>
+            <li data-page-node-id="TVE7Sue0T8yOBF2cz0RAqQ">奖励指定平台时并入对应平台分布；不指定则以金色单独成条。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>📊 看懂数据总览</summary>
-        <div class="h-body">
-          <ul>
-            <li>顶部切换时间范围：<b>总 / 今年 / 选月（可左右翻月）/ 某天（精确到某日）</b>，所有统计卡和图表同步变化。</li>
-            <li>净收入 = 收入 − 保险费（<b>不含电费</b>）；「总电费」单独列出。</li>
-            <li>平台分布按各平台品牌色展示收入占比；奖励金色单独条。</li>
-            <li>底部可一键导出当前范围的 <b>Excel(.xls)</b> 报表或 <b>PDF</b> 报表。</li>
+      <details class="help-item" data-page-node-id="C55dS3l0ySBRh6ptLAZRjp">
+        <summary data-page-node-id="aNZjL0s0FNXDH6mOOsATZE">🔋 电池与提醒</summary>
+        <div class="h-body" data-page-node-id="6cx89DGDDEcxo1WecYXQCO">
+          <ul data-page-node-id="QejWyjbpF0oJM1HbaMOgBF">
+            <li data-page-node-id="cwhPEkJZEqb3EztAHz0YSA">支持多块电池（铅酸 / 石墨烯 / 锂电等），各自独立记录，可随时切换。</li>
+            <li data-page-node-id="nlyoMNBz8fm1eslB7AtBEH"><b data-page-node-id="L4vlYZxKDnW888KuCatg9n">电量自动测算</b>：以最近一次充电的「结束电量 + 满电续航」为基准，自动扣减之后每天登记的里程，得到当前剩余电量；你每天记的里程越多，电量估算越准。</li>
+            <li data-page-node-id="jaLKD3wmGVtIUlWlQllpDY"><b data-page-node-id="vJdJ1yHFKQ8bemP2cvj6gH">手动修正</b>：在「⚙️ 我的 → 电池管理 → 编辑」里改「当前电量」，系统会把它作为新的基准点，后续里程从这里开始扣。</li>
+            <li data-page-node-id="9X004UrSA2ZkC95FzT1XNj"><b data-page-node-id="O1Sca2OdGnH7TY3Um1JnEF">满电续航</b>：在「⚙️ 我的 → 电池管理 → 编辑」里手动填一次即可，系统会拿它做电量估算与衰减提醒。</li>
+            <li data-page-node-id="eiljVBbVJmh6KqXcHymbm8">电量环显示当前电量 %；<b data-page-node-id="PBQ4MWCb1xB3cwMMcEWHRG">智能提醒</b>结合电量 + 近期骑行里程，估算「还能跑多少公里 / 大约还能用几天」。</li>
+            <li data-page-node-id="BgOohJKRT3V6FTxWAxBu17"><b data-page-node-id="jeZ2WOjPrNR7ODJeY3Ambe">桌面通知</b>：在电池页或「我的」勾选「开启桌面提醒」，电量过低或久未充电时弹窗。需以 <code data-page-node-id="ZDbTEvdemrjcH6mjnbe6ds">https</code> 或已安装方式打开（<code data-page-node-id="Fk1OKsfLv1RBcPctdngt8D">file://</code> 下会自动置灰，这是浏览器限制）。</li>
+            <li data-page-node-id="XcfQvGACddrC3Loa5nKxH4"><b data-page-node-id="t0qc0OZXSHf2cwx7aAxvyk">右上角电池信息卡</b>：页面右上角常驻显示当前电池「🛵 电池名 · 电量% + 状态点」。状态点颜色：<b data-page-node-id="Y7BnDvRSCyAox4filHcC7d">绿色</b>=电量充足、<b data-page-node-id="9sOijVfXwGxfU7OJoAK5Dc">黄色</b>=偏低（&lt;40%）、<b data-page-node-id="ayZJ6C7qlTEOYdgE4C4vBw">红色</b>=极低（&lt;20%）、<b data-page-node-id="DA8pj8XrHNoJ4nm0Z7b1DN">蓝色脉冲</b>=今天有充电且尚未充满。点一下卡片可直接跳到「电池」页。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>💾 备份与导出</summary>
-        <div class="h-body">
-          <ul>
-            <li><b>导出整包 JSON</b>：电池 + 充电 + 里程 + 跑单 + 奖励全部数据，换机或重装时导入恢复。</li>
-            <li><b>导出 CSV</b>：跑单 / 里程 / 奖励 / 充电 / 维修罚单 各自独立导出，文件带 BOM，Excel / WPS 打开中文不乱码，方便做账报税。</li>
-            <li><b>每日备份提醒</b>：每次更新数据后，如果今天还没导出过 JSON，页面底部会弹一个提示卡，点「立即备份」直接下载整包 JSON，点 × 则当天不再打扰。即使已开启 GitHub / Gist 同步，也建议偶尔导一份本地文件做兜底（换机 / 重装 / 云端被覆盖时能救回）。</li>
+      <details class="help-item" data-page-node-id="nxCPiBnFCpu5ZLHYjqtaEi">
+        <summary data-page-node-id="pJeu6Fm24XLgnQUS82fX4v">📊 看懂数据总览</summary>
+        <div class="h-body" data-page-node-id="TSjzhYmUNmOqDcxsIBvs7G">
+          <ul data-page-node-id="2GCe1BuccsNW54xsyGjoJp">
+            <li data-page-node-id="LrWfX19aTI0o6My53PKyEw">顶部切换时间范围：<b data-page-node-id="b23ggiOWYvsDQ2HfR2Ldwd">总 / 今年 / 选月（可左右翻月）/ 某天（精确到某日）</b>，所有统计卡和图表同步变化。</li>
+            <li data-page-node-id="IMksvjxMMIDOzyrIxSYWtD">净收入 = 收入 − 保险费（<b data-page-node-id="JZ54jK7suRHMPhYgJW0AGe">不含电费</b>）；「总电费」单独列出。</li>
+            <li data-page-node-id="ldhzDPGbHF3ATpguff3u4E">平台分布按各平台品牌色展示收入占比；奖励金色单独条。</li>
+            <li data-page-node-id="hBJCvU7sm2i9FfoUX0Ybpf">底部可一键导出当前范围的 <b data-page-node-id="ahuqKxicgSHRvsHFJ0DAww">Excel(.xls)</b> 报表或 <b data-page-node-id="IX8ZxFhJPKzzmnuZinw5jE">PDF</b> 报表。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>💸 其他支出（维修保养 / 罚单）</summary>
-        <div class="h-body">
-          <ul>
-            <li>在「📝 记一笔 → 💸 其他支出」里登记两类花销：<b>🛠 维修保养</b>（保养 / 维修 / 换电池 / 换轮胎 / 换刹车 / 其他）和 <b>🚨 跑单罚单</b>（罚单 / 闯红灯 / 超速 / 逆行 / 超时 / 其他）。</li>
-            <li>点「支出类型」切换后，下面的「项目 / 类型」和「关联平台」会自动跟着变；罚单需选关联平台（哪个平台派单时吃的罚单），维修保养可不填。</li>
-            <li><b>类别支持自定义</b>：「项目 / 类型」是输入框，既能在下拉里选预设项，也能直接打字填任意内容（如「改装」「补漆」「违停申诉」）。你填过的新类别会被自动记住，下次直接在下拉里选，不用重复输入。</li>
-            <li>金额、日期、备注都记全，方便日后回看花在哪。</li>
-            <li>数据总览「成本」区有 <b>维修保养(周期)</b> 和 <b>跑单罚单(周期)</b> 两项总额，随上方时间范围（总 / 今年 / 选月 / 某天）一起变化。</li>
-            <li>Excel / PDF 报表和「我的 → 导出维修罚单 CSV」都包含这项支出。</li>
+      <details class="help-item" data-page-node-id="XFW55zb6Iutdp8nvp0yODp">
+        <summary data-page-node-id="7x97nKElHZDkYRTnkXeHM9">💾 备份与导出</summary>
+        <div class="h-body" data-page-node-id="nWMJ5F4i0YBQlNsONXp4mF">
+          <ul data-page-node-id="Gjd6xWNzr91iubuSodeKzb">
+            <li data-page-node-id="J3OZDMFLiMrDFyD2NoFOFU"><b data-page-node-id="g15EIZHwtbkazlSKniUy32">导出整包 JSON</b>：电池 + 充电 + 里程 + 跑单 + 奖励全部数据，换机或重装时导入恢复。</li>
+            <li data-page-node-id="kw0rmUamp76bQILtGxVSP1"><b data-page-node-id="ODOAhEGTbEDvAEwhdyBN5Z">导出 CSV</b>：跑单 / 里程 / 奖励 / 充电 / 维修罚单 各自独立导出，文件带 BOM，Excel / WPS 打开中文不乱码，方便做账报税。</li>
+            <li data-page-node-id="hBNk16D3W7N3myN9JkKTZJ"><b data-page-node-id="vQwPJCNgaZGlBr2JVGgKtz">每日备份提醒</b>：每次更新数据后，如果今天还没导出过 JSON，页面底部会弹一个提示卡，点「立即备份」直接下载整包 JSON，点 × 则当天不再打扰。即使已开启 GitHub / Gist 同步，也建议偶尔导一份本地文件做兜底（换机 / 重装 / 云端被覆盖时能救回）。</li>
+          </ul>
+        </div>
+      </details>
+      <details class="help-item" data-page-node-id="QMTBYws6LbZDrdm6kN1a2f">
+        <summary data-page-node-id="fPddd7o9rrvIWsP4mHdrag">💸 其他支出（维修保养 / 罚单）</summary>
+        <div class="h-body" data-page-node-id="EGC9TWoIiv1Km2y0zrYdxW">
+          <ul data-page-node-id="BzGkBXsd7pfMBLLGJRTrXA">
+            <li data-page-node-id="6gUBEc9VPCYEIAGck9a3IW">在「📝 记一笔 → 💸 其他支出」里登记两类花销：<b data-page-node-id="BnxSb3gri7zCixeQOGT8Ng">🛠 维修保养</b>（保养 / 维修 / 换电池 / 换轮胎 / 换刹车 / 其他）和 <b data-page-node-id="4yLt9GEn7RRIJiLAnj3LvD">🚨 跑单罚单</b>（罚单 / 闯红灯 / 超速 / 逆行 / 超时 / 其他）。</li>
+            <li data-page-node-id="7qf85uce9AbMiQSXErdMGk">点「支出类型」切换后，下面的「项目 / 类型」和「关联平台」会自动跟着变；罚单需选关联平台（哪个平台派单时吃的罚单），维修保养可不填。</li>
+            <li data-page-node-id="TGE38ddpdLuTuw2doOGLNZ"><b data-page-node-id="CRLnluRUCpzAKsQ6Oeg1UJ">类别支持自定义</b>：「项目 / 类型」是输入框，既能在下拉里选预设项，也能直接打字填任意内容（如「改装」「补漆」「违停申诉」）。你填过的新类别会被自动记住，下次直接在下拉里选，不用重复输入。</li>
+            <li data-page-node-id="kxSHWBc5j1kg3CamqXHBYx">金额、日期、备注都记全，方便日后回看花在哪。</li>
+            <li data-page-node-id="HGqYeSN2zGYSSVF2WUcIgZ">数据总览「成本」区有 <b data-page-node-id="27iKqwnx7UmN29xyeNEwam">维修保养(周期)</b> 和 <b data-page-node-id="BDdZz4qPCqBUOqHotZiCV4">跑单罚单(周期)</b> 两项总额，随上方时间范围（总 / 今年 / 选月 / 某天）一起变化。</li>
+            <li data-page-node-id="M2GimUH83QbNubggvp7k7D">Excel / PDF 报表和「我的 → 导出维修罚单 CSV」都包含这项支出。</li>
           </ul>
         </div>
       </details>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>☁️ GitHub 同步（可选）</summary>
-        <div class="h-body">
-          <ul>
-            <li>把数据同步到你自己的仓库，换电脑 / 换网址都能拉回。</li>
-            <li>在「⚙️ 我的 → ☁️ GitHub 同步」填 Token（仅存本机）、仓库名，点测试连接 → 推送。</li>
-            <li>公开仓库建议保持「推送数据文件」关闭，只同步 index.html + README，保护隐私。</li>
-            <li>勾选「同步源代码」可把网页和说明一并推送。</li>
+      <details class="help-item" data-page-node-id="FDtp6hlo9kv23RXNxhDcWt">
+        <summary data-page-node-id="gqyYAcGX1xgibHkACkBIb2">☁️ GitHub 同步（可选）</summary>
+        <div class="h-body" data-page-node-id="yfAsQSv2bW71dsb4fC6V3i">
+          <ul data-page-node-id="OpvpLBGBfV0gV6alI7Gmu3">
+            <li data-page-node-id="OQ1UtRyH987sYoYTE6Sd1y">把数据同步到你自己的仓库，换电脑 / 换网址都能拉回。</li>
+            <li data-page-node-id="DpoVN2TGybD33VtHr0g5PP">在「⚙️ 我的 → ☁️ GitHub 同步」填 Token（仅存本机）、仓库名，点测试连接 → 推送。</li>
+            <li data-page-node-id="WpmAkdZIwkMVNo9kWWceFm">公开仓库建议保持「推送数据文件」关闭，只同步 index.html + README，保护隐私。</li>
+            <li data-page-node-id="M2stxO1gWn3TAA2twAXeBC">勾选「同步源代码」可把网页和说明一并推送。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>📝 Gist 同步（可选）</summary>
-        <div class="h-body">
-          <ul>
-            <li>不想建仓库也能同步：用 GitHub <b>Gist</b>，只要一个有 <code>gist</code> 权限的 Token（和上方 GitHub 同步的 token 可相同也可不同）。</li>
-            <li>在「⚙️ 我的 → 📝 Gist 同步」填 Token；<b>Gist ID 留空</b>，首次点「推送」会自动创建并记住 ID，以后都更新这一个。</li>
-            <li>「公开 Gist」默认不勾（私有，只有你能看），真实数据请勿勾选公开。</li>
-            <li>勾选「启用」+「自动同步」后：本地改动约 1.2 秒自动推上去，远程有改动每 10 秒自动拉回合并，多设备实时一致。</li>
-            <li>点「测试连接」先验证 Token 有效，再「推送」即可。</li>
+      <details class="help-item" data-page-node-id="4qfyq0DEmG9UYWksSwqvE3">
+        <summary data-page-node-id="YMaryzRZIHBLZ7WhMhar5Q">📝 Gist 同步（可选）</summary>
+        <div class="h-body" data-page-node-id="4j6LrzlXN9cAzhpEUj0ebE">
+          <ul data-page-node-id="NjQnJcPuHP563YLVDCtE4a">
+            <li data-page-node-id="87vfwPYQ01q9c0dlAkSmnR">不想建仓库也能同步：用 GitHub <b data-page-node-id="SVN3BVcB0VnpdtehHxx3P2">Gist</b>，只要一个有 <code data-page-node-id="uAr0pHRlLQ2OLUVgBDExyU">gist</code> 权限的 Token（和上方 GitHub 同步的 token 可相同也可不同）。</li>
+            <li data-page-node-id="dP3mTKfgDfjToE2zk1pOCx">在「⚙️ 我的 → 📝 Gist 同步」填 Token；<b data-page-node-id="MlGTfRBGOzzHM9Hwag8JcP">Gist ID 留空</b>，首次点「推送」会自动创建并记住 ID，以后都更新这一个。</li>
+            <li data-page-node-id="dbE1r1RG5rlM0OW01NYEkZ">「公开 Gist」默认不勾（私有，只有你能看），真实数据请勿勾选公开。</li>
+            <li data-page-node-id="M6gbGZU187xVlXd86xeD6p">勾选「启用」+「自动同步」后：本地改动约 1.2 秒自动推上去，远程有改动每 10 秒自动拉回合并，多设备实时一致。</li>
+            <li data-page-node-id="mZAX5F2PJZguL7u5GcJASw">点「测试连接」先验证 Token 有效，再「推送」即可。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>🎨 外观与主题</summary>
-        <div class="h-body">
-          <p>「⚙️ 我的 → 外观」可在 <b>浅色 / 深色 / 跟随系统</b> 间切换；跟随系统会随系统偏好自动变。</p>
+      <details class="help-item" data-page-node-id="c0jvQbJRzA8ObZ1hENOF1g">
+        <summary data-page-node-id="8bpbDQ1WEm2gWXSvUxIEkS">🎨 外观与主题</summary>
+        <div class="h-body" data-page-node-id="qu5SecvsETAxLzDQhn9hIO">
+          <p data-page-node-id="uEKozQGENE90AXR7FfvjFA">「⚙️ 我的 → 外观」可在 <b data-page-node-id="L6NHnCHqyVlYFpXoOxbZv5">浅色 / 深色 / 跟随系统</b> 间切换；跟随系统会随系统偏好自动变。</p>
         </div>
       </details>
-      <details class="help-item">
-        <summary>🔒 隐私与安全</summary>
-        <div class="h-body">
-          <ul>
-            <li>数据默认只存在你的浏览器 localStorage，不上传任何第三方。</li>
-            <li>Token 只存本机，不会写进推送的数据文件。</li>
-            <li>提醒：WorkBuddy / IDE 预览每次端口会变，等于换了网址，localStorage 读不到旧数据；建议 file:// 双击或部署到固定网址。</li>
+      <details class="help-item" data-page-node-id="vqg0bAhfPcdMP6IRft2WAh">
+        <summary data-page-node-id="5DAAIJUOKL0JW0byagb0yX">🔒 隐私与安全</summary>
+        <div class="h-body" data-page-node-id="zirsp7aO9epULCalcq1K4K">
+          <ul data-page-node-id="XhE0EPjd5jdJUY4IweOeJx">
+            <li data-page-node-id="buLlFM7RG3rcRMLFqiijwF">数据默认只存在你的浏览器 localStorage，不上传任何第三方。</li>
+            <li data-page-node-id="koGZhe9glb08mXvoDEazWl">Token 只存本机，不会写进推送的数据文件。</li>
+            <li data-page-node-id="aT3Mv9PWfKpRYbjB8XW4qD">提醒：WorkBuddy / IDE 预览每次端口会变，等于换了网址，localStorage 读不到旧数据；建议 file:// 双击或部署到固定网址。</li>
           </ul>
         </div>
       </details>
-      <details class="help-item">
-        <summary>❓ 常见问题</summary>
-        <div class="h-body">
-          <ul>
-            <li>桌面通知在 file:// 下用不了？这是浏览器限制，部署到 https 或安装到桌面即可。</li>
-            <li>记错了能改吗？每类记录下方「近期记录」列表里点「编辑」回填修改、点「删除」二次确认移除。</li>
-            <li>多电池怎么切换？「🔋 电池」页或「我的」里选当前使用的电池。</li>
+      <details class="help-item" data-page-node-id="CUUbwQt5MIrgGwGAhOjmyB">
+        <summary data-page-node-id="fEGBl2vDZ43BbqfHsozhNC">❓ 常见问题</summary>
+        <div class="h-body" data-page-node-id="NGtYcTanbt3fs28CpLahh4">
+          <ul data-page-node-id="GyaDiWdQDesOndTnoO5mV4">
+            <li data-page-node-id="HY0JghHfBwnXdGE2hgGst2">桌面通知在 file:// 下用不了？这是浏览器限制，部署到 https 或安装到桌面即可。</li>
+            <li data-page-node-id="Uyjdcnyi2X42ROFgiAHQH7">记错了能改吗？每类记录下方「近期记录」列表里点「编辑」回填修改、点「删除」二次确认移除。</li>
+            <li data-page-node-id="eQAzXR5HXDxFcsYZSQjNHF">多电池怎么切换？「🔋 电池」页或「我的」里选当前使用的电池。</li>
           </ul>
         </div>
       </details>
@@ -1546,139 +1548,139 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
 
 </main>
 
-<div class="toast" id="toast"><span class="ok">✓</span><span id="toastMsg">已记录</span></div>
-<div class="backup-hint" id="backupHint" hidden>
-  <span class="ico" aria-hidden="true">💾</span>
-  <span class="msg" id="backupHintMsg">今天还没把数据备份到本地文件</span>
-  <button class="btn-pri" id="backupHintBtn" type="button">立即备份</button>
-  <button class="backup-hint-close" id="backupHintClose" type="button" title="今天不再提示" aria-label="关闭">×</button>
+<div class="toast" id="toast" data-page-node-id="yes2xv1SNZwTopYydcxppD"><span class="ok" data-page-node-id="OupzLDz5vjhkwrajqAAEFU">✓</span><span id="toastMsg" data-page-node-id="OPWMZeHv7jrYIEPlWeWYyB">已记录</span></div>
+<div class="backup-hint" id="backupHint" hidden data-page-node-id="QOxCOyuF8YJDbCD5sEcWHg">
+  <span class="ico" aria-hidden="true" data-page-node-id="WCJfTz9JhDbukIUnDJZuFb">💾</span>
+  <span class="msg" id="backupHintMsg" data-page-node-id="iWhG8HHd7Pp3kgKYde0Dt5">今天还没把数据备份到本地文件</span>
+  <button class="btn-pri" id="backupHintBtn" type="button" data-page-node-id="VHLADJxGdCXqhs9LGX6lVp">立即备份</button>
+  <button class="backup-hint-close" id="backupHintClose" type="button" title="今天不再提示" aria-label="关闭" data-page-node-id="6rQosHCzdfxHqkiTKLOQu1">×</button>
 </div>
 
 <!-- 电池编辑/添加弹窗 -->
-<div class="modal" id="batModal" role="dialog" aria-modal="true" aria-labelledby="batModalTitle">
-  <div class="scrim" data-close></div>
-  <div class="sheet sheet-wide">
-    <div class="m-head">
-      <div class="m-title" id="batModalTitle">添加电池</div>
-      <button class="m-close" type="button" data-close aria-label="关闭">×</button>
+<div class="modal" id="batModal" role="dialog" aria-modal="true" aria-labelledby="batModalTitle" data-page-node-id="uua4j02wFQTzQsHuZxBuWL">
+  <div class="scrim" data-close data-page-node-id="lG7XN4abarskDUTUhV4Y6o"></div>
+  <div class="sheet sheet-wide" data-page-node-id="3WgzMG55sbUAQj4TIwPqAp">
+    <div class="m-head" data-page-node-id="uTmk4JRizNGS9LnF7GVN9b">
+      <div class="m-title" id="batModalTitle" data-page-node-id="Snf2KAAI0CNOX1nmSt9pNJ">添加电池</div>
+      <button class="m-close" type="button" data-close aria-label="关闭" data-page-node-id="EoBBDIHTLeICMVaKgJPk7O">×</button>
     </div>
-    <div class="m-body">
-      <input type="hidden" id="batId">
-      <div class="row">
-        <div class="field">
-          <label>电池名称</label>
-          <input type="text" class="control" id="batNameI" placeholder="如 九号 / 旧电池" maxlength="20">
+    <div class="m-body" data-page-node-id="nwjCOXjA7M1Po3eTatFt2f">
+      <input type="hidden" id="batId" data-page-node-id="R7jBgEi1MZc4YaouDzF3xk">
+      <div class="row" data-page-node-id="y9M7J94TZCBqW4d4glkowx">
+        <div class="field" data-page-node-id="1qlTHLJLzdeHCMvS38hiXt">
+          <label data-page-node-id="eIZ9nqjvKGHguCKXVmuEgC">电池名称</label>
+          <input type="text" class="control" id="batNameI" placeholder="如 九号 / 旧电池" maxlength="20" data-page-node-id="WvbRzHHHmRfGC0fHctTj2Q">
         </div>
-        <div class="field">
-          <label>电动车品牌</label>
-          <select id="batBrandI" class="control">
-            <option value="">— 请选择 —</option>
-            <option value="九号">九号</option>
-            <option value="雅迪">雅迪</option>
-            <option value="爱玛">爱玛</option>
-            <option value="台铃">台铃</option>
-            <option value="小牛">小牛</option>
-            <option value="新日">新日</option>
-            <option value="绿源">绿源</option>
-            <option value="小刀">小刀</option>
-            <option value="立马">立马</option>
-            <option value="比德文">比德文</option>
-            <option value="金箭">金箭</option>
-            <option value="五星钻豹">五星钻豹</option>
-            <option value="其他">其他（手动输入）…</option>
+        <div class="field" data-page-node-id="OFjHX6rf1a0tr6pv7tqd0l">
+          <label data-page-node-id="dsJH6hieWGkqI7na7DAUUU">电动车品牌</label>
+          <select id="batBrandI" class="control" data-page-node-id="0oJrQ5XvDtk9iy7ijtKdTq">
+            <option value="" data-page-node-id="TEoFinQNuMmEzMTY1nEr3A">— 请选择 —</option>
+            <option value="九号" data-page-node-id="GGylEaezjYKwWb2sxy5wiq">九号</option>
+            <option value="雅迪" data-page-node-id="CKiGYWI8QDQZnp7hXithE7">雅迪</option>
+            <option value="爱玛" data-page-node-id="5TrBH1Q4nf4AJG9Fc7xgAj">爱玛</option>
+            <option value="台铃" data-page-node-id="AYq9jnvNyal2wCiA7aC7lu">台铃</option>
+            <option value="小牛" data-page-node-id="lP6UQSBZJhOOtvSCMhI21W">小牛</option>
+            <option value="新日" data-page-node-id="u9THx43H3QHS9GcmacWWMn">新日</option>
+            <option value="绿源" data-page-node-id="klEdIK9VMucKqucI3NCpky">绿源</option>
+            <option value="小刀" data-page-node-id="aDd9N3WHWTB9HpCy1VDpsa">小刀</option>
+            <option value="立马" data-page-node-id="VREpQhP3GlSmiajMz4eciy">立马</option>
+            <option value="比德文" data-page-node-id="3K6zNW2CjmxzOwz19Zw5zV">比德文</option>
+            <option value="金箭" data-page-node-id="5KVz7dfGnaiZN77lt2ylAw">金箭</option>
+            <option value="五星钻豹" data-page-node-id="8ny4e1sYbddGEBTjQFJjEg">五星钻豹</option>
+            <option value="其他" data-page-node-id="HTTm0RCar40Q19nv7YAPXn">其他（手动输入）…</option>
           </select>
-          <input type="text" class="control" id="batBrandCustom" placeholder="请输入品牌名" maxlength="16" style="display:none;margin-top:8px">
+          <input type="text" class="control" id="batBrandCustom" placeholder="请输入品牌名" maxlength="16" style="display:none;margin-top:8px" data-page-node-id="nBq1GPmtbhedDSyMFuE0MR">
         </div>
       </div>
-      <div class="row">
-        <div class="field">
-          <label>电池种类</label>
-          <select id="batTypeI" class="control">
-            <option value="normal">普通铅酸</option>
-            <option value="graphene">石墨烯铅酸</option>
-            <option value="gel">胶体电池</option>
-            <option value="liion">锂电池</option>
-            <option value="other">其他 / 未知</option>
+      <div class="row" data-page-node-id="cqAAhuHvZ6DCyozGNzbnm4">
+        <div class="field" data-page-node-id="eOAMBP69qUbqL7ArBHq8FC">
+          <label data-page-node-id="KmiykpMizYEHKCwG0w7Luw">电池种类</label>
+          <select id="batTypeI" class="control" data-page-node-id="72ivjJAe8hXq1T8ODrXVG5">
+            <option value="normal" data-page-node-id="74JDdWqF4K3rmsxlhvTizw">普通铅酸</option>
+            <option value="graphene" data-page-node-id="ph30YXOBPRyNYkWKUwmnhA">石墨烯铅酸</option>
+            <option value="gel" data-page-node-id="LHbCaDRkEPykIylmj3uFaD">胶体电池</option>
+            <option value="liion" data-page-node-id="rkHEoNMWZBnSydcag8dd6B">锂电池</option>
+            <option value="other" data-page-node-id="A7aCBkMcHRpSEKl8eyAeQT">其他 / 未知</option>
           </select>
         </div>
-        <div class="field">
-          <label>家里电价 (元/度)</label>
-          <input type="number" class="control" id="batPriceI" min="0" step="0.1" placeholder="如 1">
+        <div class="field" data-page-node-id="7bwgfoh5RhqZXc8FkcHJdH">
+          <label data-page-node-id="xFaaHTA2iOvZxkYlX2oGxI">家里电价 (元/度)</label>
+          <input type="number" class="control" id="batPriceI" min="0" step="0.1" placeholder="如 1" data-page-node-id="peGudap0abfAOOP9Iroj8s">
         </div>
       </div>
-      <div class="row">
-        <div class="field">
-          <label>电池电压 (V)</label>
-          <input type="number" class="control" id="batVoltI" min="0" step="1" placeholder="如 72">
+      <div class="row" data-page-node-id="8HGPg1cwSnETyh9EsM2Ozx">
+        <div class="field" data-page-node-id="rxUTyFsTVYEL4oeQPBMibK">
+          <label data-page-node-id="HOLr1cGpjpqjGyqgICthiK">电池电压 (V)</label>
+          <input type="number" class="control" id="batVoltI" min="0" step="1" placeholder="如 72" data-page-node-id="rs9D6Ir8mBoGBAiKmF32gC">
         </div>
-        <div class="field">
-          <label>电池容量 (Ah)</label>
-          <input type="number" class="control" id="batAhI" min="0" step="1" placeholder="如 40">
+        <div class="field" data-page-node-id="CKxRTp1wE67nzOUDnSWoeG">
+          <label data-page-node-id="cdEehg5wAViE3s3aeitNn1">电池容量 (Ah)</label>
+          <input type="number" class="control" id="batAhI" min="0" step="1" placeholder="如 40" data-page-node-id="nVcZgJc4LDpfglX9Ed9jJG">
         </div>
-        <div class="field">
-          <label>充电效率 (%)</label>
-          <input type="number" class="control" id="batEffI" min="1" max="100" step="1" placeholder="如 88">
-          <div class="hint-inline">铅酸约 85-90%，锂电约 90-95%</div>
-        </div>
-      </div>
-      <div class="hint-inline" id="batCapInfo" style="margin:6px 0 10px;"></div>
-      <div class="row">
-        <div class="field">
-          <label>当前电量（%）</label>
-          <input type="number" class="control" id="batSocI" min="0" max="100" step="1" placeholder="100">
-          <div class="hint-inline">可手动修正；系统也会根据里程自动算</div>
-        </div>
-        <div class="field">
-          <label>满电续航（km）</label>
-          <input type="number" class="control" id="batRangeKmI" min="1" step="0.1" placeholder="如 80">
-          <div class="hint-inline">自动取最近一次充电续航，也可手填</div>
-        </div>
-        <div class="field">
-          <label>购买日期</label>
-          <input type="date" class="control" id="batBuyDateI">
+        <div class="field" data-page-node-id="Wxe7cvP5H8jKhDfxJFJqwK">
+          <label data-page-node-id="1qD8zG0IuuTi6UXN0M6PhC">充电效率 (%)</label>
+          <input type="number" class="control" id="batEffI" min="1" max="100" step="1" placeholder="如 88" data-page-node-id="wX9X82Rw7rDHYuqEbP8w1T">
+          <div class="hint-inline" data-page-node-id="hpWZa88ZvICZs0GHAnGQPp">铅酸约 85-90%，锂电约 90-95%</div>
         </div>
       </div>
-      <div class="row">
-        <div class="field">
-          <label>寿命上限（循环次数）</label>
-          <input type="number" class="control" id="batLifeMaxI" min="100" max="1500" placeholder="400">
+      <div class="hint-inline" id="batCapInfo" style="margin:6px 0 10px;" data-page-node-id="f7hXkfFjKBVXK9HyoP9zY6"></div>
+      <div class="row" data-page-node-id="Riq3nZZjcPpRMFoTrGEZnP">
+        <div class="field" data-page-node-id="R45V3knRPtDveBaWJt1q49">
+          <label data-page-node-id="GRmO8GTx2NYhz2qpa3mcDA">当前电量（%）</label>
+          <input type="number" class="control" id="batSocI" min="0" max="100" step="1" placeholder="100" data-page-node-id="7TscdkE2LAjdUlrWnkJ2Ro">
+          <div class="hint-inline" data-page-node-id="Pic2Wo8NGSEv4iADw97Nqr">可手动修正；系统也会根据里程自动算</div>
+        </div>
+        <div class="field" data-page-node-id="nRy7bkI7AJ5PUDQLPHUgw5">
+          <label data-page-node-id="P0PSYU7d0cO5IWYrZn6AAt">满电续航（km）</label>
+          <input type="number" class="control" id="batRangeKmI" min="1" step="0.1" placeholder="如 80" data-page-node-id="XWwB2ITz18BdWP7fu3uG05">
+          <div class="hint-inline" data-page-node-id="fdG1AtljR8kNTywSKFW9d0">自动取最近一次充电续航，也可手填</div>
+        </div>
+        <div class="field" data-page-node-id="Do887njrf9k5DE4v0FL0LA">
+          <label data-page-node-id="BuyW0u0Utc9K6OmHMo0mKc">购买日期</label>
+          <input type="date" class="control" id="batBuyDateI" data-page-node-id="p99aXCo4cqp5jWEQti7JQj">
         </div>
       </div>
-      <div class="row">
-        <div class="field">
-          <label>电池购入价格（元，可选）</label>
-          <input type="number" class="control" id="batCostPriceI" min="0" step="1" placeholder="如 800">
-          <div class="hint-inline">填了可算「每次充电摊多少 / 每公里电池成本」</div>
+      <div class="row" data-page-node-id="mT9rLDSxRBjVSnJLrr4Ob1">
+        <div class="field" data-page-node-id="VNmCCxHlnXGHskgrJfbVQG">
+          <label data-page-node-id="i7QqGl1Fp4VI8pA9y1KFPS">寿命上限（循环次数）</label>
+          <input type="number" class="control" id="batLifeMaxI" min="100" max="1500" placeholder="400" data-page-node-id="AzGa2bfFKNG2k1I6CiaP67">
+        </div>
+      </div>
+      <div class="row" data-page-node-id="nvahxoWOBByfd41a3kw6Fy">
+        <div class="field" data-page-node-id="fdgvPTSP6azkTTRrFTACPF">
+          <label data-page-node-id="GqgKSCUFkFFGgXkbhEGotZ">电池购入价格（元，可选）</label>
+          <input type="number" class="control" id="batCostPriceI" min="0" step="1" placeholder="如 800" data-page-node-id="Jd6Ldzx4JJ4LdHXtFq573t">
+          <div class="hint-inline" data-page-node-id="2GTVnMkzC6zr3pb4xWHmbG">填了可算「每次充电摊多少 / 每公里电池成本」</div>
         </div>
       </div>
     </div>
-    <div class="m-actions">
-      <button class="btn btn-ghost" type="button" data-close>取消</button>
-      <button class="btn btn-primary" type="button" id="batSaveBtn">保存</button>
+    <div class="m-actions" data-page-node-id="cWtXRBIy7vGdiEAnDd8toX">
+      <button class="btn btn-ghost" type="button" data-close data-page-node-id="O5drSD55FdMc64iWuMEmCa">取消</button>
+      <button class="btn btn-primary" type="button" id="batSaveBtn" data-page-node-id="G8EKNxrYFzd7YcxjqmHhmd">保存</button>
     </div>
   </div>
 </div>
 
 <!-- 删除电池确认 -->
-<div class="modal" id="batDelModal" role="dialog" aria-modal="true" aria-labelledby="batDelTitle">
-  <div class="scrim" data-close></div>
-  <div class="sheet">
-    <div class="m-head">
-      <div class="m-title" id="batDelTitle">删除电池</div>
-      <button class="m-close" type="button" data-close aria-label="关闭">×</button>
+<div class="modal" id="batDelModal" role="dialog" aria-modal="true" aria-labelledby="batDelTitle" data-page-node-id="Lg3GQC9OAFiOAKjGxTEEej">
+  <div class="scrim" data-close data-page-node-id="w2icgB1Rs7HqiciZhSmhEt"></div>
+  <div class="sheet" data-page-node-id="KClFZUDq7tPpbA0kEedtqv">
+    <div class="m-head" data-page-node-id="CdM0ljyNGiZ8rqiXOvVPPi">
+      <div class="m-title" id="batDelTitle" data-page-node-id="S4GAQY8NsJO5jp4GFepzwg">删除电池</div>
+      <button class="m-close" type="button" data-close aria-label="关闭" data-page-node-id="EQcPfRDgTwA5gA5Hot1Y6G">×</button>
     </div>
-    <div class="m-body">
-      <div class="danger-box">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        <div>
-          <div class="d-t">确认删除「<span id="batDelName">电池</span>」？</div>
-          <div class="d-s">该电池下的充电、里程、跑单记录也会一起移除，且不可恢复。若只是暂时不用，建议改用「切换使用」而非删除。</div>
+    <div class="m-body" data-page-node-id="UP5NcZUHSGJN5Wj9M1LC3Q">
+      <div class="danger-box" data-page-node-id="nZTc8irzKUcab1ukZ4Ad76">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="bbeS0KhI0ao9C7hBxZEWvK"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" data-page-node-id="OZlpnrgKUNCFsweQ2Brog3"/><line x1="12" y1="9" x2="12" y2="13" data-page-node-id="0DZNiiqIS6uFpbJLRMudCB"/><line x1="12" y1="17" x2="12.01" y2="17" data-page-node-id="1W8NdWzkINsCWHqHmvQ0P3"/></svg>
+        <div data-page-node-id="6oM9sGoyBthb80RlgWTNxs">
+          <div class="d-t" data-page-node-id="SqxWHdlhABATNVAA5xsaiT">确认删除「<span id="batDelName" data-page-node-id="pCdOav2AY46BM9RKV4rt1s">电池</span>」？</div>
+          <div class="d-s" data-page-node-id="BeL3mbH4G3FoJJqSJU9Dr9">该电池下的充电、里程、跑单记录也会一起移除，且不可恢复。若只是暂时不用，建议改用「切换使用」而非删除。</div>
         </div>
       </div>
     </div>
-    <div class="m-actions">
-      <button class="btn btn-ghost" type="button" data-close>取消</button>
-      <button class="btn btn-danger" type="button" id="batDelConfirm">删除</button>
+    <div class="m-actions" data-page-node-id="h4LyJNCcJUbr7nyxuJRaIa">
+      <button class="btn btn-ghost" type="button" data-close data-page-node-id="fgVytePOBnVSEWeKbFoYiI">取消</button>
+      <button class="btn btn-danger" type="button" id="batDelConfirm" data-page-node-id="HCReZEKxSA1Djrja3Djzso">删除</button>
     </div>
   </div>
 </div>
@@ -1704,6 +1706,15 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
     '达达':{name:'达达',ins:0}, '顺丰':{name:'顺丰',ins:0}, '盒马':{name:'盒马',ins:0}
   };
   var PLATFORMS=Object.assign({}, DEFAULT_PLATFORMS);
+  var defaultPlat=null; // 用户指定的「跑单默认平台」，新建跑单第一行自动选中
+  function getDefaultPlat(){ return (defaultPlat && PLATFORMS[defaultPlat]) ? defaultPlat : null; }
+  function setDefaultPlat(name){
+    defaultPlat=(name && PLATFORMS[name])?name:null;
+    // 用户改默认平台 → 把跑单表单里所有行的平台选择重置为空，让新默认生效
+    document.querySelectorAll('#deliItems .di-platform').forEach(function(s){ s.value=''; });
+    savePlatCfg(); renderPlatCfg(); fillDeliPlatformSelect();
+    showToast(defaultPlat?('已把「'+defaultPlat+'」设为跑单默认平台'):'已取消跑单默认平台');
+  }
   function loadPlatCfg(){
     try{
       var raw=lsGet(PLAT_CFG_KEY);
@@ -1711,12 +1722,16 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
       var c=JSON.parse(raw);
       if(c&&typeof c==='object'&&Object.keys(c).length){
         PLATFORMS={};
-        Object.keys(c).forEach(function(k){ PLATFORMS[k]={name:k, ins:parseFloat(c[k])||0}; });
+        if(c.__default) defaultPlat=c.__default;
+        Object.keys(c).forEach(function(k){
+          if(k==='__default') return;
+          PLATFORMS[k]={name:k, ins:parseFloat(c[k])||0};
+        });
       }
     }catch(e){}
   }
   function savePlatCfg(){
-    var cfg={};
+    var cfg={__default: defaultPlat||''};
     Object.keys(PLATFORMS).forEach(function(k){ cfg[k]=PLATFORMS[k].ins; });
     lsSet(PLAT_CFG_KEY, JSON.stringify(cfg));
   }
@@ -1863,25 +1878,30 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
     refreshBatRangeKm(b);
     var rangeKm = parseFloat(b.rangeKm);
     if(!rangeKm || rangeKm<=0) return; // 无续航依据时不自动改，保留手动值
-    // 基准点候选：①手动修正 ②最晚充电记录 ③里程里报过电量的最晚一条（用户主动报的最准，自动采纳）
+    // 基准点候选：①手动修正 ②最晚充电记录 ③里程里报过电量的最晚一条
+    // 优先级 pri：充电=3（充电是电量重置动作，最权威）> 手动修正=2 > 里程报数=1
+    // 排序：日期最晚优先；同日时按 pri 高者优先（确保「当天充完电」不会被同日的里程报数覆盖）
     var cand=[];
     if(b.socRef!=null && b.socRef!=='' && b.socRefDate){
-      cand.push({date:b.socRefDate, soc:Math.max(0,Math.min(100,parseFloat(b.socRef))), src:'manual'});
+      cand.push({date:b.socRefDate, soc:Math.max(0,Math.min(100,parseFloat(b.socRef))), pri:2});
     }
     var lastFull = logs.filter(function(l){ return l.batteryId===bid; })
                        .sort(function(a,b){ return a.date<b.date?1:-1; })[0];
     if(lastFull){
       var endSoc=(lastFull.endSoc!=null&&lastFull.endSoc!=='')?parseFloat(lastFull.endSoc):100;
-      cand.push({date:lastFull.date, soc:endSoc, src:'charge'});
+      cand.push({date:lastFull.date, soc:endSoc, pri:3});
     }
     var lastMileSoc = miles.filter(function(m){ return m.batteryId===bid && m.soc!=null && m.soc!==''; })
                            .sort(function(a,b){ return a.date<b.date?1:-1; })[0];
     if(lastMileSoc){
-      cand.push({date:lastMileSoc.date, soc:Math.max(0,Math.min(100,parseFloat(lastMileSoc.soc))), src:'mile'});
+      cand.push({date:lastMileSoc.date, soc:Math.max(0,Math.min(100,parseFloat(lastMileSoc.soc))), pri:1});
     }
     var refSoc=100, refDate=b.socRefDate||b.buyDate||todayStr();
     if(cand.length){
-      cand.sort(function(a,b){ return a.date<b.date?1:-1; });
+      cand.sort(function(a,b){
+        if(a.date!==b.date) return a.date<b.date?1:-1;
+        return b.pri-a.pri;
+      });
       refSoc = cand[0].soc;
       refDate = cand[0].date;
     }
@@ -2443,11 +2463,12 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
   function recalcDeli(){ var s=0; deliItems.querySelectorAll('.di-amt').forEach(function(i){ s+=parseFloat(i.value)||0; }); deliSum.textContent='¥'+s.toFixed(2); }
   function addDeliRow(){
     var row = document.createElement('div'); row.className='deli-item';
-    row.innerHTML = '<select class="di-platform"><option>美团众包</option><option>京东秒送</option><option>淘宝闪购</option><option>货拉拉</option></select>'+
+    row.innerHTML = '<select class="di-platform"><option></option></select>'+
       '<input class="di-num" type="number" placeholder="单量" min="0"><input class="di-amt" type="number" placeholder="收入¥" step="0.01"><button class="di-x" type="button" title="删除">×</button>';
     deliItems.appendChild(row);
     row.querySelector('.di-amt').addEventListener('input', recalcDeli);
     row.querySelector('.di-x').addEventListener('click', function(){ row.remove(); recalcDeli(); });
+    fillDeliPlatformSelect(); // 让新行下拉用 PLATFORMS + 默认平台填充
     return row;
   }
   document.getElementById('deliAdd').addEventListener('click', function(){ addDeliRow(); });
@@ -2459,6 +2480,31 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
   function showToast(msg){ toastMsg.textContent=msg; toast.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(function(){ toast.classList.remove('show'); }, 2200); }
 
   /* ---- 数据：周期切换 + 图表（store 驱动）---- */
+  var DEF_PERIOD_KEY='ebike_default_period';
+  // 默认周期可自定义；出厂默认「选月」（即显示当月数据），满足“默认显示当月”的需求
+  function getDefaultPeriod(){ return localStorage.getItem(DEF_PERIOD_KEY) || 'somemonth'; }
+  function setDefaultPeriod(p){ try{ localStorage.setItem(DEF_PERIOD_KEY, p); }catch(e){} }
+  function periodName(p){ return ({total:'全部时间', year:'今年', somemonth:'选月', someday:'某天'})[p] || p; }
+  function renderPeriodStars(){
+    document.getElementById('periodTabs').querySelectorAll('button').forEach(function(b){
+      var s=b.querySelector('.pstar'); if(!s) return;
+      s.textContent = (b.dataset.period===getDefaultPeriod()) ? '★' : '☆';
+      b.classList.toggle('is-default', b.dataset.period===getDefaultPeriod());
+    });
+  }
+  // 启动时按“默认周期”初始化当前周期；选月→当月、某天→今天
+  function applyDefaultPeriod(){
+    var dp=getDefaultPeriod();
+    curPeriod=dp;
+    curMonth=todayStr().slice(0,7);
+    curDay=todayStr();
+    document.getElementById('periodTabs').querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('active', b.dataset.period===dp);
+    });
+    renderPeriodStars();
+  }
+  window.applyDefaultPeriod=applyDefaultPeriod; window.renderPeriodStars=renderPeriodStars;
+  window.getDefaultPeriod=getDefaultPeriod; window.setDefaultPeriod=setDefaultPeriod; window.periodName=periodName;
   var curPeriod='total', curMonth=todayStr().slice(0,7), curDay=todayStr();  // curPeriod: year | total | somemonth(选定某月) | someday(选定某天)
 
   function inPeriod(dateStr){
@@ -2637,7 +2683,14 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
     }
   }
   document.getElementById('periodTabs').querySelectorAll('button').forEach(function(b){
-    b.addEventListener('click', function(){
+    b.addEventListener('click', function(e){
+      // 点星标 → 设为默认视图（不改变当前正在看的周期）
+      if(e.target && e.target.classList && e.target.classList.contains('pstar')){
+        setDefaultPeriod(b.dataset.period);
+        renderPeriodStars();
+        showToast('已把「'+periodName(b.dataset.period)+'」设为默认视图');
+        return;
+      }
       document.getElementById('periodTabs').querySelectorAll('button').forEach(function(x){ x.classList.remove('active'); });
       b.classList.add('active');
       curPeriod=b.dataset.period;
@@ -2743,7 +2796,7 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
   }
   function clearForm(kind){
     if(kind==='充电'){
-      ['chgSoc','chgCost','chRange','chDuration','chNote','chgEndSoc'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=''; });
+      ['chgSoc','chgCost','chDuration','chNote','chgEndSoc'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=''; });
       document.getElementById('chDate').value=todayStr();
       document.getElementById('chgNotFull').checked=false;
       document.getElementById('chgEndSocField').style.display='none';
@@ -2759,7 +2812,8 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
       var rows=deliItems.querySelectorAll('.deli-item');
       for(var i=rows.length-1;i>0;i--) rows[i].remove();
       var first=deliItems.querySelector('.deli-item');
-      if(first){ first.querySelector('.di-num').value=''; first.querySelector('.di-amt').value=''; first.querySelector('.di-platform').selectedIndex=0; }
+      if(first){ first.querySelector('.di-num').value=''; first.querySelector('.di-amt').value=''; first.querySelector('.di-platform').value=''; }
+      fillDeliPlatformSelect(); // 重建下拉并按用户设置的默认平台选中
       recalcDeli();
     } else if(kind==='奖励'){
       document.getElementById('rwDate').value=todayStr();
@@ -2829,7 +2883,7 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
             // 用户未手动填写：家充自动采用 placeholder 的估算值，充电桩留空
             cost=parseFloat(costInput.placeholder)||null;
           }
-          var range=parseFloat(document.getElementById('chRange').value);
+          var range=parseFloat(document.getElementById('chRange')&&document.getElementById('chRange').value);
           if(isNaN(range)) range=null;
           var payload={ date:date, soc:soc, endSoc:endSoc, location:selectedVal('loc'), cost:cost, range:range, duration:document.getElementById('chDuration').value.trim(), note:document.getElementById('chNote').value.trim() };
           if(editing['充电']){
@@ -2930,7 +2984,7 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
     document.getElementById('chDate').value=l.date||todayStr();
     document.getElementById('chgSoc').value=(l.soc!=null?l.soc:'');
     document.getElementById('chgCost').value=(l.cost!=null?l.cost:'');
-    document.getElementById('chRange').value=(l.range!=null?l.range:'');
+    var chR=document.getElementById('chRange'); if(chR) chR.value=(l.range!=null?l.range:'');
     document.getElementById('chDuration').value=l.duration||'';
     document.getElementById('chNote').value=l.note||'';
     var notFull=(l.endSoc!=null && l.endSoc<100);
@@ -3799,19 +3853,25 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
   })();
   // 跑单平台下拉动态生成（与可配置 PLATFORMS 同步）
   function fillDeliPlatformSelect(){
+    var def=getDefaultPlat();
     document.querySelectorAll('#deliItems .di-platform').forEach(function(sel){
       var cur=sel.value;
       sel.innerHTML='';
       Object.keys(PLATFORMS).forEach(function(name){ var o=document.createElement('option'); o.value=name; o.textContent=name; sel.appendChild(o); });
       var ok=false;
       Array.prototype.slice.call(sel.options).forEach(function(o){ if(o.value===cur){ sel.value=cur; ok=true; } });
-      if(!ok) sel.selectedIndex=0;
+      if(!ok){
+        if(def && Array.prototype.slice.call(sel.options).some(function(o){return o.value===def;})) sel.value=def;
+        else sel.selectedIndex=0;
+      }
     });
   }
   function renderPlatCfg(){
     var list=document.getElementById('platCfgList'); if(!list) return;
     list.innerHTML = Object.keys(PLATFORMS).map(function(n){
-      return '<div class="plat-cfg-row" data-name="'+escapeHtml(n)+'">'
+      var isDef=(n===defaultPlat);
+      return '<div class="plat-cfg-row'+(isDef?' is-default':'')+'" data-name="'+escapeHtml(n)+'">'
+        + '<button class="def-btn'+(isDef?' active':'')+'" type="button" data-defplat="'+escapeHtml(n)+'" title="'+(isDef?'当前默认平台，点击取消默认':'设为跑单默认平台')+'" aria-pressed="'+(isDef?'true':'false')+'">'+(isDef?'★':'☆')+'</button>'
         + '<span class="pn">'+escapeHtml(n)+'</span>'
         + '<input class="control ins-in" type="number" step="0.1" value="'+(PLATFORMS[n].ins)+'" data-ins="'+escapeHtml(n)+'" aria-label="'+escapeHtml(n)+'保险费">'
         + '<span class="unit">元/天</span>'
@@ -3837,10 +3897,20 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
     }
   });
   document.getElementById('platCfgList').addEventListener('click', function(e){
+    var def=e.target.getAttribute&&e.target.getAttribute('data-defplat');
+    if(def){
+      setDefaultPlat(def===defaultPlat?null:def);
+      return;
+    }
     var del=e.target.getAttribute&&e.target.getAttribute('data-delplat');
     if(del){
       if(!confirm('删除平台「'+del+'」？已按该平台记的跑单保险费会按 0 重新计算。')) return;
-      delete PLATFORMS[del]; savePlatCfg();
+      delete PLATFORMS[del];
+      if(defaultPlat===del){
+        defaultPlat=null;
+        document.querySelectorAll('#deliItems .di-platform').forEach(function(s){ s.value=''; });
+      }
+      savePlatCfg();
       renderPlatCfg(); fillDeliPlatformSelect(); renderAll();
       showToast('已删除平台：'+del);
     }
@@ -3871,6 +3941,7 @@ details.danger-zone .warn-box{ margin:8px 0 12px; padding:10px 12px; border-radi
   setupNotify();
   updateNotifyHint();
   renderRecordLists();
+  applyDefaultPeriod();
   renderAll();
   refreshChargeCostUI();
   updateBatSummary();
